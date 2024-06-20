@@ -1,0 +1,162 @@
+syntax = "proto3";
+
+package proto;
+
+message transaction {
+	
+	enum transactiontype {
+		add_secret_vote = 0;
+		add_open_vote = 1;
+		generate = 2;
+		authorize_miner = 3;
+		authorize_organizer = 4;
+		authorize_issuer = 5;
+		authorize_voter = 6;
+		create_voting = 7;
+		coin_join = 8;
+		another_voting_protocol = 9;
+		hash_personal_data = 10;
+	}
+	transactiontype m_type = 1;
+
+	message vin {
+		bytes m_txid = 1;
+		optional bytes m_sign = 2;
+		bytes m_pk = 3;
+	}
+	repeated vin m_vin = 2;
+ 
+	message vout {
+		bytes m_pkh = 1;
+		fixed32 m_amount = 2;
+	}
+	repeated vout m_vout = 3;
+
+	bytes m_txid = 4;
+	bytes m_allmetadata = 5;
+}
+
+message header {
+	fixed32 m_version = 1;
+	bytes m_parent_hash = 2;
+	bytes m_actual_hash = 3;
+	fixed32 m_block_time = 4;
+	bytes m_all_tx_hash = 5;
+	repeated bytes m_all_signatures = 6;
+}
+
+message headers {
+    repeated header m_headers = 1;
+}
+
+message block {
+	header m_header = 1;
+	repeated transaction m_transaction = 2;
+}
+
+message addr {
+    message peer_details {
+        string m_address = 1;
+        uint32 m_port = 2;
+        uint64 m_timestamp = 3;
+    }
+    repeated peer_details m_peer_list = 1;
+}
+
+message all_active_votings_for_voter {
+	repeated bytes m_voting_ids = 1;
+}
+
+message getheaders {
+	fixed32 m_version = 1;
+	bytes m_hash_header_start = 2;
+	bytes m_hash_header_stop = 3;
+}
+
+message gettxs {
+	bytes m_hash_header = 1;
+}
+
+message getblock {
+	bytes m_hash_header = 1;
+}
+
+message getmempooltransactions {
+}
+
+message getaddr {
+}
+
+message getmerklebranch {
+	bytes m_txid = 1;
+}
+
+message merkle_branch {
+	repeated bytes m_merkle_branch = 1;
+	optional bytes m_block_id = 2;
+}
+
+message get_all_active_votings_for_voter {
+	bytes m_voter_pk = 1;
+}
+
+message get_amount_on_pkh {
+	bytes m_pkh = 1;
+}
+
+message amount_on_pkh {
+	uint32 m_amount = 1;
+	optional bytes m_txid = 2;
+}
+
+message get_transaction {
+	bytes m_txid = 1;
+}
+
+message get_authorization_txid {
+	bytes m_pk = 1;
+	bytes m_voting_id = 2;
+}
+
+message authorization_txid {
+	bytes m_txid = 1;
+}
+
+message get_all_finished_votings_for_voter {
+	bytes m_voter_pk = 1;
+}
+
+message all_finished_votings_for_voter {
+	repeated bytes m_voting_ids = 1;
+}
+
+message request {
+    oneof request_type {
+        getheaders m_getheaders = 1;
+        gettxs m_gettxs = 2;
+        getblock m_getblock = 3;
+        getmempooltransactions m_getmempooltransactions = 4;
+        getaddr m_getaddr = 5;
+        getmerklebranch m_getmerklebranch = 6;
+        get_all_active_votings_for_voter m_get_all_active_votings_for_voter = 8;
+        get_amount_on_pkh m_get_amount_on_pkh = 9;
+        get_transaction m_get_transaction = 10;
+        get_authorization_txid m_get_authorization_txid = 11;
+	get_all_finished_votings_for_voter m_get_all_finished_votings_for_voter = 12;
+    }
+}
+
+message proto_massage {
+    oneof message_type {
+        request m_request = 1;
+        headers m_headers = 2;
+        block m_block = 3;
+        transaction m_transaction = 4;
+        addr m_addr = 5;
+        merkle_branch m_merkle_branch = 7;
+        all_active_votings_for_voter m_all_active_votings_for_voter = 8;
+        amount_on_pkh m_amount_on_pkh = 9;
+        authorization_txid m_authorization_txid = 10;
+	all_finished_votings_for_voter m_all_finished_votings_for_voter = 11;
+    }
+}

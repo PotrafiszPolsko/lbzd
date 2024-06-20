@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+import "p2p.proto";
+
+package proto;
+
+message block_record {
+    header m_header = 1;
+    uint32 m_height = 2;
+    uint32 m_number_of_transactions = 3;
+    string m_file_contains_block = 4;
+    sint32 m_position_in_file = 5;
+    uint32 m_size_of_binary_data = 6;
+}
+
+message file_info_record {
+    uint32 m_number_of_blocks = 1;
+    uint32 m_filesize = 2;
+    uint32 m_height_lowest = 3;
+    uint32 m_height_highest = 4;
+}
+
+message transaction_record {
+    string m_file_contains_block = 1;
+    uint32 m_offset_of_block = 2;
+    uint32 m_offset_of_transaction = 3;
+    bytes m_blockid = 4;
+}
+
