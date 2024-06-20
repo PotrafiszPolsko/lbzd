@@ -18,5 +18,12 @@ iVoting and iVotingd was created by Smart Cables Sp. z o.o. in realization of Po
 
 iVoting system was applied as an European patent EP24172479.8 and Polish patent P.444711 both in process of verification.
 
+# Contact
+E-mail: hi@ivoting.pl
+
+Company address:\
+Smart Cables Sp. z o.o.\
+Rudzica 442, 43-394 Rudzica
+
 # License
 [AGPL-3.0 license](LICENSE)
