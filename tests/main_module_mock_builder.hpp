@@ -6,11 +6,11 @@
 class c_main_module_mock_builder {
 	public:
 		c_main_module_mock_builder();
-		
 		std::unique_ptr<c_main_module> get_result();
 		void set_blockchain_module(std::unique_ptr<c_blockchain_module> &&blockchain_module);
 		void set_p2p_module(std::unique_ptr<c_p2p_module> &&p2p_module);
 		void set_rpc_module(std::unique_ptr<c_rpc_module> &&rpc_module);
+		void set_wallet_module_interface(std::unique_ptr<c_wallet_module_interface> &&wallet_module_interface);
 	private:
 		std::unique_ptr<c_main_module> m_main_module;
 };

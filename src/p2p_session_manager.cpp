@@ -14,7 +14,7 @@ c_p2p_session_manager::c_p2p_session_manager(read_handler read_handler, new_peer
 	boost::asio::socket_base::reuse_address option(true);
 	m_acceptor.set_option(option);
 	do_accept();
-	const auto number_of_threads = 1;
+	const auto number_of_threads = 5;
 	for(int i = 0; i < number_of_threads; i++)
 		m_io_context_thread.emplace_back(std::thread([this]{m_io_context.run();}));
 }

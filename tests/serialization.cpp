@@ -22,7 +22,6 @@ c_vout serialization_utils::make_random_vout() const {
 	std::generate(vout.m_pkh.begin(), vout.m_pkh.end(), [this] {
 		return get_random_byte();
 	});
-	vout.m_amount = get_random_int();
 	return vout;
 }
 
@@ -51,7 +50,7 @@ uint8_t serialization_utils::get_random_int() const {
 
 c_transaction serialization_utils::get_random_tx(const size_t number_of_vin, const size_t number_of_vout) const {
 	c_transaction transaction;
-	transaction.m_type = t_transactiontype::add_secret_vote;
+	transaction.m_type = t_transactiontype::another_voting_protocol;
 	for(size_t i=0; i<number_of_vout; i++) {
 		auto vout = make_random_vout();
 		transaction.m_vout.emplace_back(std::move(vout));
@@ -97,6 +96,24 @@ TEST_P(serialization_utils, protobuf) {
 	EXPECT_EQ(transaction, from_protobuf_transaction);
 }
 
+TEST_P(serialization_utils, header) {
+	c_header header;
+	header.m_block_time = static_cast<uint32_t>(get_unix_time());
+	header.m_actual_hash.fill(0x76);
+	header.m_parent_hash.fill(0x76);
+	header.m_version = 0;
+	t_signature_type sign;
+	sign.fill(0x77);
+	header.m_all_signatures.emplace_back(std::move(sign));
+
+	const auto serialized_header = serialize_to_string(header);
+	const auto deserialized_header = deserialize_from_string<c_header>(serialized_header);
+	EXPECT_EQ(header.m_block_time, deserialized_header.m_block_time);
+	EXPECT_EQ(header.m_actual_hash, deserialized_header.m_actual_hash);
+	EXPECT_EQ(header.m_parent_hash, deserialized_header.m_parent_hash);
+	EXPECT_EQ(header.m_version, deserialized_header.m_version);
+}
+
 TEST_P(serialization_utils, block) {
 	const auto number_of_transactions = 10;
 	c_block block;
@@ -112,7 +129,9 @@ TEST_P(serialization_utils, block) {
 	block.m_header.m_actual_hash.fill(0x76);
 	block.m_header.m_parent_hash.fill(0x76);
 	block.m_header.m_version = 0;
-	block.m_header.m_all_signatures.emplace_back();
+	t_signature_type sign;
+	sign.fill(0x77);
+	block.m_header.m_all_signatures.emplace_back(std::move(sign));
 
 	const auto serialized_block = serialize_to_string(block);
 	const auto deserialized_block = deserialize_from_string<c_block>(serialized_block);
@@ -143,7 +162,9 @@ TEST_P(serialization_utils, block_record) {
 	block_record.m_header.m_actual_hash.fill(0x76);
 	block_record.m_header.m_parent_hash.fill(0x76);
 	block_record.m_header.m_version = 0;
-	block_record.m_header.m_all_signatures.emplace_back();
+	t_signature_type sign;
+	sign.fill(0x77);
+	block_record.m_header.m_all_signatures.emplace_back(std::move(sign));
 	block_record.m_height = std::get<0>(GetParam());
 	block_record.m_number_of_transactions = std::get<1>(GetParam());
 	block_record.m_file_contains_block = "test file name";

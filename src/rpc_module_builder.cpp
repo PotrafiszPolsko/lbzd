@@ -4,7 +4,7 @@
 #include <boost/asio/io_context.hpp>
 
 void c_rpc_module_builder::set_program_options(const boost::program_options::variables_map &vm) {
-    m_variable_map = vm;
+	m_variable_map = vm;
 }
 
 std::unique_ptr<c_rpc_server> c_rpc_module_builder::build_rpc_server(std::shared_ptr<c_rpc_exec> rpc_exec) const {

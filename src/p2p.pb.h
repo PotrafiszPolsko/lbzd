@@ -48,7 +48,7 @@ struct TableStruct_p2p_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[26]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[20]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -62,30 +62,12 @@ extern addrDefaultTypeInternal _addr_default_instance_;
 class addr_peer_details;
 struct addr_peer_detailsDefaultTypeInternal;
 extern addr_peer_detailsDefaultTypeInternal _addr_peer_details_default_instance_;
-class all_active_votings_for_voter;
-struct all_active_votings_for_voterDefaultTypeInternal;
-extern all_active_votings_for_voterDefaultTypeInternal _all_active_votings_for_voter_default_instance_;
-class all_finished_votings_for_voter;
-struct all_finished_votings_for_voterDefaultTypeInternal;
-extern all_finished_votings_for_voterDefaultTypeInternal _all_finished_votings_for_voter_default_instance_;
-class amount_on_pkh;
-struct amount_on_pkhDefaultTypeInternal;
-extern amount_on_pkhDefaultTypeInternal _amount_on_pkh_default_instance_;
 class authorization_txid;
 struct authorization_txidDefaultTypeInternal;
 extern authorization_txidDefaultTypeInternal _authorization_txid_default_instance_;
 class block;
 struct blockDefaultTypeInternal;
 extern blockDefaultTypeInternal _block_default_instance_;
-class get_all_active_votings_for_voter;
-struct get_all_active_votings_for_voterDefaultTypeInternal;
-extern get_all_active_votings_for_voterDefaultTypeInternal _get_all_active_votings_for_voter_default_instance_;
-class get_all_finished_votings_for_voter;
-struct get_all_finished_votings_for_voterDefaultTypeInternal;
-extern get_all_finished_votings_for_voterDefaultTypeInternal _get_all_finished_votings_for_voter_default_instance_;
-class get_amount_on_pkh;
-struct get_amount_on_pkhDefaultTypeInternal;
-extern get_amount_on_pkhDefaultTypeInternal _get_amount_on_pkh_default_instance_;
 class get_authorization_txid;
 struct get_authorization_txidDefaultTypeInternal;
 extern get_authorization_txidDefaultTypeInternal _get_authorization_txid_default_instance_;
@@ -138,14 +120,8 @@ extern transaction_voutDefaultTypeInternal _transaction_vout_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::proto::addr* Arena::CreateMaybeMessage<::proto::addr>(Arena*);
 template<> ::proto::addr_peer_details* Arena::CreateMaybeMessage<::proto::addr_peer_details>(Arena*);
-template<> ::proto::all_active_votings_for_voter* Arena::CreateMaybeMessage<::proto::all_active_votings_for_voter>(Arena*);
-template<> ::proto::all_finished_votings_for_voter* Arena::CreateMaybeMessage<::proto::all_finished_votings_for_voter>(Arena*);
-template<> ::proto::amount_on_pkh* Arena::CreateMaybeMessage<::proto::amount_on_pkh>(Arena*);
 template<> ::proto::authorization_txid* Arena::CreateMaybeMessage<::proto::authorization_txid>(Arena*);
 template<> ::proto::block* Arena::CreateMaybeMessage<::proto::block>(Arena*);
-template<> ::proto::get_all_active_votings_for_voter* Arena::CreateMaybeMessage<::proto::get_all_active_votings_for_voter>(Arena*);
-template<> ::proto::get_all_finished_votings_for_voter* Arena::CreateMaybeMessage<::proto::get_all_finished_votings_for_voter>(Arena*);
-template<> ::proto::get_amount_on_pkh* Arena::CreateMaybeMessage<::proto::get_amount_on_pkh>(Arena*);
 template<> ::proto::get_authorization_txid* Arena::CreateMaybeMessage<::proto::get_authorization_txid>(Arena*);
 template<> ::proto::get_transaction* Arena::CreateMaybeMessage<::proto::get_transaction>(Arena*);
 template<> ::proto::getaddr* Arena::CreateMaybeMessage<::proto::getaddr>(Arena*);
@@ -166,23 +142,17 @@ PROTOBUF_NAMESPACE_CLOSE
 namespace proto {
 
 enum transaction_transactiontype : int {
-  transaction_transactiontype_add_secret_vote = 0,
-  transaction_transactiontype_add_open_vote = 1,
-  transaction_transactiontype_generate = 2,
-  transaction_transactiontype_authorize_miner = 3,
-  transaction_transactiontype_authorize_organizer = 4,
-  transaction_transactiontype_authorize_issuer = 5,
-  transaction_transactiontype_authorize_voter = 6,
-  transaction_transactiontype_create_voting = 7,
-  transaction_transactiontype_coin_join = 8,
-  transaction_transactiontype_another_voting_protocol = 9,
-  transaction_transactiontype_hash_personal_data = 10,
+  transaction_transactiontype_placeholder = 0,
+  transaction_transactiontype_generate = 1,
+  transaction_transactiontype_authorize_miner = 2,
+  transaction_transactiontype_authorize_organizer = 3,
+  transaction_transactiontype_another_voting_protocol = 4,
   transaction_transactiontype_transaction_transactiontype_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   transaction_transactiontype_transaction_transactiontype_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool transaction_transactiontype_IsValid(int value);
-constexpr transaction_transactiontype transaction_transactiontype_transactiontype_MIN = transaction_transactiontype_add_secret_vote;
-constexpr transaction_transactiontype transaction_transactiontype_transactiontype_MAX = transaction_transactiontype_hash_personal_data;
+constexpr transaction_transactiontype transaction_transactiontype_transactiontype_MIN = transaction_transactiontype_placeholder;
+constexpr transaction_transactiontype transaction_transactiontype_transactiontype_MAX = transaction_transactiontype_another_voting_protocol;
 constexpr int transaction_transactiontype_transactiontype_ARRAYSIZE = transaction_transactiontype_transactiontype_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* transaction_transactiontype_descriptor();
@@ -512,7 +482,6 @@ class transaction_vout final :
 
   enum : int {
     kMPkhFieldNumber = 1,
-    kMAmountFieldNumber = 2,
   };
   // bytes m_pkh = 1;
   void clear_m_pkh();
@@ -528,15 +497,6 @@ class transaction_vout final :
   std::string* _internal_mutable_m_pkh();
   public:
 
-  // fixed32 m_amount = 2;
-  void clear_m_amount();
-  uint32_t m_amount() const;
-  void set_m_amount(uint32_t value);
-  private:
-  uint32_t _internal_m_amount() const;
-  void _internal_set_m_amount(uint32_t value);
-  public:
-
   // @@protoc_insertion_point(class_scope:proto.transaction.vout)
  private:
   class _Internal;
@@ -545,7 +505,6 @@ class transaction_vout final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr m_pkh_;
-  uint32_t m_amount_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_p2p_2eproto;
 };
@@ -674,28 +633,16 @@ class transaction final :
   typedef transaction_vout vout;
 
   typedef transaction_transactiontype transactiontype;
-  static constexpr transactiontype add_secret_vote =
-    transaction_transactiontype_add_secret_vote;
-  static constexpr transactiontype add_open_vote =
-    transaction_transactiontype_add_open_vote;
+  static constexpr transactiontype placeholder =
+    transaction_transactiontype_placeholder;
   static constexpr transactiontype generate =
     transaction_transactiontype_generate;
   static constexpr transactiontype authorize_miner =
     transaction_transactiontype_authorize_miner;
   static constexpr transactiontype authorize_organizer =
     transaction_transactiontype_authorize_organizer;
-  static constexpr transactiontype authorize_issuer =
-    transaction_transactiontype_authorize_issuer;
-  static constexpr transactiontype authorize_voter =
-    transaction_transactiontype_authorize_voter;
-  static constexpr transactiontype create_voting =
-    transaction_transactiontype_create_voting;
-  static constexpr transactiontype coin_join =
-    transaction_transactiontype_coin_join;
   static constexpr transactiontype another_voting_protocol =
     transaction_transactiontype_another_voting_protocol;
-  static constexpr transactiontype hash_personal_data =
-    transaction_transactiontype_hash_personal_data;
   static inline bool transactiontype_IsValid(int value) {
     return transaction_transactiontype_IsValid(value);
   }
@@ -1711,167 +1658,6 @@ class addr final :
 };
 // -------------------------------------------------------------------
 
-class all_active_votings_for_voter final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:proto.all_active_votings_for_voter) */ {
- public:
-  inline all_active_votings_for_voter() : all_active_votings_for_voter(nullptr) {}
-  ~all_active_votings_for_voter() override;
-  explicit constexpr all_active_votings_for_voter(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  all_active_votings_for_voter(const all_active_votings_for_voter& from);
-  all_active_votings_for_voter(all_active_votings_for_voter&& from) noexcept
-    : all_active_votings_for_voter() {
-    *this = ::std::move(from);
-  }
-
-  inline all_active_votings_for_voter& operator=(const all_active_votings_for_voter& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline all_active_votings_for_voter& operator=(all_active_votings_for_voter&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const all_active_votings_for_voter& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const all_active_votings_for_voter* internal_default_instance() {
-    return reinterpret_cast<const all_active_votings_for_voter*>(
-               &_all_active_votings_for_voter_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    8;
-
-  friend void swap(all_active_votings_for_voter& a, all_active_votings_for_voter& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(all_active_votings_for_voter* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(all_active_votings_for_voter* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  all_active_votings_for_voter* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<all_active_votings_for_voter>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const all_active_votings_for_voter& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const all_active_votings_for_voter& from);
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(all_active_votings_for_voter* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "proto.all_active_votings_for_voter";
-  }
-  protected:
-  explicit all_active_votings_for_voter(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  private:
-  static void ArenaDtor(void* object);
-  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kMVotingIdsFieldNumber = 1,
-  };
-  // repeated bytes m_voting_ids = 1;
-  int m_voting_ids_size() const;
-  private:
-  int _internal_m_voting_ids_size() const;
-  public:
-  void clear_m_voting_ids();
-  const std::string& m_voting_ids(int index) const;
-  std::string* mutable_m_voting_ids(int index);
-  void set_m_voting_ids(int index, const std::string& value);
-  void set_m_voting_ids(int index, std::string&& value);
-  void set_m_voting_ids(int index, const char* value);
-  void set_m_voting_ids(int index, const void* value, size_t size);
-  std::string* add_m_voting_ids();
-  void add_m_voting_ids(const std::string& value);
-  void add_m_voting_ids(std::string&& value);
-  void add_m_voting_ids(const char* value);
-  void add_m_voting_ids(const void* value, size_t size);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& m_voting_ids() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_m_voting_ids();
-  private:
-  const std::string& _internal_m_voting_ids(int index) const;
-  std::string* _internal_add_m_voting_ids();
-  public:
-
-  // @@protoc_insertion_point(class_scope:proto.all_active_votings_for_voter)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> m_voting_ids_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  friend struct ::TableStruct_p2p_2eproto;
-};
-// -------------------------------------------------------------------
-
 class getheaders final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:proto.getheaders) */ {
  public:
@@ -1920,7 +1706,7 @@ class getheaders final :
                &_getheaders_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    8;
 
   friend void swap(getheaders& a, getheaders& b) {
     a.Swap(&b);
@@ -2098,7 +1884,7 @@ class gettxs final :
                &_gettxs_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    9;
 
   friend void swap(gettxs& a, gettxs& b) {
     a.Swap(&b);
@@ -2249,7 +2035,7 @@ class getblock final :
                &_getblock_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    10;
 
   friend void swap(getblock& a, getblock& b) {
     a.Swap(&b);
@@ -2399,7 +2185,7 @@ class getmempooltransactions final :
                &_getmempooltransactions_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    11;
 
   friend void swap(getmempooltransactions& a, getmempooltransactions& b) {
     a.Swap(&b);
@@ -2517,7 +2303,7 @@ class getaddr final :
                &_getaddr_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    12;
 
   friend void swap(getaddr& a, getaddr& b) {
     a.Swap(&b);
@@ -2636,7 +2422,7 @@ class getmerklebranch final :
                &_getmerklebranch_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    13;
 
   friend void swap(getmerklebranch& a, getmerklebranch& b) {
     a.Swap(&b);
@@ -2787,7 +2573,7 @@ class merkle_branch final :
                &_merkle_branch_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    14;
 
   friend void swap(merkle_branch& a, merkle_branch& b) {
     a.Swap(&b);
@@ -2888,11 +2674,7 @@ class merkle_branch final :
   std::string* _internal_add_m_merkle_branch();
   public:
 
-  // optional bytes m_block_id = 2;
-  bool has_m_block_id() const;
-  private:
-  bool _internal_has_m_block_id() const;
-  public:
+  // bytes m_block_id = 2;
   void clear_m_block_id();
   const std::string& m_block_id() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -2913,479 +2695,9 @@ class merkle_branch final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> m_merkle_branch_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr m_block_id_;
-  friend struct ::TableStruct_p2p_2eproto;
-};
-// -------------------------------------------------------------------
-
-class get_all_active_votings_for_voter final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:proto.get_all_active_votings_for_voter) */ {
- public:
-  inline get_all_active_votings_for_voter() : get_all_active_votings_for_voter(nullptr) {}
-  ~get_all_active_votings_for_voter() override;
-  explicit constexpr get_all_active_votings_for_voter(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  get_all_active_votings_for_voter(const get_all_active_votings_for_voter& from);
-  get_all_active_votings_for_voter(get_all_active_votings_for_voter&& from) noexcept
-    : get_all_active_votings_for_voter() {
-    *this = ::std::move(from);
-  }
-
-  inline get_all_active_votings_for_voter& operator=(const get_all_active_votings_for_voter& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline get_all_active_votings_for_voter& operator=(get_all_active_votings_for_voter&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const get_all_active_votings_for_voter& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const get_all_active_votings_for_voter* internal_default_instance() {
-    return reinterpret_cast<const get_all_active_votings_for_voter*>(
-               &_get_all_active_votings_for_voter_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    16;
-
-  friend void swap(get_all_active_votings_for_voter& a, get_all_active_votings_for_voter& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(get_all_active_votings_for_voter* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(get_all_active_votings_for_voter* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  get_all_active_votings_for_voter* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<get_all_active_votings_for_voter>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const get_all_active_votings_for_voter& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const get_all_active_votings_for_voter& from);
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(get_all_active_votings_for_voter* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "proto.get_all_active_votings_for_voter";
-  }
-  protected:
-  explicit get_all_active_votings_for_voter(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  private:
-  static void ArenaDtor(void* object);
-  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kMVoterPkFieldNumber = 1,
-  };
-  // bytes m_voter_pk = 1;
-  void clear_m_voter_pk();
-  const std::string& m_voter_pk() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_m_voter_pk(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_m_voter_pk();
-  PROTOBUF_NODISCARD std::string* release_m_voter_pk();
-  void set_allocated_m_voter_pk(std::string* m_voter_pk);
-  private:
-  const std::string& _internal_m_voter_pk() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_m_voter_pk(const std::string& value);
-  std::string* _internal_mutable_m_voter_pk();
-  public:
-
-  // @@protoc_insertion_point(class_scope:proto.get_all_active_votings_for_voter)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr m_voter_pk_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  friend struct ::TableStruct_p2p_2eproto;
-};
-// -------------------------------------------------------------------
-
-class get_amount_on_pkh final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:proto.get_amount_on_pkh) */ {
- public:
-  inline get_amount_on_pkh() : get_amount_on_pkh(nullptr) {}
-  ~get_amount_on_pkh() override;
-  explicit constexpr get_amount_on_pkh(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  get_amount_on_pkh(const get_amount_on_pkh& from);
-  get_amount_on_pkh(get_amount_on_pkh&& from) noexcept
-    : get_amount_on_pkh() {
-    *this = ::std::move(from);
-  }
-
-  inline get_amount_on_pkh& operator=(const get_amount_on_pkh& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline get_amount_on_pkh& operator=(get_amount_on_pkh&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const get_amount_on_pkh& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const get_amount_on_pkh* internal_default_instance() {
-    return reinterpret_cast<const get_amount_on_pkh*>(
-               &_get_amount_on_pkh_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    17;
-
-  friend void swap(get_amount_on_pkh& a, get_amount_on_pkh& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(get_amount_on_pkh* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(get_amount_on_pkh* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  get_amount_on_pkh* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<get_amount_on_pkh>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const get_amount_on_pkh& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const get_amount_on_pkh& from);
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(get_amount_on_pkh* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "proto.get_amount_on_pkh";
-  }
-  protected:
-  explicit get_amount_on_pkh(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  private:
-  static void ArenaDtor(void* object);
-  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kMPkhFieldNumber = 1,
-  };
-  // bytes m_pkh = 1;
-  void clear_m_pkh();
-  const std::string& m_pkh() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_m_pkh(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_m_pkh();
-  PROTOBUF_NODISCARD std::string* release_m_pkh();
-  void set_allocated_m_pkh(std::string* m_pkh);
-  private:
-  const std::string& _internal_m_pkh() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_m_pkh(const std::string& value);
-  std::string* _internal_mutable_m_pkh();
-  public:
-
-  // @@protoc_insertion_point(class_scope:proto.get_amount_on_pkh)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr m_pkh_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  friend struct ::TableStruct_p2p_2eproto;
-};
-// -------------------------------------------------------------------
-
-class amount_on_pkh final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:proto.amount_on_pkh) */ {
- public:
-  inline amount_on_pkh() : amount_on_pkh(nullptr) {}
-  ~amount_on_pkh() override;
-  explicit constexpr amount_on_pkh(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  amount_on_pkh(const amount_on_pkh& from);
-  amount_on_pkh(amount_on_pkh&& from) noexcept
-    : amount_on_pkh() {
-    *this = ::std::move(from);
-  }
-
-  inline amount_on_pkh& operator=(const amount_on_pkh& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline amount_on_pkh& operator=(amount_on_pkh&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const amount_on_pkh& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const amount_on_pkh* internal_default_instance() {
-    return reinterpret_cast<const amount_on_pkh*>(
-               &_amount_on_pkh_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    18;
-
-  friend void swap(amount_on_pkh& a, amount_on_pkh& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(amount_on_pkh* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(amount_on_pkh* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  amount_on_pkh* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<amount_on_pkh>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const amount_on_pkh& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const amount_on_pkh& from);
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(amount_on_pkh* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "proto.amount_on_pkh";
-  }
-  protected:
-  explicit amount_on_pkh(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  private:
-  static void ArenaDtor(void* object);
-  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kMTxidFieldNumber = 2,
-    kMAmountFieldNumber = 1,
-  };
-  // optional bytes m_txid = 2;
-  bool has_m_txid() const;
-  private:
-  bool _internal_has_m_txid() const;
-  public:
-  void clear_m_txid();
-  const std::string& m_txid() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_m_txid(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_m_txid();
-  PROTOBUF_NODISCARD std::string* release_m_txid();
-  void set_allocated_m_txid(std::string* m_txid);
-  private:
-  const std::string& _internal_m_txid() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_m_txid(const std::string& value);
-  std::string* _internal_mutable_m_txid();
-  public:
-
-  // uint32 m_amount = 1;
-  void clear_m_amount();
-  uint32_t m_amount() const;
-  void set_m_amount(uint32_t value);
-  private:
-  uint32_t _internal_m_amount() const;
-  void _internal_set_m_amount(uint32_t value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:proto.amount_on_pkh)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr m_txid_;
-  uint32_t m_amount_;
   friend struct ::TableStruct_p2p_2eproto;
 };
 // -------------------------------------------------------------------
@@ -3438,7 +2750,7 @@ class get_transaction final :
                &_get_transaction_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    15;
 
   friend void swap(get_transaction& a, get_transaction& b) {
     a.Swap(&b);
@@ -3589,7 +2901,7 @@ class get_authorization_txid final :
                &_get_authorization_txid_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    16;
 
   friend void swap(get_authorization_txid& a, get_authorization_txid& b) {
     a.Swap(&b);
@@ -3756,7 +3068,7 @@ class authorization_txid final :
                &_authorization_txid_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    17;
 
   friend void swap(authorization_txid& a, authorization_txid& b) {
     a.Swap(&b);
@@ -3859,318 +3171,6 @@ class authorization_txid final :
 };
 // -------------------------------------------------------------------
 
-class get_all_finished_votings_for_voter final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:proto.get_all_finished_votings_for_voter) */ {
- public:
-  inline get_all_finished_votings_for_voter() : get_all_finished_votings_for_voter(nullptr) {}
-  ~get_all_finished_votings_for_voter() override;
-  explicit constexpr get_all_finished_votings_for_voter(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  get_all_finished_votings_for_voter(const get_all_finished_votings_for_voter& from);
-  get_all_finished_votings_for_voter(get_all_finished_votings_for_voter&& from) noexcept
-    : get_all_finished_votings_for_voter() {
-    *this = ::std::move(from);
-  }
-
-  inline get_all_finished_votings_for_voter& operator=(const get_all_finished_votings_for_voter& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline get_all_finished_votings_for_voter& operator=(get_all_finished_votings_for_voter&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const get_all_finished_votings_for_voter& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const get_all_finished_votings_for_voter* internal_default_instance() {
-    return reinterpret_cast<const get_all_finished_votings_for_voter*>(
-               &_get_all_finished_votings_for_voter_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    22;
-
-  friend void swap(get_all_finished_votings_for_voter& a, get_all_finished_votings_for_voter& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(get_all_finished_votings_for_voter* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(get_all_finished_votings_for_voter* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  get_all_finished_votings_for_voter* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<get_all_finished_votings_for_voter>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const get_all_finished_votings_for_voter& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const get_all_finished_votings_for_voter& from);
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(get_all_finished_votings_for_voter* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "proto.get_all_finished_votings_for_voter";
-  }
-  protected:
-  explicit get_all_finished_votings_for_voter(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  private:
-  static void ArenaDtor(void* object);
-  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kMVoterPkFieldNumber = 1,
-  };
-  // bytes m_voter_pk = 1;
-  void clear_m_voter_pk();
-  const std::string& m_voter_pk() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_m_voter_pk(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_m_voter_pk();
-  PROTOBUF_NODISCARD std::string* release_m_voter_pk();
-  void set_allocated_m_voter_pk(std::string* m_voter_pk);
-  private:
-  const std::string& _internal_m_voter_pk() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_m_voter_pk(const std::string& value);
-  std::string* _internal_mutable_m_voter_pk();
-  public:
-
-  // @@protoc_insertion_point(class_scope:proto.get_all_finished_votings_for_voter)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr m_voter_pk_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  friend struct ::TableStruct_p2p_2eproto;
-};
-// -------------------------------------------------------------------
-
-class all_finished_votings_for_voter final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:proto.all_finished_votings_for_voter) */ {
- public:
-  inline all_finished_votings_for_voter() : all_finished_votings_for_voter(nullptr) {}
-  ~all_finished_votings_for_voter() override;
-  explicit constexpr all_finished_votings_for_voter(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  all_finished_votings_for_voter(const all_finished_votings_for_voter& from);
-  all_finished_votings_for_voter(all_finished_votings_for_voter&& from) noexcept
-    : all_finished_votings_for_voter() {
-    *this = ::std::move(from);
-  }
-
-  inline all_finished_votings_for_voter& operator=(const all_finished_votings_for_voter& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline all_finished_votings_for_voter& operator=(all_finished_votings_for_voter&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const all_finished_votings_for_voter& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const all_finished_votings_for_voter* internal_default_instance() {
-    return reinterpret_cast<const all_finished_votings_for_voter*>(
-               &_all_finished_votings_for_voter_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    23;
-
-  friend void swap(all_finished_votings_for_voter& a, all_finished_votings_for_voter& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(all_finished_votings_for_voter* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(all_finished_votings_for_voter* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  all_finished_votings_for_voter* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<all_finished_votings_for_voter>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const all_finished_votings_for_voter& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const all_finished_votings_for_voter& from);
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(all_finished_votings_for_voter* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "proto.all_finished_votings_for_voter";
-  }
-  protected:
-  explicit all_finished_votings_for_voter(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  private:
-  static void ArenaDtor(void* object);
-  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kMVotingIdsFieldNumber = 1,
-  };
-  // repeated bytes m_voting_ids = 1;
-  int m_voting_ids_size() const;
-  private:
-  int _internal_m_voting_ids_size() const;
-  public:
-  void clear_m_voting_ids();
-  const std::string& m_voting_ids(int index) const;
-  std::string* mutable_m_voting_ids(int index);
-  void set_m_voting_ids(int index, const std::string& value);
-  void set_m_voting_ids(int index, std::string&& value);
-  void set_m_voting_ids(int index, const char* value);
-  void set_m_voting_ids(int index, const void* value, size_t size);
-  std::string* add_m_voting_ids();
-  void add_m_voting_ids(const std::string& value);
-  void add_m_voting_ids(std::string&& value);
-  void add_m_voting_ids(const char* value);
-  void add_m_voting_ids(const void* value, size_t size);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& m_voting_ids() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_m_voting_ids();
-  private:
-  const std::string& _internal_m_voting_ids(int index) const;
-  std::string* _internal_add_m_voting_ids();
-  public:
-
-  // @@protoc_insertion_point(class_scope:proto.all_finished_votings_for_voter)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> m_voting_ids_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  friend struct ::TableStruct_p2p_2eproto;
-};
-// -------------------------------------------------------------------
-
 class request final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:proto.request) */ {
  public:
@@ -4221,11 +3221,8 @@ class request final :
     kMGetmempooltransactions = 4,
     kMGetaddr = 5,
     kMGetmerklebranch = 6,
-    kMGetAllActiveVotingsForVoter = 8,
-    kMGetAmountOnPkh = 9,
     kMGetTransaction = 10,
     kMGetAuthorizationTxid = 11,
-    kMGetAllFinishedVotingsForVoter = 12,
     REQUEST_TYPE_NOT_SET = 0,
   };
 
@@ -4234,7 +3231,7 @@ class request final :
                &_request_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    18;
 
   friend void swap(request& a, request& b) {
     a.Swap(&b);
@@ -4314,11 +3311,8 @@ class request final :
     kMGetmempooltransactionsFieldNumber = 4,
     kMGetaddrFieldNumber = 5,
     kMGetmerklebranchFieldNumber = 6,
-    kMGetAllActiveVotingsForVoterFieldNumber = 8,
-    kMGetAmountOnPkhFieldNumber = 9,
     kMGetTransactionFieldNumber = 10,
     kMGetAuthorizationTxidFieldNumber = 11,
-    kMGetAllFinishedVotingsForVoterFieldNumber = 12,
   };
   // .proto.getheaders m_getheaders = 1;
   bool has_m_getheaders() const;
@@ -4428,42 +3422,6 @@ class request final :
       ::proto::getmerklebranch* m_getmerklebranch);
   ::proto::getmerklebranch* unsafe_arena_release_m_getmerklebranch();
 
-  // .proto.get_all_active_votings_for_voter m_get_all_active_votings_for_voter = 8;
-  bool has_m_get_all_active_votings_for_voter() const;
-  private:
-  bool _internal_has_m_get_all_active_votings_for_voter() const;
-  public:
-  void clear_m_get_all_active_votings_for_voter();
-  const ::proto::get_all_active_votings_for_voter& m_get_all_active_votings_for_voter() const;
-  PROTOBUF_NODISCARD ::proto::get_all_active_votings_for_voter* release_m_get_all_active_votings_for_voter();
-  ::proto::get_all_active_votings_for_voter* mutable_m_get_all_active_votings_for_voter();
-  void set_allocated_m_get_all_active_votings_for_voter(::proto::get_all_active_votings_for_voter* m_get_all_active_votings_for_voter);
-  private:
-  const ::proto::get_all_active_votings_for_voter& _internal_m_get_all_active_votings_for_voter() const;
-  ::proto::get_all_active_votings_for_voter* _internal_mutable_m_get_all_active_votings_for_voter();
-  public:
-  void unsafe_arena_set_allocated_m_get_all_active_votings_for_voter(
-      ::proto::get_all_active_votings_for_voter* m_get_all_active_votings_for_voter);
-  ::proto::get_all_active_votings_for_voter* unsafe_arena_release_m_get_all_active_votings_for_voter();
-
-  // .proto.get_amount_on_pkh m_get_amount_on_pkh = 9;
-  bool has_m_get_amount_on_pkh() const;
-  private:
-  bool _internal_has_m_get_amount_on_pkh() const;
-  public:
-  void clear_m_get_amount_on_pkh();
-  const ::proto::get_amount_on_pkh& m_get_amount_on_pkh() const;
-  PROTOBUF_NODISCARD ::proto::get_amount_on_pkh* release_m_get_amount_on_pkh();
-  ::proto::get_amount_on_pkh* mutable_m_get_amount_on_pkh();
-  void set_allocated_m_get_amount_on_pkh(::proto::get_amount_on_pkh* m_get_amount_on_pkh);
-  private:
-  const ::proto::get_amount_on_pkh& _internal_m_get_amount_on_pkh() const;
-  ::proto::get_amount_on_pkh* _internal_mutable_m_get_amount_on_pkh();
-  public:
-  void unsafe_arena_set_allocated_m_get_amount_on_pkh(
-      ::proto::get_amount_on_pkh* m_get_amount_on_pkh);
-  ::proto::get_amount_on_pkh* unsafe_arena_release_m_get_amount_on_pkh();
-
   // .proto.get_transaction m_get_transaction = 10;
   bool has_m_get_transaction() const;
   private:
@@ -4500,24 +3458,6 @@ class request final :
       ::proto::get_authorization_txid* m_get_authorization_txid);
   ::proto::get_authorization_txid* unsafe_arena_release_m_get_authorization_txid();
 
-  // .proto.get_all_finished_votings_for_voter m_get_all_finished_votings_for_voter = 12;
-  bool has_m_get_all_finished_votings_for_voter() const;
-  private:
-  bool _internal_has_m_get_all_finished_votings_for_voter() const;
-  public:
-  void clear_m_get_all_finished_votings_for_voter();
-  const ::proto::get_all_finished_votings_for_voter& m_get_all_finished_votings_for_voter() const;
-  PROTOBUF_NODISCARD ::proto::get_all_finished_votings_for_voter* release_m_get_all_finished_votings_for_voter();
-  ::proto::get_all_finished_votings_for_voter* mutable_m_get_all_finished_votings_for_voter();
-  void set_allocated_m_get_all_finished_votings_for_voter(::proto::get_all_finished_votings_for_voter* m_get_all_finished_votings_for_voter);
-  private:
-  const ::proto::get_all_finished_votings_for_voter& _internal_m_get_all_finished_votings_for_voter() const;
-  ::proto::get_all_finished_votings_for_voter* _internal_mutable_m_get_all_finished_votings_for_voter();
-  public:
-  void unsafe_arena_set_allocated_m_get_all_finished_votings_for_voter(
-      ::proto::get_all_finished_votings_for_voter* m_get_all_finished_votings_for_voter);
-  ::proto::get_all_finished_votings_for_voter* unsafe_arena_release_m_get_all_finished_votings_for_voter();
-
   void clear_request_type();
   RequestTypeCase request_type_case() const;
   // @@protoc_insertion_point(class_scope:proto.request)
@@ -4529,11 +3469,8 @@ class request final :
   void set_has_m_getmempooltransactions();
   void set_has_m_getaddr();
   void set_has_m_getmerklebranch();
-  void set_has_m_get_all_active_votings_for_voter();
-  void set_has_m_get_amount_on_pkh();
   void set_has_m_get_transaction();
   void set_has_m_get_authorization_txid();
-  void set_has_m_get_all_finished_votings_for_voter();
 
   inline bool has_request_type() const;
   inline void clear_has_request_type();
@@ -4550,11 +3487,8 @@ class request final :
     ::proto::getmempooltransactions* m_getmempooltransactions_;
     ::proto::getaddr* m_getaddr_;
     ::proto::getmerklebranch* m_getmerklebranch_;
-    ::proto::get_all_active_votings_for_voter* m_get_all_active_votings_for_voter_;
-    ::proto::get_amount_on_pkh* m_get_amount_on_pkh_;
     ::proto::get_transaction* m_get_transaction_;
     ::proto::get_authorization_txid* m_get_authorization_txid_;
-    ::proto::get_all_finished_votings_for_voter* m_get_all_finished_votings_for_voter_;
   } request_type_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   uint32_t _oneof_case_[1];
@@ -4613,10 +3547,7 @@ class proto_massage final :
     kMTransaction = 4,
     kMAddr = 5,
     kMMerkleBranch = 7,
-    kMAllActiveVotingsForVoter = 8,
-    kMAmountOnPkh = 9,
     kMAuthorizationTxid = 10,
-    kMAllFinishedVotingsForVoter = 11,
     MESSAGE_TYPE_NOT_SET = 0,
   };
 
@@ -4625,7 +3556,7 @@ class proto_massage final :
                &_proto_massage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    25;
+    19;
 
   friend void swap(proto_massage& a, proto_massage& b) {
     a.Swap(&b);
@@ -4705,10 +3636,7 @@ class proto_massage final :
     kMTransactionFieldNumber = 4,
     kMAddrFieldNumber = 5,
     kMMerkleBranchFieldNumber = 7,
-    kMAllActiveVotingsForVoterFieldNumber = 8,
-    kMAmountOnPkhFieldNumber = 9,
     kMAuthorizationTxidFieldNumber = 10,
-    kMAllFinishedVotingsForVoterFieldNumber = 11,
   };
   // .proto.request m_request = 1;
   bool has_m_request() const;
@@ -4818,42 +3746,6 @@ class proto_massage final :
       ::proto::merkle_branch* m_merkle_branch);
   ::proto::merkle_branch* unsafe_arena_release_m_merkle_branch();
 
-  // .proto.all_active_votings_for_voter m_all_active_votings_for_voter = 8;
-  bool has_m_all_active_votings_for_voter() const;
-  private:
-  bool _internal_has_m_all_active_votings_for_voter() const;
-  public:
-  void clear_m_all_active_votings_for_voter();
-  const ::proto::all_active_votings_for_voter& m_all_active_votings_for_voter() const;
-  PROTOBUF_NODISCARD ::proto::all_active_votings_for_voter* release_m_all_active_votings_for_voter();
-  ::proto::all_active_votings_for_voter* mutable_m_all_active_votings_for_voter();
-  void set_allocated_m_all_active_votings_for_voter(::proto::all_active_votings_for_voter* m_all_active_votings_for_voter);
-  private:
-  const ::proto::all_active_votings_for_voter& _internal_m_all_active_votings_for_voter() const;
-  ::proto::all_active_votings_for_voter* _internal_mutable_m_all_active_votings_for_voter();
-  public:
-  void unsafe_arena_set_allocated_m_all_active_votings_for_voter(
-      ::proto::all_active_votings_for_voter* m_all_active_votings_for_voter);
-  ::proto::all_active_votings_for_voter* unsafe_arena_release_m_all_active_votings_for_voter();
-
-  // .proto.amount_on_pkh m_amount_on_pkh = 9;
-  bool has_m_amount_on_pkh() const;
-  private:
-  bool _internal_has_m_amount_on_pkh() const;
-  public:
-  void clear_m_amount_on_pkh();
-  const ::proto::amount_on_pkh& m_amount_on_pkh() const;
-  PROTOBUF_NODISCARD ::proto::amount_on_pkh* release_m_amount_on_pkh();
-  ::proto::amount_on_pkh* mutable_m_amount_on_pkh();
-  void set_allocated_m_amount_on_pkh(::proto::amount_on_pkh* m_amount_on_pkh);
-  private:
-  const ::proto::amount_on_pkh& _internal_m_amount_on_pkh() const;
-  ::proto::amount_on_pkh* _internal_mutable_m_amount_on_pkh();
-  public:
-  void unsafe_arena_set_allocated_m_amount_on_pkh(
-      ::proto::amount_on_pkh* m_amount_on_pkh);
-  ::proto::amount_on_pkh* unsafe_arena_release_m_amount_on_pkh();
-
   // .proto.authorization_txid m_authorization_txid = 10;
   bool has_m_authorization_txid() const;
   private:
@@ -4872,24 +3764,6 @@ class proto_massage final :
       ::proto::authorization_txid* m_authorization_txid);
   ::proto::authorization_txid* unsafe_arena_release_m_authorization_txid();
 
-  // .proto.all_finished_votings_for_voter m_all_finished_votings_for_voter = 11;
-  bool has_m_all_finished_votings_for_voter() const;
-  private:
-  bool _internal_has_m_all_finished_votings_for_voter() const;
-  public:
-  void clear_m_all_finished_votings_for_voter();
-  const ::proto::all_finished_votings_for_voter& m_all_finished_votings_for_voter() const;
-  PROTOBUF_NODISCARD ::proto::all_finished_votings_for_voter* release_m_all_finished_votings_for_voter();
-  ::proto::all_finished_votings_for_voter* mutable_m_all_finished_votings_for_voter();
-  void set_allocated_m_all_finished_votings_for_voter(::proto::all_finished_votings_for_voter* m_all_finished_votings_for_voter);
-  private:
-  const ::proto::all_finished_votings_for_voter& _internal_m_all_finished_votings_for_voter() const;
-  ::proto::all_finished_votings_for_voter* _internal_mutable_m_all_finished_votings_for_voter();
-  public:
-  void unsafe_arena_set_allocated_m_all_finished_votings_for_voter(
-      ::proto::all_finished_votings_for_voter* m_all_finished_votings_for_voter);
-  ::proto::all_finished_votings_for_voter* unsafe_arena_release_m_all_finished_votings_for_voter();
-
   void clear_message_type();
   MessageTypeCase message_type_case() const;
   // @@protoc_insertion_point(class_scope:proto.proto_massage)
@@ -4901,10 +3775,7 @@ class proto_massage final :
   void set_has_m_transaction();
   void set_has_m_addr();
   void set_has_m_merkle_branch();
-  void set_has_m_all_active_votings_for_voter();
-  void set_has_m_amount_on_pkh();
   void set_has_m_authorization_txid();
-  void set_has_m_all_finished_votings_for_voter();
 
   inline bool has_message_type() const;
   inline void clear_has_message_type();
@@ -4921,10 +3792,7 @@ class proto_massage final :
     ::proto::transaction* m_transaction_;
     ::proto::addr* m_addr_;
     ::proto::merkle_branch* m_merkle_branch_;
-    ::proto::all_active_votings_for_voter* m_all_active_votings_for_voter_;
-    ::proto::amount_on_pkh* m_amount_on_pkh_;
     ::proto::authorization_txid* m_authorization_txid_;
-    ::proto::all_finished_votings_for_voter* m_all_finished_votings_for_voter_;
   } message_type_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   uint32_t _oneof_case_[1];
@@ -5166,26 +4034,6 @@ inline void transaction_vout::set_allocated_m_pkh(std::string* m_pkh) {
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:proto.transaction.vout.m_pkh)
-}
-
-// fixed32 m_amount = 2;
-inline void transaction_vout::clear_m_amount() {
-  m_amount_ = 0u;
-}
-inline uint32_t transaction_vout::_internal_m_amount() const {
-  return m_amount_;
-}
-inline uint32_t transaction_vout::m_amount() const {
-  // @@protoc_insertion_point(field_get:proto.transaction.vout.m_amount)
-  return _internal_m_amount();
-}
-inline void transaction_vout::_internal_set_m_amount(uint32_t value) {
-  
-  m_amount_ = value;
-}
-inline void transaction_vout::set_m_amount(uint32_t value) {
-  _internal_set_m_amount(value);
-  // @@protoc_insertion_point(field_set:proto.transaction.vout.m_amount)
 }
 
 // -------------------------------------------------------------------
@@ -5985,85 +4833,6 @@ addr::m_peer_list() const {
 
 // -------------------------------------------------------------------
 
-// all_active_votings_for_voter
-
-// repeated bytes m_voting_ids = 1;
-inline int all_active_votings_for_voter::_internal_m_voting_ids_size() const {
-  return m_voting_ids_.size();
-}
-inline int all_active_votings_for_voter::m_voting_ids_size() const {
-  return _internal_m_voting_ids_size();
-}
-inline void all_active_votings_for_voter::clear_m_voting_ids() {
-  m_voting_ids_.Clear();
-}
-inline std::string* all_active_votings_for_voter::add_m_voting_ids() {
-  std::string* _s = _internal_add_m_voting_ids();
-  // @@protoc_insertion_point(field_add_mutable:proto.all_active_votings_for_voter.m_voting_ids)
-  return _s;
-}
-inline const std::string& all_active_votings_for_voter::_internal_m_voting_ids(int index) const {
-  return m_voting_ids_.Get(index);
-}
-inline const std::string& all_active_votings_for_voter::m_voting_ids(int index) const {
-  // @@protoc_insertion_point(field_get:proto.all_active_votings_for_voter.m_voting_ids)
-  return _internal_m_voting_ids(index);
-}
-inline std::string* all_active_votings_for_voter::mutable_m_voting_ids(int index) {
-  // @@protoc_insertion_point(field_mutable:proto.all_active_votings_for_voter.m_voting_ids)
-  return m_voting_ids_.Mutable(index);
-}
-inline void all_active_votings_for_voter::set_m_voting_ids(int index, const std::string& value) {
-  m_voting_ids_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set:proto.all_active_votings_for_voter.m_voting_ids)
-}
-inline void all_active_votings_for_voter::set_m_voting_ids(int index, std::string&& value) {
-  m_voting_ids_.Mutable(index)->assign(std::move(value));
-  // @@protoc_insertion_point(field_set:proto.all_active_votings_for_voter.m_voting_ids)
-}
-inline void all_active_votings_for_voter::set_m_voting_ids(int index, const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  m_voting_ids_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:proto.all_active_votings_for_voter.m_voting_ids)
-}
-inline void all_active_votings_for_voter::set_m_voting_ids(int index, const void* value, size_t size) {
-  m_voting_ids_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:proto.all_active_votings_for_voter.m_voting_ids)
-}
-inline std::string* all_active_votings_for_voter::_internal_add_m_voting_ids() {
-  return m_voting_ids_.Add();
-}
-inline void all_active_votings_for_voter::add_m_voting_ids(const std::string& value) {
-  m_voting_ids_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:proto.all_active_votings_for_voter.m_voting_ids)
-}
-inline void all_active_votings_for_voter::add_m_voting_ids(std::string&& value) {
-  m_voting_ids_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:proto.all_active_votings_for_voter.m_voting_ids)
-}
-inline void all_active_votings_for_voter::add_m_voting_ids(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  m_voting_ids_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:proto.all_active_votings_for_voter.m_voting_ids)
-}
-inline void all_active_votings_for_voter::add_m_voting_ids(const void* value, size_t size) {
-  m_voting_ids_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:proto.all_active_votings_for_voter.m_voting_ids)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
-all_active_votings_for_voter::m_voting_ids() const {
-  // @@protoc_insertion_point(field_list:proto.all_active_votings_for_voter.m_voting_ids)
-  return m_voting_ids_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
-all_active_votings_for_voter::mutable_m_voting_ids() {
-  // @@protoc_insertion_point(field_mutable_list:proto.all_active_votings_for_voter.m_voting_ids)
-  return &m_voting_ids_;
-}
-
-// -------------------------------------------------------------------
-
 // getheaders
 
 // fixed32 m_version = 1;
@@ -6440,17 +5209,9 @@ merkle_branch::mutable_m_merkle_branch() {
   return &m_merkle_branch_;
 }
 
-// optional bytes m_block_id = 2;
-inline bool merkle_branch::_internal_has_m_block_id() const {
-  bool value = (_has_bits_[0] & 0x00000001u) != 0;
-  return value;
-}
-inline bool merkle_branch::has_m_block_id() const {
-  return _internal_has_m_block_id();
-}
+// bytes m_block_id = 2;
 inline void merkle_branch::clear_m_block_id() {
   m_block_id_.ClearToEmpty();
-  _has_bits_[0] &= ~0x00000001u;
 }
 inline const std::string& merkle_branch::m_block_id() const {
   // @@protoc_insertion_point(field_get:proto.merkle_branch.m_block_id)
@@ -6459,7 +5220,7 @@ inline const std::string& merkle_branch::m_block_id() const {
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void merkle_branch::set_m_block_id(ArgT0&& arg0, ArgT... args) {
- _has_bits_[0] |= 0x00000001u;
+ 
  m_block_id_.SetBytes(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
   // @@protoc_insertion_point(field_set:proto.merkle_branch.m_block_id)
 }
@@ -6472,32 +5233,22 @@ inline const std::string& merkle_branch::_internal_m_block_id() const {
   return m_block_id_.Get();
 }
 inline void merkle_branch::_internal_set_m_block_id(const std::string& value) {
-  _has_bits_[0] |= 0x00000001u;
+  
   m_block_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
 }
 inline std::string* merkle_branch::_internal_mutable_m_block_id() {
-  _has_bits_[0] |= 0x00000001u;
+  
   return m_block_id_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
 inline std::string* merkle_branch::release_m_block_id() {
   // @@protoc_insertion_point(field_release:proto.merkle_branch.m_block_id)
-  if (!_internal_has_m_block_id()) {
-    return nullptr;
-  }
-  _has_bits_[0] &= ~0x00000001u;
-  auto* p = m_block_id_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (m_block_id_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
-    m_block_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  return p;
+  return m_block_id_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
 }
 inline void merkle_branch::set_allocated_m_block_id(std::string* m_block_id) {
   if (m_block_id != nullptr) {
-    _has_bits_[0] |= 0x00000001u;
+    
   } else {
-    _has_bits_[0] &= ~0x00000001u;
+    
   }
   m_block_id_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), m_block_id,
       GetArenaForAllocation());
@@ -6507,209 +5258,6 @@ inline void merkle_branch::set_allocated_m_block_id(std::string* m_block_id) {
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:proto.merkle_branch.m_block_id)
-}
-
-// -------------------------------------------------------------------
-
-// get_all_active_votings_for_voter
-
-// bytes m_voter_pk = 1;
-inline void get_all_active_votings_for_voter::clear_m_voter_pk() {
-  m_voter_pk_.ClearToEmpty();
-}
-inline const std::string& get_all_active_votings_for_voter::m_voter_pk() const {
-  // @@protoc_insertion_point(field_get:proto.get_all_active_votings_for_voter.m_voter_pk)
-  return _internal_m_voter_pk();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void get_all_active_votings_for_voter::set_m_voter_pk(ArgT0&& arg0, ArgT... args) {
- 
- m_voter_pk_.SetBytes(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:proto.get_all_active_votings_for_voter.m_voter_pk)
-}
-inline std::string* get_all_active_votings_for_voter::mutable_m_voter_pk() {
-  std::string* _s = _internal_mutable_m_voter_pk();
-  // @@protoc_insertion_point(field_mutable:proto.get_all_active_votings_for_voter.m_voter_pk)
-  return _s;
-}
-inline const std::string& get_all_active_votings_for_voter::_internal_m_voter_pk() const {
-  return m_voter_pk_.Get();
-}
-inline void get_all_active_votings_for_voter::_internal_set_m_voter_pk(const std::string& value) {
-  
-  m_voter_pk_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
-}
-inline std::string* get_all_active_votings_for_voter::_internal_mutable_m_voter_pk() {
-  
-  return m_voter_pk_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
-}
-inline std::string* get_all_active_votings_for_voter::release_m_voter_pk() {
-  // @@protoc_insertion_point(field_release:proto.get_all_active_votings_for_voter.m_voter_pk)
-  return m_voter_pk_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
-}
-inline void get_all_active_votings_for_voter::set_allocated_m_voter_pk(std::string* m_voter_pk) {
-  if (m_voter_pk != nullptr) {
-    
-  } else {
-    
-  }
-  m_voter_pk_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), m_voter_pk,
-      GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (m_voter_pk_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
-    m_voter_pk_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:proto.get_all_active_votings_for_voter.m_voter_pk)
-}
-
-// -------------------------------------------------------------------
-
-// get_amount_on_pkh
-
-// bytes m_pkh = 1;
-inline void get_amount_on_pkh::clear_m_pkh() {
-  m_pkh_.ClearToEmpty();
-}
-inline const std::string& get_amount_on_pkh::m_pkh() const {
-  // @@protoc_insertion_point(field_get:proto.get_amount_on_pkh.m_pkh)
-  return _internal_m_pkh();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void get_amount_on_pkh::set_m_pkh(ArgT0&& arg0, ArgT... args) {
- 
- m_pkh_.SetBytes(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:proto.get_amount_on_pkh.m_pkh)
-}
-inline std::string* get_amount_on_pkh::mutable_m_pkh() {
-  std::string* _s = _internal_mutable_m_pkh();
-  // @@protoc_insertion_point(field_mutable:proto.get_amount_on_pkh.m_pkh)
-  return _s;
-}
-inline const std::string& get_amount_on_pkh::_internal_m_pkh() const {
-  return m_pkh_.Get();
-}
-inline void get_amount_on_pkh::_internal_set_m_pkh(const std::string& value) {
-  
-  m_pkh_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
-}
-inline std::string* get_amount_on_pkh::_internal_mutable_m_pkh() {
-  
-  return m_pkh_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
-}
-inline std::string* get_amount_on_pkh::release_m_pkh() {
-  // @@protoc_insertion_point(field_release:proto.get_amount_on_pkh.m_pkh)
-  return m_pkh_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
-}
-inline void get_amount_on_pkh::set_allocated_m_pkh(std::string* m_pkh) {
-  if (m_pkh != nullptr) {
-    
-  } else {
-    
-  }
-  m_pkh_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), m_pkh,
-      GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (m_pkh_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
-    m_pkh_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:proto.get_amount_on_pkh.m_pkh)
-}
-
-// -------------------------------------------------------------------
-
-// amount_on_pkh
-
-// uint32 m_amount = 1;
-inline void amount_on_pkh::clear_m_amount() {
-  m_amount_ = 0u;
-}
-inline uint32_t amount_on_pkh::_internal_m_amount() const {
-  return m_amount_;
-}
-inline uint32_t amount_on_pkh::m_amount() const {
-  // @@protoc_insertion_point(field_get:proto.amount_on_pkh.m_amount)
-  return _internal_m_amount();
-}
-inline void amount_on_pkh::_internal_set_m_amount(uint32_t value) {
-  
-  m_amount_ = value;
-}
-inline void amount_on_pkh::set_m_amount(uint32_t value) {
-  _internal_set_m_amount(value);
-  // @@protoc_insertion_point(field_set:proto.amount_on_pkh.m_amount)
-}
-
-// optional bytes m_txid = 2;
-inline bool amount_on_pkh::_internal_has_m_txid() const {
-  bool value = (_has_bits_[0] & 0x00000001u) != 0;
-  return value;
-}
-inline bool amount_on_pkh::has_m_txid() const {
-  return _internal_has_m_txid();
-}
-inline void amount_on_pkh::clear_m_txid() {
-  m_txid_.ClearToEmpty();
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline const std::string& amount_on_pkh::m_txid() const {
-  // @@protoc_insertion_point(field_get:proto.amount_on_pkh.m_txid)
-  return _internal_m_txid();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void amount_on_pkh::set_m_txid(ArgT0&& arg0, ArgT... args) {
- _has_bits_[0] |= 0x00000001u;
- m_txid_.SetBytes(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:proto.amount_on_pkh.m_txid)
-}
-inline std::string* amount_on_pkh::mutable_m_txid() {
-  std::string* _s = _internal_mutable_m_txid();
-  // @@protoc_insertion_point(field_mutable:proto.amount_on_pkh.m_txid)
-  return _s;
-}
-inline const std::string& amount_on_pkh::_internal_m_txid() const {
-  return m_txid_.Get();
-}
-inline void amount_on_pkh::_internal_set_m_txid(const std::string& value) {
-  _has_bits_[0] |= 0x00000001u;
-  m_txid_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
-}
-inline std::string* amount_on_pkh::_internal_mutable_m_txid() {
-  _has_bits_[0] |= 0x00000001u;
-  return m_txid_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
-}
-inline std::string* amount_on_pkh::release_m_txid() {
-  // @@protoc_insertion_point(field_release:proto.amount_on_pkh.m_txid)
-  if (!_internal_has_m_txid()) {
-    return nullptr;
-  }
-  _has_bits_[0] &= ~0x00000001u;
-  auto* p = m_txid_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (m_txid_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
-    m_txid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  return p;
-}
-inline void amount_on_pkh::set_allocated_m_txid(std::string* m_txid) {
-  if (m_txid != nullptr) {
-    _has_bits_[0] |= 0x00000001u;
-  } else {
-    _has_bits_[0] &= ~0x00000001u;
-  }
-  m_txid_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), m_txid,
-      GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (m_txid_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
-    m_txid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:proto.amount_on_pkh.m_txid)
 }
 
 // -------------------------------------------------------------------
@@ -6926,140 +5474,6 @@ inline void authorization_txid::set_allocated_m_txid(std::string* m_txid) {
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:proto.authorization_txid.m_txid)
-}
-
-// -------------------------------------------------------------------
-
-// get_all_finished_votings_for_voter
-
-// bytes m_voter_pk = 1;
-inline void get_all_finished_votings_for_voter::clear_m_voter_pk() {
-  m_voter_pk_.ClearToEmpty();
-}
-inline const std::string& get_all_finished_votings_for_voter::m_voter_pk() const {
-  // @@protoc_insertion_point(field_get:proto.get_all_finished_votings_for_voter.m_voter_pk)
-  return _internal_m_voter_pk();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void get_all_finished_votings_for_voter::set_m_voter_pk(ArgT0&& arg0, ArgT... args) {
- 
- m_voter_pk_.SetBytes(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:proto.get_all_finished_votings_for_voter.m_voter_pk)
-}
-inline std::string* get_all_finished_votings_for_voter::mutable_m_voter_pk() {
-  std::string* _s = _internal_mutable_m_voter_pk();
-  // @@protoc_insertion_point(field_mutable:proto.get_all_finished_votings_for_voter.m_voter_pk)
-  return _s;
-}
-inline const std::string& get_all_finished_votings_for_voter::_internal_m_voter_pk() const {
-  return m_voter_pk_.Get();
-}
-inline void get_all_finished_votings_for_voter::_internal_set_m_voter_pk(const std::string& value) {
-  
-  m_voter_pk_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
-}
-inline std::string* get_all_finished_votings_for_voter::_internal_mutable_m_voter_pk() {
-  
-  return m_voter_pk_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
-}
-inline std::string* get_all_finished_votings_for_voter::release_m_voter_pk() {
-  // @@protoc_insertion_point(field_release:proto.get_all_finished_votings_for_voter.m_voter_pk)
-  return m_voter_pk_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
-}
-inline void get_all_finished_votings_for_voter::set_allocated_m_voter_pk(std::string* m_voter_pk) {
-  if (m_voter_pk != nullptr) {
-    
-  } else {
-    
-  }
-  m_voter_pk_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), m_voter_pk,
-      GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (m_voter_pk_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
-    m_voter_pk_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:proto.get_all_finished_votings_for_voter.m_voter_pk)
-}
-
-// -------------------------------------------------------------------
-
-// all_finished_votings_for_voter
-
-// repeated bytes m_voting_ids = 1;
-inline int all_finished_votings_for_voter::_internal_m_voting_ids_size() const {
-  return m_voting_ids_.size();
-}
-inline int all_finished_votings_for_voter::m_voting_ids_size() const {
-  return _internal_m_voting_ids_size();
-}
-inline void all_finished_votings_for_voter::clear_m_voting_ids() {
-  m_voting_ids_.Clear();
-}
-inline std::string* all_finished_votings_for_voter::add_m_voting_ids() {
-  std::string* _s = _internal_add_m_voting_ids();
-  // @@protoc_insertion_point(field_add_mutable:proto.all_finished_votings_for_voter.m_voting_ids)
-  return _s;
-}
-inline const std::string& all_finished_votings_for_voter::_internal_m_voting_ids(int index) const {
-  return m_voting_ids_.Get(index);
-}
-inline const std::string& all_finished_votings_for_voter::m_voting_ids(int index) const {
-  // @@protoc_insertion_point(field_get:proto.all_finished_votings_for_voter.m_voting_ids)
-  return _internal_m_voting_ids(index);
-}
-inline std::string* all_finished_votings_for_voter::mutable_m_voting_ids(int index) {
-  // @@protoc_insertion_point(field_mutable:proto.all_finished_votings_for_voter.m_voting_ids)
-  return m_voting_ids_.Mutable(index);
-}
-inline void all_finished_votings_for_voter::set_m_voting_ids(int index, const std::string& value) {
-  m_voting_ids_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set:proto.all_finished_votings_for_voter.m_voting_ids)
-}
-inline void all_finished_votings_for_voter::set_m_voting_ids(int index, std::string&& value) {
-  m_voting_ids_.Mutable(index)->assign(std::move(value));
-  // @@protoc_insertion_point(field_set:proto.all_finished_votings_for_voter.m_voting_ids)
-}
-inline void all_finished_votings_for_voter::set_m_voting_ids(int index, const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  m_voting_ids_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:proto.all_finished_votings_for_voter.m_voting_ids)
-}
-inline void all_finished_votings_for_voter::set_m_voting_ids(int index, const void* value, size_t size) {
-  m_voting_ids_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:proto.all_finished_votings_for_voter.m_voting_ids)
-}
-inline std::string* all_finished_votings_for_voter::_internal_add_m_voting_ids() {
-  return m_voting_ids_.Add();
-}
-inline void all_finished_votings_for_voter::add_m_voting_ids(const std::string& value) {
-  m_voting_ids_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:proto.all_finished_votings_for_voter.m_voting_ids)
-}
-inline void all_finished_votings_for_voter::add_m_voting_ids(std::string&& value) {
-  m_voting_ids_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:proto.all_finished_votings_for_voter.m_voting_ids)
-}
-inline void all_finished_votings_for_voter::add_m_voting_ids(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  m_voting_ids_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:proto.all_finished_votings_for_voter.m_voting_ids)
-}
-inline void all_finished_votings_for_voter::add_m_voting_ids(const void* value, size_t size) {
-  m_voting_ids_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:proto.all_finished_votings_for_voter.m_voting_ids)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
-all_finished_votings_for_voter::m_voting_ids() const {
-  // @@protoc_insertion_point(field_list:proto.all_finished_votings_for_voter.m_voting_ids)
-  return m_voting_ids_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
-all_finished_votings_for_voter::mutable_m_voting_ids() {
-  // @@protoc_insertion_point(field_mutable_list:proto.all_finished_votings_for_voter.m_voting_ids)
-  return &m_voting_ids_;
 }
 
 // -------------------------------------------------------------------
@@ -7510,154 +5924,6 @@ inline ::proto::getmerklebranch* request::mutable_m_getmerklebranch() {
   return _msg;
 }
 
-// .proto.get_all_active_votings_for_voter m_get_all_active_votings_for_voter = 8;
-inline bool request::_internal_has_m_get_all_active_votings_for_voter() const {
-  return request_type_case() == kMGetAllActiveVotingsForVoter;
-}
-inline bool request::has_m_get_all_active_votings_for_voter() const {
-  return _internal_has_m_get_all_active_votings_for_voter();
-}
-inline void request::set_has_m_get_all_active_votings_for_voter() {
-  _oneof_case_[0] = kMGetAllActiveVotingsForVoter;
-}
-inline void request::clear_m_get_all_active_votings_for_voter() {
-  if (_internal_has_m_get_all_active_votings_for_voter()) {
-    if (GetArenaForAllocation() == nullptr) {
-      delete request_type_.m_get_all_active_votings_for_voter_;
-    }
-    clear_has_request_type();
-  }
-}
-inline ::proto::get_all_active_votings_for_voter* request::release_m_get_all_active_votings_for_voter() {
-  // @@protoc_insertion_point(field_release:proto.request.m_get_all_active_votings_for_voter)
-  if (_internal_has_m_get_all_active_votings_for_voter()) {
-    clear_has_request_type();
-      ::proto::get_all_active_votings_for_voter* temp = request_type_.m_get_all_active_votings_for_voter_;
-    if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-    }
-    request_type_.m_get_all_active_votings_for_voter_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline const ::proto::get_all_active_votings_for_voter& request::_internal_m_get_all_active_votings_for_voter() const {
-  return _internal_has_m_get_all_active_votings_for_voter()
-      ? *request_type_.m_get_all_active_votings_for_voter_
-      : reinterpret_cast< ::proto::get_all_active_votings_for_voter&>(::proto::_get_all_active_votings_for_voter_default_instance_);
-}
-inline const ::proto::get_all_active_votings_for_voter& request::m_get_all_active_votings_for_voter() const {
-  // @@protoc_insertion_point(field_get:proto.request.m_get_all_active_votings_for_voter)
-  return _internal_m_get_all_active_votings_for_voter();
-}
-inline ::proto::get_all_active_votings_for_voter* request::unsafe_arena_release_m_get_all_active_votings_for_voter() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:proto.request.m_get_all_active_votings_for_voter)
-  if (_internal_has_m_get_all_active_votings_for_voter()) {
-    clear_has_request_type();
-    ::proto::get_all_active_votings_for_voter* temp = request_type_.m_get_all_active_votings_for_voter_;
-    request_type_.m_get_all_active_votings_for_voter_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline void request::unsafe_arena_set_allocated_m_get_all_active_votings_for_voter(::proto::get_all_active_votings_for_voter* m_get_all_active_votings_for_voter) {
-  clear_request_type();
-  if (m_get_all_active_votings_for_voter) {
-    set_has_m_get_all_active_votings_for_voter();
-    request_type_.m_get_all_active_votings_for_voter_ = m_get_all_active_votings_for_voter;
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:proto.request.m_get_all_active_votings_for_voter)
-}
-inline ::proto::get_all_active_votings_for_voter* request::_internal_mutable_m_get_all_active_votings_for_voter() {
-  if (!_internal_has_m_get_all_active_votings_for_voter()) {
-    clear_request_type();
-    set_has_m_get_all_active_votings_for_voter();
-    request_type_.m_get_all_active_votings_for_voter_ = CreateMaybeMessage< ::proto::get_all_active_votings_for_voter >(GetArenaForAllocation());
-  }
-  return request_type_.m_get_all_active_votings_for_voter_;
-}
-inline ::proto::get_all_active_votings_for_voter* request::mutable_m_get_all_active_votings_for_voter() {
-  ::proto::get_all_active_votings_for_voter* _msg = _internal_mutable_m_get_all_active_votings_for_voter();
-  // @@protoc_insertion_point(field_mutable:proto.request.m_get_all_active_votings_for_voter)
-  return _msg;
-}
-
-// .proto.get_amount_on_pkh m_get_amount_on_pkh = 9;
-inline bool request::_internal_has_m_get_amount_on_pkh() const {
-  return request_type_case() == kMGetAmountOnPkh;
-}
-inline bool request::has_m_get_amount_on_pkh() const {
-  return _internal_has_m_get_amount_on_pkh();
-}
-inline void request::set_has_m_get_amount_on_pkh() {
-  _oneof_case_[0] = kMGetAmountOnPkh;
-}
-inline void request::clear_m_get_amount_on_pkh() {
-  if (_internal_has_m_get_amount_on_pkh()) {
-    if (GetArenaForAllocation() == nullptr) {
-      delete request_type_.m_get_amount_on_pkh_;
-    }
-    clear_has_request_type();
-  }
-}
-inline ::proto::get_amount_on_pkh* request::release_m_get_amount_on_pkh() {
-  // @@protoc_insertion_point(field_release:proto.request.m_get_amount_on_pkh)
-  if (_internal_has_m_get_amount_on_pkh()) {
-    clear_has_request_type();
-      ::proto::get_amount_on_pkh* temp = request_type_.m_get_amount_on_pkh_;
-    if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-    }
-    request_type_.m_get_amount_on_pkh_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline const ::proto::get_amount_on_pkh& request::_internal_m_get_amount_on_pkh() const {
-  return _internal_has_m_get_amount_on_pkh()
-      ? *request_type_.m_get_amount_on_pkh_
-      : reinterpret_cast< ::proto::get_amount_on_pkh&>(::proto::_get_amount_on_pkh_default_instance_);
-}
-inline const ::proto::get_amount_on_pkh& request::m_get_amount_on_pkh() const {
-  // @@protoc_insertion_point(field_get:proto.request.m_get_amount_on_pkh)
-  return _internal_m_get_amount_on_pkh();
-}
-inline ::proto::get_amount_on_pkh* request::unsafe_arena_release_m_get_amount_on_pkh() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:proto.request.m_get_amount_on_pkh)
-  if (_internal_has_m_get_amount_on_pkh()) {
-    clear_has_request_type();
-    ::proto::get_amount_on_pkh* temp = request_type_.m_get_amount_on_pkh_;
-    request_type_.m_get_amount_on_pkh_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline void request::unsafe_arena_set_allocated_m_get_amount_on_pkh(::proto::get_amount_on_pkh* m_get_amount_on_pkh) {
-  clear_request_type();
-  if (m_get_amount_on_pkh) {
-    set_has_m_get_amount_on_pkh();
-    request_type_.m_get_amount_on_pkh_ = m_get_amount_on_pkh;
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:proto.request.m_get_amount_on_pkh)
-}
-inline ::proto::get_amount_on_pkh* request::_internal_mutable_m_get_amount_on_pkh() {
-  if (!_internal_has_m_get_amount_on_pkh()) {
-    clear_request_type();
-    set_has_m_get_amount_on_pkh();
-    request_type_.m_get_amount_on_pkh_ = CreateMaybeMessage< ::proto::get_amount_on_pkh >(GetArenaForAllocation());
-  }
-  return request_type_.m_get_amount_on_pkh_;
-}
-inline ::proto::get_amount_on_pkh* request::mutable_m_get_amount_on_pkh() {
-  ::proto::get_amount_on_pkh* _msg = _internal_mutable_m_get_amount_on_pkh();
-  // @@protoc_insertion_point(field_mutable:proto.request.m_get_amount_on_pkh)
-  return _msg;
-}
-
 // .proto.get_transaction m_get_transaction = 10;
 inline bool request::_internal_has_m_get_transaction() const {
   return request_type_case() == kMGetTransaction;
@@ -7803,80 +6069,6 @@ inline ::proto::get_authorization_txid* request::_internal_mutable_m_get_authori
 inline ::proto::get_authorization_txid* request::mutable_m_get_authorization_txid() {
   ::proto::get_authorization_txid* _msg = _internal_mutable_m_get_authorization_txid();
   // @@protoc_insertion_point(field_mutable:proto.request.m_get_authorization_txid)
-  return _msg;
-}
-
-// .proto.get_all_finished_votings_for_voter m_get_all_finished_votings_for_voter = 12;
-inline bool request::_internal_has_m_get_all_finished_votings_for_voter() const {
-  return request_type_case() == kMGetAllFinishedVotingsForVoter;
-}
-inline bool request::has_m_get_all_finished_votings_for_voter() const {
-  return _internal_has_m_get_all_finished_votings_for_voter();
-}
-inline void request::set_has_m_get_all_finished_votings_for_voter() {
-  _oneof_case_[0] = kMGetAllFinishedVotingsForVoter;
-}
-inline void request::clear_m_get_all_finished_votings_for_voter() {
-  if (_internal_has_m_get_all_finished_votings_for_voter()) {
-    if (GetArenaForAllocation() == nullptr) {
-      delete request_type_.m_get_all_finished_votings_for_voter_;
-    }
-    clear_has_request_type();
-  }
-}
-inline ::proto::get_all_finished_votings_for_voter* request::release_m_get_all_finished_votings_for_voter() {
-  // @@protoc_insertion_point(field_release:proto.request.m_get_all_finished_votings_for_voter)
-  if (_internal_has_m_get_all_finished_votings_for_voter()) {
-    clear_has_request_type();
-      ::proto::get_all_finished_votings_for_voter* temp = request_type_.m_get_all_finished_votings_for_voter_;
-    if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-    }
-    request_type_.m_get_all_finished_votings_for_voter_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline const ::proto::get_all_finished_votings_for_voter& request::_internal_m_get_all_finished_votings_for_voter() const {
-  return _internal_has_m_get_all_finished_votings_for_voter()
-      ? *request_type_.m_get_all_finished_votings_for_voter_
-      : reinterpret_cast< ::proto::get_all_finished_votings_for_voter&>(::proto::_get_all_finished_votings_for_voter_default_instance_);
-}
-inline const ::proto::get_all_finished_votings_for_voter& request::m_get_all_finished_votings_for_voter() const {
-  // @@protoc_insertion_point(field_get:proto.request.m_get_all_finished_votings_for_voter)
-  return _internal_m_get_all_finished_votings_for_voter();
-}
-inline ::proto::get_all_finished_votings_for_voter* request::unsafe_arena_release_m_get_all_finished_votings_for_voter() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:proto.request.m_get_all_finished_votings_for_voter)
-  if (_internal_has_m_get_all_finished_votings_for_voter()) {
-    clear_has_request_type();
-    ::proto::get_all_finished_votings_for_voter* temp = request_type_.m_get_all_finished_votings_for_voter_;
-    request_type_.m_get_all_finished_votings_for_voter_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline void request::unsafe_arena_set_allocated_m_get_all_finished_votings_for_voter(::proto::get_all_finished_votings_for_voter* m_get_all_finished_votings_for_voter) {
-  clear_request_type();
-  if (m_get_all_finished_votings_for_voter) {
-    set_has_m_get_all_finished_votings_for_voter();
-    request_type_.m_get_all_finished_votings_for_voter_ = m_get_all_finished_votings_for_voter;
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:proto.request.m_get_all_finished_votings_for_voter)
-}
-inline ::proto::get_all_finished_votings_for_voter* request::_internal_mutable_m_get_all_finished_votings_for_voter() {
-  if (!_internal_has_m_get_all_finished_votings_for_voter()) {
-    clear_request_type();
-    set_has_m_get_all_finished_votings_for_voter();
-    request_type_.m_get_all_finished_votings_for_voter_ = CreateMaybeMessage< ::proto::get_all_finished_votings_for_voter >(GetArenaForAllocation());
-  }
-  return request_type_.m_get_all_finished_votings_for_voter_;
-}
-inline ::proto::get_all_finished_votings_for_voter* request::mutable_m_get_all_finished_votings_for_voter() {
-  ::proto::get_all_finished_votings_for_voter* _msg = _internal_mutable_m_get_all_finished_votings_for_voter();
-  // @@protoc_insertion_point(field_mutable:proto.request.m_get_all_finished_votings_for_voter)
   return _msg;
 }
 
@@ -8337,154 +6529,6 @@ inline ::proto::merkle_branch* proto_massage::mutable_m_merkle_branch() {
   return _msg;
 }
 
-// .proto.all_active_votings_for_voter m_all_active_votings_for_voter = 8;
-inline bool proto_massage::_internal_has_m_all_active_votings_for_voter() const {
-  return message_type_case() == kMAllActiveVotingsForVoter;
-}
-inline bool proto_massage::has_m_all_active_votings_for_voter() const {
-  return _internal_has_m_all_active_votings_for_voter();
-}
-inline void proto_massage::set_has_m_all_active_votings_for_voter() {
-  _oneof_case_[0] = kMAllActiveVotingsForVoter;
-}
-inline void proto_massage::clear_m_all_active_votings_for_voter() {
-  if (_internal_has_m_all_active_votings_for_voter()) {
-    if (GetArenaForAllocation() == nullptr) {
-      delete message_type_.m_all_active_votings_for_voter_;
-    }
-    clear_has_message_type();
-  }
-}
-inline ::proto::all_active_votings_for_voter* proto_massage::release_m_all_active_votings_for_voter() {
-  // @@protoc_insertion_point(field_release:proto.proto_massage.m_all_active_votings_for_voter)
-  if (_internal_has_m_all_active_votings_for_voter()) {
-    clear_has_message_type();
-      ::proto::all_active_votings_for_voter* temp = message_type_.m_all_active_votings_for_voter_;
-    if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-    }
-    message_type_.m_all_active_votings_for_voter_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline const ::proto::all_active_votings_for_voter& proto_massage::_internal_m_all_active_votings_for_voter() const {
-  return _internal_has_m_all_active_votings_for_voter()
-      ? *message_type_.m_all_active_votings_for_voter_
-      : reinterpret_cast< ::proto::all_active_votings_for_voter&>(::proto::_all_active_votings_for_voter_default_instance_);
-}
-inline const ::proto::all_active_votings_for_voter& proto_massage::m_all_active_votings_for_voter() const {
-  // @@protoc_insertion_point(field_get:proto.proto_massage.m_all_active_votings_for_voter)
-  return _internal_m_all_active_votings_for_voter();
-}
-inline ::proto::all_active_votings_for_voter* proto_massage::unsafe_arena_release_m_all_active_votings_for_voter() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:proto.proto_massage.m_all_active_votings_for_voter)
-  if (_internal_has_m_all_active_votings_for_voter()) {
-    clear_has_message_type();
-    ::proto::all_active_votings_for_voter* temp = message_type_.m_all_active_votings_for_voter_;
-    message_type_.m_all_active_votings_for_voter_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline void proto_massage::unsafe_arena_set_allocated_m_all_active_votings_for_voter(::proto::all_active_votings_for_voter* m_all_active_votings_for_voter) {
-  clear_message_type();
-  if (m_all_active_votings_for_voter) {
-    set_has_m_all_active_votings_for_voter();
-    message_type_.m_all_active_votings_for_voter_ = m_all_active_votings_for_voter;
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:proto.proto_massage.m_all_active_votings_for_voter)
-}
-inline ::proto::all_active_votings_for_voter* proto_massage::_internal_mutable_m_all_active_votings_for_voter() {
-  if (!_internal_has_m_all_active_votings_for_voter()) {
-    clear_message_type();
-    set_has_m_all_active_votings_for_voter();
-    message_type_.m_all_active_votings_for_voter_ = CreateMaybeMessage< ::proto::all_active_votings_for_voter >(GetArenaForAllocation());
-  }
-  return message_type_.m_all_active_votings_for_voter_;
-}
-inline ::proto::all_active_votings_for_voter* proto_massage::mutable_m_all_active_votings_for_voter() {
-  ::proto::all_active_votings_for_voter* _msg = _internal_mutable_m_all_active_votings_for_voter();
-  // @@protoc_insertion_point(field_mutable:proto.proto_massage.m_all_active_votings_for_voter)
-  return _msg;
-}
-
-// .proto.amount_on_pkh m_amount_on_pkh = 9;
-inline bool proto_massage::_internal_has_m_amount_on_pkh() const {
-  return message_type_case() == kMAmountOnPkh;
-}
-inline bool proto_massage::has_m_amount_on_pkh() const {
-  return _internal_has_m_amount_on_pkh();
-}
-inline void proto_massage::set_has_m_amount_on_pkh() {
-  _oneof_case_[0] = kMAmountOnPkh;
-}
-inline void proto_massage::clear_m_amount_on_pkh() {
-  if (_internal_has_m_amount_on_pkh()) {
-    if (GetArenaForAllocation() == nullptr) {
-      delete message_type_.m_amount_on_pkh_;
-    }
-    clear_has_message_type();
-  }
-}
-inline ::proto::amount_on_pkh* proto_massage::release_m_amount_on_pkh() {
-  // @@protoc_insertion_point(field_release:proto.proto_massage.m_amount_on_pkh)
-  if (_internal_has_m_amount_on_pkh()) {
-    clear_has_message_type();
-      ::proto::amount_on_pkh* temp = message_type_.m_amount_on_pkh_;
-    if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-    }
-    message_type_.m_amount_on_pkh_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline const ::proto::amount_on_pkh& proto_massage::_internal_m_amount_on_pkh() const {
-  return _internal_has_m_amount_on_pkh()
-      ? *message_type_.m_amount_on_pkh_
-      : reinterpret_cast< ::proto::amount_on_pkh&>(::proto::_amount_on_pkh_default_instance_);
-}
-inline const ::proto::amount_on_pkh& proto_massage::m_amount_on_pkh() const {
-  // @@protoc_insertion_point(field_get:proto.proto_massage.m_amount_on_pkh)
-  return _internal_m_amount_on_pkh();
-}
-inline ::proto::amount_on_pkh* proto_massage::unsafe_arena_release_m_amount_on_pkh() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:proto.proto_massage.m_amount_on_pkh)
-  if (_internal_has_m_amount_on_pkh()) {
-    clear_has_message_type();
-    ::proto::amount_on_pkh* temp = message_type_.m_amount_on_pkh_;
-    message_type_.m_amount_on_pkh_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline void proto_massage::unsafe_arena_set_allocated_m_amount_on_pkh(::proto::amount_on_pkh* m_amount_on_pkh) {
-  clear_message_type();
-  if (m_amount_on_pkh) {
-    set_has_m_amount_on_pkh();
-    message_type_.m_amount_on_pkh_ = m_amount_on_pkh;
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:proto.proto_massage.m_amount_on_pkh)
-}
-inline ::proto::amount_on_pkh* proto_massage::_internal_mutable_m_amount_on_pkh() {
-  if (!_internal_has_m_amount_on_pkh()) {
-    clear_message_type();
-    set_has_m_amount_on_pkh();
-    message_type_.m_amount_on_pkh_ = CreateMaybeMessage< ::proto::amount_on_pkh >(GetArenaForAllocation());
-  }
-  return message_type_.m_amount_on_pkh_;
-}
-inline ::proto::amount_on_pkh* proto_massage::mutable_m_amount_on_pkh() {
-  ::proto::amount_on_pkh* _msg = _internal_mutable_m_amount_on_pkh();
-  // @@protoc_insertion_point(field_mutable:proto.proto_massage.m_amount_on_pkh)
-  return _msg;
-}
-
 // .proto.authorization_txid m_authorization_txid = 10;
 inline bool proto_massage::_internal_has_m_authorization_txid() const {
   return message_type_case() == kMAuthorizationTxid;
@@ -8559,80 +6603,6 @@ inline ::proto::authorization_txid* proto_massage::mutable_m_authorization_txid(
   return _msg;
 }
 
-// .proto.all_finished_votings_for_voter m_all_finished_votings_for_voter = 11;
-inline bool proto_massage::_internal_has_m_all_finished_votings_for_voter() const {
-  return message_type_case() == kMAllFinishedVotingsForVoter;
-}
-inline bool proto_massage::has_m_all_finished_votings_for_voter() const {
-  return _internal_has_m_all_finished_votings_for_voter();
-}
-inline void proto_massage::set_has_m_all_finished_votings_for_voter() {
-  _oneof_case_[0] = kMAllFinishedVotingsForVoter;
-}
-inline void proto_massage::clear_m_all_finished_votings_for_voter() {
-  if (_internal_has_m_all_finished_votings_for_voter()) {
-    if (GetArenaForAllocation() == nullptr) {
-      delete message_type_.m_all_finished_votings_for_voter_;
-    }
-    clear_has_message_type();
-  }
-}
-inline ::proto::all_finished_votings_for_voter* proto_massage::release_m_all_finished_votings_for_voter() {
-  // @@protoc_insertion_point(field_release:proto.proto_massage.m_all_finished_votings_for_voter)
-  if (_internal_has_m_all_finished_votings_for_voter()) {
-    clear_has_message_type();
-      ::proto::all_finished_votings_for_voter* temp = message_type_.m_all_finished_votings_for_voter_;
-    if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-    }
-    message_type_.m_all_finished_votings_for_voter_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline const ::proto::all_finished_votings_for_voter& proto_massage::_internal_m_all_finished_votings_for_voter() const {
-  return _internal_has_m_all_finished_votings_for_voter()
-      ? *message_type_.m_all_finished_votings_for_voter_
-      : reinterpret_cast< ::proto::all_finished_votings_for_voter&>(::proto::_all_finished_votings_for_voter_default_instance_);
-}
-inline const ::proto::all_finished_votings_for_voter& proto_massage::m_all_finished_votings_for_voter() const {
-  // @@protoc_insertion_point(field_get:proto.proto_massage.m_all_finished_votings_for_voter)
-  return _internal_m_all_finished_votings_for_voter();
-}
-inline ::proto::all_finished_votings_for_voter* proto_massage::unsafe_arena_release_m_all_finished_votings_for_voter() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:proto.proto_massage.m_all_finished_votings_for_voter)
-  if (_internal_has_m_all_finished_votings_for_voter()) {
-    clear_has_message_type();
-    ::proto::all_finished_votings_for_voter* temp = message_type_.m_all_finished_votings_for_voter_;
-    message_type_.m_all_finished_votings_for_voter_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline void proto_massage::unsafe_arena_set_allocated_m_all_finished_votings_for_voter(::proto::all_finished_votings_for_voter* m_all_finished_votings_for_voter) {
-  clear_message_type();
-  if (m_all_finished_votings_for_voter) {
-    set_has_m_all_finished_votings_for_voter();
-    message_type_.m_all_finished_votings_for_voter_ = m_all_finished_votings_for_voter;
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:proto.proto_massage.m_all_finished_votings_for_voter)
-}
-inline ::proto::all_finished_votings_for_voter* proto_massage::_internal_mutable_m_all_finished_votings_for_voter() {
-  if (!_internal_has_m_all_finished_votings_for_voter()) {
-    clear_message_type();
-    set_has_m_all_finished_votings_for_voter();
-    message_type_.m_all_finished_votings_for_voter_ = CreateMaybeMessage< ::proto::all_finished_votings_for_voter >(GetArenaForAllocation());
-  }
-  return message_type_.m_all_finished_votings_for_voter_;
-}
-inline ::proto::all_finished_votings_for_voter* proto_massage::mutable_m_all_finished_votings_for_voter() {
-  ::proto::all_finished_votings_for_voter* _msg = _internal_mutable_m_all_finished_votings_for_voter();
-  // @@protoc_insertion_point(field_mutable:proto.proto_massage.m_all_finished_votings_for_voter)
-  return _msg;
-}
-
 inline bool proto_massage::has_message_type() const {
   return message_type_case() != MESSAGE_TYPE_NOT_SET;
 }
@@ -8645,18 +6615,6 @@ inline proto_massage::MessageTypeCase proto_massage::message_type_case() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

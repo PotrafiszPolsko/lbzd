@@ -14,6 +14,7 @@ class c_blockchain_module_builder : public c_component_builder {
 		std::unique_ptr<c_utxo> build_utxo() const;
 		std::unique_ptr<c_block_verifier> build_block_verifyer(const c_blockchain & blockchain, const c_utxo & utxo, size_t number_of_threads) const;
 		std::unique_ptr<c_mempool> build_mempool() const;
+		std::unique_ptr<c_miner> build_miner() const;
 };
 
 #endif // BLOCKCHAIN_MODULE_BUILDER_HPP

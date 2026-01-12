@@ -19,10 +19,13 @@ void writing_string_to_a_file(const std::filesystem::path & filename_path, const
 std::string reading_string_to_a_file(const std::filesystem::path & filename_path) {
 	std::ifstream file;
 	file.open(filename_path, std::ios::in);
-	std::string file_data;
-	file >> file_data;
+	std::stringstream file_data;
+	std::string line;
+	while(std::getline(file, line, '\0')) {
+		file_data << line;
+	}
 	file.close();
-	return file_data;
+	return file_data.str();
 }
 
 std::filesystem::path make_file(const std::filesystem::path & filename_path, const std::string & text) {
@@ -38,7 +41,13 @@ std::filesystem::path make_conf_file(const std::filesystem::path & datadir_path)
 
 std::filesystem::path get_default_datadir() {
 	std::filesystem::path default_datadir_path;
+#ifdef WIN32
+	const auto * home_path = std::getenv("appdata");
+#elif ANDROID
+	const auto * home_path = std::getenv("ANDROID_HOME");
+#else
 	const auto * home_path = std::getenv("HOME");
+#endif
 	if(home_path == nullptr)
 		throw std::runtime_error("there is no HOME env");
 	default_datadir_path = home_path;

@@ -6,6 +6,7 @@
 #include "peer_reference.hpp"
 
 using read_handler = std::function<void(const c_peer_reference &, span<const unsigned char>)>;
+using write_handler = std::function<void(const c_peer_reference &)>;
 using new_peer_handler = std::function<void(const c_peer_reference &)>;
 
 #endif // P2P_HANDLER_TYPES_HPP

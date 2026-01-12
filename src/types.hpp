@@ -20,22 +20,19 @@ struct t_secret_key_type {
 	std::array<unsigned char, 32> m_kr; // right 32B of k
 };
 
+struct t_secret_key_root {
+	std::array<unsigned char, 32> m_kl; // left 32B of k (modifyted bytes)
+	std::array<unsigned char, 32> m_kr; // right 32B of k
+	std::array<unsigned char, 32> m_master_secret;
+};
+
 using t_public_key_type = std::array<unsigned char, 32>; // A
 constexpr size_t public_key_size = std::tuple_size<t_public_key_type>::value;
 
-struct t_voting_metadata {
-	std::string m_name;
-	uint8_t m_voting_type; //0=secret, 1=open
-	std::string m_question;
-	std::vector<std::string> m_options;
-	uint16_t m_number_of_choice; // number of choices in multiple choice questions
-	uint32_t m_authorization_level;
-	uint32_t m_number_of_blocks_to_the_end;
-	uint32_t m_start_timepoint;
+struct t_root_keypair {
+		t_public_key_type m_public_key;
+		t_secret_key_root m_secret_key;
+		std::array<unsigned char, 256/8> m_c; // chain code
 };
-
-bool operator==(const t_voting_metadata & lhs, const t_voting_metadata & rhs) noexcept;
-
-using t_authorization_level = uint32_t;
 
 #endif // TYPES_HPP

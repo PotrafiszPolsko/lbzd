@@ -5,9 +5,9 @@
 #include <random>
 
 const std::array<std::pair<std::string, unsigned short>, 3> c_p2p_module::s_seed_nodes = {
-	std::make_pair(std::string("proton.ivoting.pl"), 22083),
-	std::make_pair(std::string("foton.ivoting.pl"), 22083),
-	std::make_pair(std::string("antyneutron.ivoting.pl"), 22083)
+	std::make_pair(std::string("proton.ivoting.pl"), n_networkparams::port_p2p_tcp),
+	std::make_pair(std::string("foton.ivoting.pl"), n_networkparams::port_p2p_tcp),
+	std::make_pair(std::string("antyneutron.ivoting.pl"), n_networkparams::port_p2p_tcp)
 };
 
 c_p2p_module::c_p2p_module(c_mediator & mediator)
@@ -17,23 +17,15 @@ c_p2p_module::c_p2p_module(c_mediator & mediator)
 }
 
 void c_p2p_module::send_proto_message_to_peer(const proto::proto_massage & proto_message, const c_peer_reference& endpoint) {
-	LOG(debug) << "\e[0;31m" << proto_message.DebugString() << "\e[0m";
 	const std::string serialized_message = proto_message.SerializeAsString();
 	const auto type = endpoint.get_type();
 	if(type==c_peer_reference::type::e_tcp) m_session_manager_tcp->send_to_peer(endpoint, serialized_message);
 	if(type==c_peer_reference::type::e_url) m_session_manager_tcp->send_to_peer(endpoint, serialized_message);
-	if(type==c_peer_reference::type::e_onion) m_session_manager_tor->send_to_peer(endpoint, serialized_message);
 }
 
-void c_p2p_module::broadcast_proto_message(const proto::proto_massage & proto_message, const bool only_tor) {
-	LOG(debug) << "\e[0;31m broadcast " << proto_message.DebugString() << "\e[0m";
+void c_p2p_module::broadcast_proto_message(const proto::proto_massage & proto_message) {
 	const auto proto_message_as_string = proto_message.SerializeAsString();
-	if (m_session_manager_tor->number_of_connected_peers() == 0) 
-		LOG(warning) << "No connected tor peers";
-	m_session_manager_tor->send_to_all_peers(proto_message_as_string);
-	if (!only_tor) {
-		m_session_manager_tcp->send_to_all_peers(proto_message_as_string);
-	}
+	m_session_manager_tcp->send_to_all_peers(proto_message_as_string);
 }
 
 void c_p2p_module::gettx_request(const proto::request & request_proto, const c_peer_reference & endpoint) {
@@ -123,11 +115,7 @@ void c_p2p_module::getaddr_request(const c_peer_reference & endpoint) {
 		proto_peer_details->set_m_port(my_address_form_port_forwarder->second);
 		proto_peer_details->set_m_timestamp(get_unix_time());
 	}
-	const auto tor_port = m_session_manager_tor->get_hidden_service_port();
-	const auto tor_address = m_session_manager_tor->get_tor_address();
 	auto * const proto_peer_details = addr.add_m_peer_list();
-	proto_peer_details->set_m_address(tor_address);
-	proto_peer_details->set_m_port(tor_port);
 	proto_peer_details->set_m_timestamp(get_unix_time());
 	proto::proto_massage proto_message;
 	proto_message.mutable_m_addr()->CopyFrom(addr);
@@ -157,60 +145,6 @@ void c_p2p_module::getmerklebranch_request(const proto::request &request_proto, 
 	send_proto_message_to_peer(proto_message, endpoint);
 }
 
-void c_p2p_module::getallactivevotingsforvoter_request(const proto::request & request_proto, const c_peer_reference & endpoint) {
-	const auto & get_acvtive_votings_proto = request_proto.m_get_all_active_votings_for_voter();
-	const auto & voter_pk_str = get_acvtive_votings_proto.m_voter_pk();
-	t_mediator_command_request_get_all_active_votings_for_voter request;
-	request.m_voter_pk = transform_string_to_array<std::tuple_size<t_public_key_type>::value>(voter_pk_str);
-	const auto response = notify_mediator(request);
-	const auto response_get_all_votings = dynamic_cast<t_mediator_command_response_get_all_active_votings_for_voter&>(*response);
-	proto::proto_massage proto_message;
-	auto * const proto_active_votings = proto_message.mutable_m_all_active_votings_for_voter();
-	for (const auto & voting : response_get_all_votings.m_active_votings) {
-		auto * const voting_id = proto_active_votings->add_m_voting_ids();
-		*voting_id = container_to_string(voting.first);
-	}
-	send_proto_message_to_peer(proto_message, endpoint);
-}
-
-void c_p2p_module::getallfinishedvotingsforvoter_request(const proto::request & request_proto, const c_peer_reference & endpoint) {
-	const auto & get_finished_votings_proto = request_proto.m_get_all_finished_votings_for_voter();
-	const auto & voter_pk_str = get_finished_votings_proto.m_voter_pk();
-	t_mediator_command_request_get_all_finished_votings_for_voter request;
-	request.m_voter_pk = transform_string_to_array<std::tuple_size<t_public_key_type>::value>(voter_pk_str);
-	const auto response = notify_mediator(request);
-	const auto response_get_all_votings = dynamic_cast<t_mediator_command_response_get_all_finished_votings_for_voter&>(*response);
-	proto::proto_massage proto_message;
-	auto * const proto_finished_votings = proto_message.mutable_m_all_finished_votings_for_voter();
-	for (const auto & voting : response_get_all_votings.m_finished_votings) {
-		auto * const voting_id = proto_finished_votings->add_m_voting_ids();
-		*voting_id = container_to_string(voting.first);
-	}
-	send_proto_message_to_peer(proto_message, endpoint);
-}
-
-void c_p2p_module::getamountonpkh_request(const proto::request & request_proto, const c_peer_reference & endpoint) {
-	const auto & get_amount_on_pkh_proto = request_proto.m_get_amount_on_pkh();
-	const auto pkh_str = get_amount_on_pkh_proto.m_pkh();
-	const auto pkh = transform_string_to_array<hash_size>(pkh_str);
-	t_mediator_command_request_get_amount_on_pkh request;
-	request.m_pkh = pkh;
-	const auto response = notify_mediator(request);
-	const auto & response_amount_on_pkh = dynamic_cast<const t_mediator_command_response_get_amount_on_pkh&>(*response);
-	const auto amount = response_amount_on_pkh.m_amount;
-	proto::proto_massage proto_message;
-	auto * const proto_amount_on_pkh = proto_message.mutable_m_amount_on_pkh();
-	proto_amount_on_pkh->set_m_amount(amount);
-	if (amount > 0) { // get source txid
-		t_mediator_command_request_get_source_txid_for_pkh request;
-		request.m_pkh = pkh;
-		const auto response = notify_mediator(request);
-		const auto & response_source_txid = dynamic_cast<const t_mediator_command_response_get_source_txid_for_pkh&>(*response);
-		proto_amount_on_pkh->set_m_txid(container_to_string(response_source_txid.m_txid));
-	}
-	send_proto_message_to_peer(proto_message, endpoint);
-}
-
 void c_p2p_module::gettransaction_request(const proto::request & request_proto, const c_peer_reference & endpoint) {
 	const auto & get_tx_proto = request_proto.m_get_transaction();
 	const auto & txid_str = get_tx_proto.m_txid();
@@ -224,24 +158,6 @@ void c_p2p_module::gettransaction_request(const proto::request & request_proto, 
 	proto::proto_massage proto_message;
 	auto * const proto_tx_message = proto_message.mutable_m_transaction();
 	proto_tx_message->CopyFrom(tx_proto);
-	send_proto_message_to_peer(proto_message, endpoint);
-}
-
-void c_p2p_module::getauthtxid_request(const proto::request & request_proto, const c_peer_reference & endpoint) {
-	const auto & get_auth_txid_proto = request_proto.m_get_authorization_txid();
-	const auto & pk_str = get_auth_txid_proto.m_pk();
-	const auto pk = transform_string_to_array<public_key_size>(pk_str);
-	const auto & voting_id_str = get_auth_txid_proto.m_voting_id();
-	const auto voting_id = transform_string_to_array<hash_size>(voting_id_str);
-	t_mediator_command_request_get_voter_auth_txid_for_voting request;
-	request.m_voter_pk = pk;
-	request.m_voting_id = voting_id;
-	const auto response = notify_mediator(request);
-	const auto & response_txid_auth_voter = dynamic_cast<t_mediator_command_response_get_voter_auth_txid_for_voting&>(*response);
-	proto::proto_massage proto_message;
-	auto * const proto_tx_message = proto_message.mutable_m_authorization_txid();
-	auto * const txid_str = proto_tx_message->mutable_m_txid();
-	*txid_str = container_to_string(response_txid_auth_voter.m_txid);
 	send_proto_message_to_peer(proto_message, endpoint);
 }
 
@@ -267,20 +183,11 @@ void c_p2p_module::parse_proto_request(const proto::request & request, const c_p
 		case proto::request::RequestTypeCase::kMGetmerklebranch:
 			getmerklebranch_request(request, endpoint);
 			break;
-		case proto::request::RequestTypeCase::kMGetAllActiveVotingsForVoter:
-			getallactivevotingsforvoter_request(request, endpoint);
-			break;
-		case proto::request::RequestTypeCase::kMGetAmountOnPkh:
-			getamountonpkh_request(request, endpoint);
-			break;
 		case proto::request::RequestTypeCase::kMGetTransaction:
 			gettransaction_request(request, endpoint);
 			break;
-		case proto::request::RequestTypeCase::kMGetAuthorizationTxid:
-			getauthtxid_request(request, endpoint);
-			break;
-		case proto::request::RequestTypeCase::kMGetAllFinishedVotingsForVoter:
-			getallfinishedvotingsforvoter_request(request, endpoint);
+			// ignored messages (needed for spv wallet)
+		case proto::request::RequestTypeCase::kMGetAuthorizationTxid :
 			break;
 		case proto::request::RequestTypeCase::REQUEST_TYPE_NOT_SET:
 			break;
@@ -297,6 +204,30 @@ void c_p2p_module::ask_for_block(const c_header & header, const c_peer_reference
 	const auto block_hash_as_string = container_to_string(block_hash);
 	*proto_request_block->mutable_m_hash_header() = block_hash_as_string;
 	send_proto_message_to_peer(proto_message, endpoint);
+}
+
+bool c_p2p_module::block_exists(const t_hash_type & block_id) const {
+	t_mediator_command_request_block_exists request;
+	request.m_block_id = block_id;
+	const auto response = notify_mediator(request);
+	const auto & response_block_exists = dynamic_cast<const t_mediator_command_response_block_exists&>(*response);
+	return response_block_exists.m_block_exists;
+}
+
+void c_p2p_module::disconnect_peer(const c_peer_reference &endpoint) {
+	switch (endpoint.get_type()) {
+		case c_peer_reference::type::e_tcp:
+		{
+			m_session_manager_tcp->delete_session(endpoint);
+		}
+		case c_peer_reference::type::e_url:
+		{
+			m_session_manager_tcp->delete_session(endpoint);
+			break;
+		}
+		default:
+			break;
+	}
 }
 
 void c_p2p_module::parse_proto_headers(const proto::headers & headers_proto, const c_peer_reference & endpoint) {
@@ -341,11 +272,11 @@ void c_p2p_module::parse_proto_block(const proto::block & block_proto, const c_p
 
 	t_mediator_command_request_add_new_block request_mediator;
 	request_mediator.m_block = block;
-	broadcast_block(block, endpoint); // send to all except endpoint
 	const auto response = notify_mediator(request_mediator);
 	const auto & response_add_new_block = dynamic_cast<const t_mediator_command_response_add_new_block&>(*response);
 	const auto is_blockchain_synchronized = response_add_new_block.m_is_blockchain_synchronized;
 	if (is_blockchain_synchronized) {
+		broadcast_block(block, endpoint); // send to all except endpoint
 		return;
 	}
 	std::unique_lock<std::mutex> lock(m_headers_to_download_mutex);
@@ -373,6 +304,32 @@ void c_p2p_module::parse_proto_block(const proto::block & block_proto, const c_p
 	const auto next_header = m_headers_to_download.front();
 	lock.unlock();
 	ask_for_block(next_header, endpoint);
+}
+
+void c_p2p_module::parse_proto_transaction(const proto::transaction & transaction_proto, const c_peer_reference & endpoint) {
+	LOG(debug) << "parse proto transaction: " << transaction_proto.DebugString();
+	const auto tx = transaction_from_protobuf(transaction_proto);
+	t_mediator_command_request_add_new_transaction request_mediator;
+	request_mediator.m_transaction = tx;
+	const auto response = notify_mediator(request_mediator);
+	assert(response != nullptr);
+	const auto & response_add_new_transaction = dynamic_cast<const t_mediator_command_response_add_new_transaction&>(*response);
+	const auto transaction_added_to_mempool = response_add_new_transaction.m_tx_added_to_mempool;
+	if (!transaction_added_to_mempool) return;
+	// send to all except sender endpoint
+	std::vector<std::unique_ptr<c_peer_reference>> peer_list;
+	peer_list = m_session_manager_tcp->get_peer_list();
+	peer_list.erase(
+				std::remove_if(
+					peer_list.begin(),
+					peer_list.end(),
+					[&endpoint](auto & endpoint_ptr){return (*endpoint_ptr == endpoint);}));
+	proto::proto_massage proto_message;
+	auto * const proto_tx_message = proto_message.mutable_m_transaction();
+	proto_tx_message->CopyFrom(transaction_proto);
+	for (const auto & peer : peer_list) {
+		send_proto_message_to_peer(proto_message, *peer);
+	}
 }
 
 void c_p2p_module::parse_proto_addr(const proto::addr & addr_proto) {
@@ -408,7 +365,7 @@ void c_p2p_module::read_handler_tcp(const c_peer_reference & endpoint, span<cons
 		LOG(info) << "Get tcp command from " << endpoint.to_string();
 		proto::proto_massage proto_message;
 		proto_message.ParseFromArray(data.data(), static_cast<int>(data.size()));
-		LOG(debug) << "\e[0;34m" << proto_message.DebugString() << "\e[0m";
+		LOG(debug) << proto_message.DebugString();
 		switch (proto_message.message_type_case()) {
 			case proto::proto_massage::MessageTypeCase::kMRequest:
 			{
@@ -425,6 +382,11 @@ void c_p2p_module::read_handler_tcp(const c_peer_reference & endpoint, span<cons
 				parse_proto_block(proto_message.m_block(), endpoint);
 				break;
 			}
+			case proto::proto_massage::MessageTypeCase::kMTransaction:
+			{
+				parse_proto_transaction(proto_message.m_transaction(), endpoint);
+				break;
+			}
 			case proto::proto_massage::MessageTypeCase::kMAddr:
 			{
 				parse_proto_addr(proto_message.m_addr());
@@ -435,13 +397,8 @@ void c_p2p_module::read_handler_tcp(const c_peer_reference & endpoint, span<cons
 				parse_proto_merkle_branch(proto_message.m_merkle_branch());
 				break;
 			}
-			// ignored messages
-			case proto::proto_massage::MessageTypeCase::kMTransaction:
-			case proto::proto_massage::MessageTypeCase::kMAllActiveVotingsForVoter:
-			case proto::proto_massage::MessageTypeCase::kMAmountOnPkh:
+			// ignored messages (needed for spv wallet)
 			case proto::proto_massage::MessageTypeCase::kMAuthorizationTxid:
-			case proto::proto_massage::MessageTypeCase::kMAllFinishedVotingsForVoter:
-
 			{
 				break;
 			}
@@ -457,31 +414,14 @@ void c_p2p_module::read_handler_tcp(const c_peer_reference & endpoint, span<cons
 	}
 }
 
-void c_p2p_module::new_peer_handler(const c_peer_reference & endpoint) {
-	{
-		// ask for mempool
-		proto::proto_massage proto_message;
-		auto * const proto_request =  proto_message.mutable_m_request();
-		auto * const proto_getmempooltransactions = proto_request->mutable_m_getmempooltransactions();
-		assert(proto_getmempooltransactions->IsInitialized());
-		send_proto_message_to_peer(proto_message, endpoint);
-	}
-	ask_for_peers(endpoint);
-}
-
-void c_p2p_module::broadcast_transaction(const c_transaction & transaction, bool only_tor) {
+void c_p2p_module::broadcast_transaction(const c_transaction & transaction) {
 	const auto transaction_proto = transaction_to_protobuf(transaction);
 	proto::proto_massage proto_message;
 	auto * const proto_tx_message = proto_message.mutable_m_transaction();
 	proto_tx_message->CopyFrom(transaction_proto);
 	const auto proto_message_as_string = proto_message.SerializeAsString();
-	if (m_session_manager_tor->number_of_connected_peers() == 0) 
-		LOG(warning) << "No connected tor peeres";
-	m_session_manager_tor->send_to_all_peers(proto_message_as_string);
-	if (!only_tor) {
-		m_session_manager_tcp->send_to_all_peers(proto_message_as_string);
-	}
-	broadcast_proto_message(proto_message, only_tor);
+	m_session_manager_tcp->send_to_all_peers(proto_message_as_string);
+	broadcast_proto_message(proto_message);
 }
 
 void c_p2p_module::broadcast_block(const c_block & block) {
@@ -503,43 +443,6 @@ void c_p2p_module::broadcast_external_ip(const std::string ip, const unsigned sh
 	broadcast_proto_message(proto_message);
 }
 
-bool c_p2p_module::block_exists(const t_hash_type &block_id) const {
-	t_mediator_command_request_block_exists request;
-	request.block_id = block_id;
-	const auto response = notify_mediator(request);
-	const auto & response_block_exists = dynamic_cast<const t_mediator_command_response_block_exists&>(*response);
-	return response_block_exists.m_block_exists;
-}
-
-void c_p2p_module::disconnect_peer(const c_peer_reference &endpoint) {
-	switch (endpoint.get_type()) {
-		case c_peer_reference::type::e_onion:
-		{
-			m_session_manager_tor->delete_session(endpoint);
-			break;
-		}
-		case c_peer_reference::type::e_tcp:
-		{
-			m_session_manager_tcp->delete_session(endpoint);
-		}
-		case c_peer_reference::type::e_url:
-		{
-			m_session_manager_tcp->delete_session(endpoint);
-			break;
-		}
-		default:
-			break;
-	}
-}
-
-std::vector<std::unique_ptr<c_peer_reference>>c_p2p_module::get_peers_tcp() const {
-	return m_session_manager_tcp->get_peer_list();
-}
-
-std::vector<std::unique_ptr<c_peer_reference> > c_p2p_module::get_peers_tor() const {
-	return m_session_manager_tor->get_peer_list();
-}
-
 void c_p2p_module::broadcast_block(const c_block & block, const c_peer_reference & endpoint) {
 	const auto block_proto = block_to_protobuf(block);
 	proto::proto_massage proto_message;
@@ -550,20 +453,20 @@ void c_p2p_module::broadcast_block(const c_block & block, const c_peer_reference
 		if (*peer_tcp == endpoint) continue;
 		send_proto_message_to_peer(proto_message, *peer_tcp);
 	}
-	const auto peer_list_tor = m_session_manager_tor->get_peer_list();
-	for (const auto & peer_tor : peer_list_tor) {
-		if (*peer_tor == endpoint) continue;
-		send_proto_message_to_peer(proto_message, *peer_tor);
-	}
 }
 
-void c_p2p_module::new_identity_tor() {
-	m_session_manager_tor->new_identity();
-	const auto peer_list = m_peer_finder->load_peers();
-	for (const auto & peer : peer_list) {
-		if (peer.m_external_address.find(".onion") != std::string::npos)
-			connect_to_peer(peer.m_external_address, peer.m_port);
-	}
+std::vector<std::unique_ptr<c_peer_reference>>c_p2p_module::get_peers_tcp() const {
+	return m_session_manager_tcp->get_peer_list();
+}
+
+void c_p2p_module::new_peer_handler(const c_peer_reference &endpoint) {
+	// ask for mempool
+	proto::proto_massage proto_message;
+	auto * const proto_request =  proto_message.mutable_m_request();
+	auto * const proto_getmempooltransactions = proto_request->mutable_m_getmempooltransactions();
+	assert(proto_getmempooltransactions->IsInitialized());
+	send_proto_message_to_peer(proto_message, endpoint);
+	ask_for_peers(endpoint);
 }
 
 void c_p2p_module::ask_for_headers() {
@@ -607,29 +510,21 @@ void c_p2p_module::start_port_forwarding(const unsigned short port) {
 
 void c_p2p_module::connect_to_peer(const std::string & ip_str, unsigned short port) {
 	const auto peer_address_as_str = ip_str + ':' + std::to_string(port);
-	for (size_t i = 0; i < 3; i++) {
+	for (unsigned i = 0; i < 3; i++) {
 		LOG(debug) << "Connect to " << peer_address_as_str;
 		if (m_peer_finder->is_peer_blacklisted(peer_address_as_str)) return;
 		if (m_peer_finder->is_my_address(peer_address_as_str)) return;
 		try {
 			const auto peer_reference = create_peer_reference(ip_str, port);
 			switch (peer_reference->get_type()) {
-				case c_peer_reference::type::e_onion:
-				{
-					m_session_manager_tor->add_peer(*peer_reference);
-					break;
-				}
 				case c_peer_reference::type::e_tcp:
-				{
-					m_session_manager_tcp->add_peer(*peer_reference);
-				}
 				case c_peer_reference::type::e_url:
 				{
 					m_session_manager_tcp->add_peer(*peer_reference);
 					break;
 				}
-				default:
-					break;
+			default:
+				break;
 			}
 			ask_for_peers(*peer_reference);
 			m_peer_finder->assign_local_reference_to_external_address(*peer_reference, peer_address_as_str);
@@ -669,7 +564,7 @@ void c_p2p_module::connect_to_saved_peers() {
 }
 
 size_t c_p2p_module::number_of_connected_peers() const {
-	return m_session_manager_tcp->number_of_connected_peers() + m_session_manager_tor->number_of_connected_peers();
+	return m_session_manager_tcp->number_of_connected_peers();
 }
 
 void c_p2p_module::connect_to_random_seed_node() {
@@ -700,7 +595,6 @@ void c_p2p_module::connect_to_random_seed_node() {
 
 void c_p2p_module::run() {
 	LOG(info) << "Run p2p module";
-	LOG(info) << "Tor address: " << m_session_manager_tor->get_tor_address();
 	ask_for_headers();
 	ask_for_mempool();
 }

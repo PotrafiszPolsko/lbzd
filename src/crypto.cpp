@@ -32,33 +32,35 @@ std::string c_crypto::encrypt(const std::string &msg) const {
 	const auto *message = reinterpret_cast<const unsigned char *>(msg.data());
 	unsigned long long ciphertext_len = 0;
 	crypto_aead_xchacha20poly1305_ietf_encrypt(
-				cipher,
-				&ciphertext_len,
-				message,
-				msg.size(),
-				nullptr,
-				0,
-				nullptr,
-				m_nonce.data(),
-				m_key_pair.m_key_transmit.data());
+	cipher,
+	&ciphertext_len,
+	message,
+	msg.size(),
+	nullptr,
+	0,
+	nullptr,
+	m_nonce.data(),
+	m_key_pair.m_key_transmit.data()
+	);
 	return ciphertext;
 }
 
 std::vector<unsigned char> c_crypto::decrypt(const std::vector<unsigned char> &enc) const {
-	std::vector<unsigned char> decrypt;
-	if(enc.size()<crypto_aead_xchacha20poly1305_IETF_ABYTES) throw std::invalid_argument("encrypt size is to short");
-	decrypt.resize(enc.size() - crypto_aead_xchacha20poly1305_IETF_ABYTES);
-	unsigned long long decrypted_len = 0;
-	const int ret = crypto_aead_xchacha20poly1305_ietf_decrypt(
-				decrypt.data(),
-				&decrypted_len,
-				nullptr,
-				enc.data(),
-				enc.size(),
-				nullptr,
-				0,
-				m_nonce.data(),
-				m_key_pair.m_key_receive.data());
-	if (ret == -1) throw std::runtime_error("decrypt error");
-	return decrypt;
+		std::vector<unsigned char> decrypt;
+		if(enc.size()<crypto_aead_xchacha20poly1305_IETF_ABYTES) throw std::invalid_argument("encrypt size is to short");
+		decrypt.resize(enc.size() - crypto_aead_xchacha20poly1305_IETF_ABYTES);
+		unsigned long long decrypted_len = 0;
+		const int ret = crypto_aead_xchacha20poly1305_ietf_decrypt(
+		decrypt.data(),
+		&decrypted_len,
+		nullptr,
+		enc.data(),
+		enc.size(),
+		nullptr,
+		0,
+		m_nonce.data(),
+		m_key_pair.m_key_receive.data()
+		);
+		if (ret == -1) throw std::runtime_error("decrypt error");
+		return decrypt;
 }

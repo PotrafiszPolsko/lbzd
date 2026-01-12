@@ -33,8 +33,7 @@ struct transaction_vinDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT transaction_vinDefaultTypeInternal _transaction_vin_default_instance_;
 constexpr transaction_vout::transaction_vout(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : m_pkh_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
-  , m_amount_(0u){}
+  : m_pkh_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
 struct transaction_voutDefaultTypeInternal {
   constexpr transaction_voutDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -129,18 +128,6 @@ struct addrDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT addrDefaultTypeInternal _addr_default_instance_;
-constexpr all_active_votings_for_voter::all_active_votings_for_voter(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : m_voting_ids_(){}
-struct all_active_votings_for_voterDefaultTypeInternal {
-  constexpr all_active_votings_for_voterDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~all_active_votings_for_voterDefaultTypeInternal() {}
-  union {
-    all_active_votings_for_voter _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT all_active_votings_for_voterDefaultTypeInternal _all_active_votings_for_voter_default_instance_;
 constexpr getheaders::getheaders(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : m_hash_header_start_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
@@ -226,43 +213,6 @@ struct merkle_branchDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT merkle_branchDefaultTypeInternal _merkle_branch_default_instance_;
-constexpr get_all_active_votings_for_voter::get_all_active_votings_for_voter(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : m_voter_pk_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
-struct get_all_active_votings_for_voterDefaultTypeInternal {
-  constexpr get_all_active_votings_for_voterDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~get_all_active_votings_for_voterDefaultTypeInternal() {}
-  union {
-    get_all_active_votings_for_voter _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT get_all_active_votings_for_voterDefaultTypeInternal _get_all_active_votings_for_voter_default_instance_;
-constexpr get_amount_on_pkh::get_amount_on_pkh(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : m_pkh_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
-struct get_amount_on_pkhDefaultTypeInternal {
-  constexpr get_amount_on_pkhDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~get_amount_on_pkhDefaultTypeInternal() {}
-  union {
-    get_amount_on_pkh _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT get_amount_on_pkhDefaultTypeInternal _get_amount_on_pkh_default_instance_;
-constexpr amount_on_pkh::amount_on_pkh(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : m_txid_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
-  , m_amount_(0u){}
-struct amount_on_pkhDefaultTypeInternal {
-  constexpr amount_on_pkhDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~amount_on_pkhDefaultTypeInternal() {}
-  union {
-    amount_on_pkh _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT amount_on_pkhDefaultTypeInternal _amount_on_pkh_default_instance_;
 constexpr get_transaction::get_transaction(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : m_txid_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
@@ -300,30 +250,6 @@ struct authorization_txidDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT authorization_txidDefaultTypeInternal _authorization_txid_default_instance_;
-constexpr get_all_finished_votings_for_voter::get_all_finished_votings_for_voter(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : m_voter_pk_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
-struct get_all_finished_votings_for_voterDefaultTypeInternal {
-  constexpr get_all_finished_votings_for_voterDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~get_all_finished_votings_for_voterDefaultTypeInternal() {}
-  union {
-    get_all_finished_votings_for_voter _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT get_all_finished_votings_for_voterDefaultTypeInternal _get_all_finished_votings_for_voter_default_instance_;
-constexpr all_finished_votings_for_voter::all_finished_votings_for_voter(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : m_voting_ids_(){}
-struct all_finished_votings_for_voterDefaultTypeInternal {
-  constexpr all_finished_votings_for_voterDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~all_finished_votings_for_voterDefaultTypeInternal() {}
-  union {
-    all_finished_votings_for_voter _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT all_finished_votings_for_voterDefaultTypeInternal _all_finished_votings_for_voter_default_instance_;
 constexpr request::request(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : _oneof_case_{}{}
@@ -349,7 +275,7 @@ struct proto_massageDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT proto_massageDefaultTypeInternal _proto_massage_default_instance_;
 }  // namespace proto
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_p2p_2eproto[26];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_p2p_2eproto[20];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_p2p_2eproto[1];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_p2p_2eproto = nullptr;
 
@@ -373,7 +299,6 @@ const uint32_t TableStruct_p2p_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(prot
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::proto::transaction_vout, m_pkh_),
-  PROTOBUF_FIELD_OFFSET(::proto::transaction_vout, m_amount_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::proto::transaction, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -429,13 +354,6 @@ const uint32_t TableStruct_p2p_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(prot
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::proto::addr, m_peer_list_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::proto::all_active_votings_for_voter, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::proto::all_active_votings_for_voter, m_voting_ids_),
-  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::proto::getheaders, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -477,7 +395,7 @@ const uint32_t TableStruct_p2p_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(prot
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::proto::getmerklebranch, m_txid_),
-  PROTOBUF_FIELD_OFFSET(::proto::merkle_branch, _has_bits_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::proto::merkle_branch, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -485,32 +403,6 @@ const uint32_t TableStruct_p2p_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(prot
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::proto::merkle_branch, m_merkle_branch_),
   PROTOBUF_FIELD_OFFSET(::proto::merkle_branch, m_block_id_),
-  ~0u,
-  0,
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::proto::get_all_active_votings_for_voter, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::proto::get_all_active_votings_for_voter, m_voter_pk_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::proto::get_amount_on_pkh, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::proto::get_amount_on_pkh, m_pkh_),
-  PROTOBUF_FIELD_OFFSET(::proto::amount_on_pkh, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::proto::amount_on_pkh, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::proto::amount_on_pkh, m_amount_),
-  PROTOBUF_FIELD_OFFSET(::proto::amount_on_pkh, m_txid_),
-  ~0u,
-  0,
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::proto::get_transaction, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -534,28 +426,11 @@ const uint32_t TableStruct_p2p_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(prot
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::proto::authorization_txid, m_txid_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::proto::get_all_finished_votings_for_voter, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::proto::get_all_finished_votings_for_voter, m_voter_pk_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::proto::all_finished_votings_for_voter, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::proto::all_finished_votings_for_voter, m_voting_ids_),
-  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::proto::request, _internal_metadata_),
   ~0u,  // no _extensions_
   PROTOBUF_FIELD_OFFSET(::proto::request, _oneof_case_[0]),
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
-  ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
-  ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
@@ -578,38 +453,29 @@ const uint32_t TableStruct_p2p_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(prot
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
-  ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
-  ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
-  ::PROTOBUF_NAMESPACE_ID::internal::kInvalidFieldOffsetTag,
   PROTOBUF_FIELD_OFFSET(::proto::proto_massage, message_type_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 9, -1, sizeof(::proto::transaction_vin)},
   { 12, -1, -1, sizeof(::proto::transaction_vout)},
-  { 20, -1, -1, sizeof(::proto::transaction)},
-  { 31, -1, -1, sizeof(::proto::header)},
-  { 43, -1, -1, sizeof(::proto::headers)},
-  { 50, -1, -1, sizeof(::proto::block)},
-  { 58, -1, -1, sizeof(::proto::addr_peer_details)},
-  { 67, -1, -1, sizeof(::proto::addr)},
-  { 74, -1, -1, sizeof(::proto::all_active_votings_for_voter)},
-  { 81, -1, -1, sizeof(::proto::getheaders)},
-  { 90, -1, -1, sizeof(::proto::gettxs)},
-  { 97, -1, -1, sizeof(::proto::getblock)},
-  { 104, -1, -1, sizeof(::proto::getmempooltransactions)},
-  { 110, -1, -1, sizeof(::proto::getaddr)},
-  { 116, -1, -1, sizeof(::proto::getmerklebranch)},
-  { 123, 131, -1, sizeof(::proto::merkle_branch)},
-  { 133, -1, -1, sizeof(::proto::get_all_active_votings_for_voter)},
-  { 140, -1, -1, sizeof(::proto::get_amount_on_pkh)},
-  { 147, 155, -1, sizeof(::proto::amount_on_pkh)},
-  { 157, -1, -1, sizeof(::proto::get_transaction)},
-  { 164, -1, -1, sizeof(::proto::get_authorization_txid)},
-  { 172, -1, -1, sizeof(::proto::authorization_txid)},
-  { 179, -1, -1, sizeof(::proto::get_all_finished_votings_for_voter)},
-  { 186, -1, -1, sizeof(::proto::all_finished_votings_for_voter)},
-  { 193, -1, -1, sizeof(::proto::request)},
-  { 211, -1, -1, sizeof(::proto::proto_massage)},
+  { 19, -1, -1, sizeof(::proto::transaction)},
+  { 30, -1, -1, sizeof(::proto::header)},
+  { 42, -1, -1, sizeof(::proto::headers)},
+  { 49, -1, -1, sizeof(::proto::block)},
+  { 57, -1, -1, sizeof(::proto::addr_peer_details)},
+  { 66, -1, -1, sizeof(::proto::addr)},
+  { 73, -1, -1, sizeof(::proto::getheaders)},
+  { 82, -1, -1, sizeof(::proto::gettxs)},
+  { 89, -1, -1, sizeof(::proto::getblock)},
+  { 96, -1, -1, sizeof(::proto::getmempooltransactions)},
+  { 102, -1, -1, sizeof(::proto::getaddr)},
+  { 108, -1, -1, sizeof(::proto::getmerklebranch)},
+  { 115, -1, -1, sizeof(::proto::merkle_branch)},
+  { 123, -1, -1, sizeof(::proto::get_transaction)},
+  { 130, -1, -1, sizeof(::proto::get_authorization_txid)},
+  { 138, -1, -1, sizeof(::proto::authorization_txid)},
+  { 145, -1, -1, sizeof(::proto::request)},
+  { 160, -1, -1, sizeof(::proto::proto_massage)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -621,7 +487,6 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_block_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_addr_peer_details_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_addr_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_all_active_votings_for_voter_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_getheaders_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_gettxs_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_getblock_default_instance_),
@@ -629,98 +494,70 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_getaddr_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_getmerklebranch_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_merkle_branch_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_get_all_active_votings_for_voter_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_get_amount_on_pkh_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_amount_on_pkh_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_get_transaction_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_get_authorization_txid_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_authorization_txid_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_get_all_finished_votings_for_voter_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_all_finished_votings_for_voter_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_request_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_proto_massage_default_instance_),
 };
 
 const char descriptor_table_protodef_p2p_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\tp2p.proto\022\005proto\"\240\004\n\013transaction\0222\n\006m_"
+  "\n\tp2p.proto\022\005proto\"\221\003\n\013transaction\0222\n\006m_"
   "type\030\001 \001(\0162\".proto.transaction.transacti"
   "ontype\022%\n\005m_vin\030\002 \003(\0132\026.proto.transactio"
   "n.vin\022\'\n\006m_vout\030\003 \003(\0132\027.proto.transactio"
   "n.vout\022\016\n\006m_txid\030\004 \001(\014\022\025\n\rm_allmetadata\030"
   "\005 \001(\014\032C\n\003vin\022\016\n\006m_txid\030\001 \001(\014\022\023\n\006m_sign\030\002"
-  " \001(\014H\000\210\001\001\022\014\n\004m_pk\030\003 \001(\014B\t\n\007_m_sign\032\'\n\004vo"
-  "ut\022\r\n\005m_pkh\030\001 \001(\014\022\020\n\010m_amount\030\002 \001(\007\"\367\001\n\017"
-  "transactiontype\022\023\n\017add_secret_vote\020\000\022\021\n\r"
-  "add_open_vote\020\001\022\014\n\010generate\020\002\022\023\n\017authori"
-  "ze_miner\020\003\022\027\n\023authorize_organizer\020\004\022\024\n\020a"
-  "uthorize_issuer\020\005\022\023\n\017authorize_voter\020\006\022\021"
-  "\n\rcreate_voting\020\007\022\r\n\tcoin_join\020\010\022\033\n\027anot"
-  "her_voting_protocol\020\t\022\026\n\022hash_personal_d"
-  "ata\020\n\"\220\001\n\006header\022\021\n\tm_version\030\001 \001(\007\022\025\n\rm"
-  "_parent_hash\030\002 \001(\014\022\025\n\rm_actual_hash\030\003 \001("
-  "\014\022\024\n\014m_block_time\030\004 \001(\007\022\025\n\rm_all_tx_hash"
-  "\030\005 \001(\014\022\030\n\020m_all_signatures\030\006 \003(\014\"+\n\007head"
-  "ers\022 \n\tm_headers\030\001 \003(\0132\r.proto.header\"S\n"
-  "\005block\022\037\n\010m_header\030\001 \001(\0132\r.proto.header\022"
-  ")\n\rm_transaction\030\002 \003(\0132\022.proto.transacti"
-  "on\"}\n\004addr\022-\n\013m_peer_list\030\001 \003(\0132\030.proto."
-  "addr.peer_details\032F\n\014peer_details\022\021\n\tm_a"
-  "ddress\030\001 \001(\t\022\016\n\006m_port\030\002 \001(\r\022\023\n\013m_timest"
-  "amp\030\003 \001(\004\"4\n\034all_active_votings_for_vote"
-  "r\022\024\n\014m_voting_ids\030\001 \003(\014\"X\n\ngetheaders\022\021\n"
-  "\tm_version\030\001 \001(\007\022\033\n\023m_hash_header_start\030"
-  "\002 \001(\014\022\032\n\022m_hash_header_stop\030\003 \001(\014\"\037\n\006get"
-  "txs\022\025\n\rm_hash_header\030\001 \001(\014\"!\n\010getblock\022\025"
-  "\n\rm_hash_header\030\001 \001(\014\"\030\n\026getmempooltrans"
-  "actions\"\t\n\007getaddr\"!\n\017getmerklebranch\022\016\n"
-  "\006m_txid\030\001 \001(\014\"P\n\rmerkle_branch\022\027\n\017m_merk"
-  "le_branch\030\001 \003(\014\022\027\n\nm_block_id\030\002 \001(\014H\000\210\001\001"
-  "B\r\n\013_m_block_id\"6\n get_all_active_voting"
-  "s_for_voter\022\022\n\nm_voter_pk\030\001 \001(\014\"\"\n\021get_a"
-  "mount_on_pkh\022\r\n\005m_pkh\030\001 \001(\014\"A\n\ramount_on"
-  "_pkh\022\020\n\010m_amount\030\001 \001(\r\022\023\n\006m_txid\030\002 \001(\014H\000"
-  "\210\001\001B\t\n\007_m_txid\"!\n\017get_transaction\022\016\n\006m_t"
-  "xid\030\001 \001(\014\";\n\026get_authorization_txid\022\014\n\004m"
-  "_pk\030\001 \001(\014\022\023\n\013m_voting_id\030\002 \001(\014\"$\n\022author"
-  "ization_txid\022\016\n\006m_txid\030\001 \001(\014\"8\n\"get_all_"
-  "finished_votings_for_voter\022\022\n\nm_voter_pk"
-  "\030\001 \001(\014\"6\n\036all_finished_votings_for_voter"
-  "\022\024\n\014m_voting_ids\030\001 \003(\014\"\216\005\n\007request\022)\n\014m_"
-  "getheaders\030\001 \001(\0132\021.proto.getheadersH\000\022!\n"
-  "\010m_gettxs\030\002 \001(\0132\r.proto.gettxsH\000\022%\n\nm_ge"
-  "tblock\030\003 \001(\0132\017.proto.getblockH\000\022A\n\030m_get"
-  "mempooltransactions\030\004 \001(\0132\035.proto.getmem"
-  "pooltransactionsH\000\022#\n\tm_getaddr\030\005 \001(\0132\016."
-  "proto.getaddrH\000\0223\n\021m_getmerklebranch\030\006 \001"
-  "(\0132\026.proto.getmerklebranchH\000\022U\n\"m_get_al"
-  "l_active_votings_for_voter\030\010 \001(\0132\'.proto"
-  ".get_all_active_votings_for_voterH\000\0227\n\023m"
-  "_get_amount_on_pkh\030\t \001(\0132\030.proto.get_amo"
-  "unt_on_pkhH\000\0223\n\021m_get_transaction\030\n \001(\0132"
-  "\026.proto.get_transactionH\000\022A\n\030m_get_autho"
-  "rization_txid\030\013 \001(\0132\035.proto.get_authoriz"
-  "ation_txidH\000\022Y\n$m_get_all_finished_votin"
-  "gs_for_voter\030\014 \001(\0132).proto.get_all_finis"
-  "hed_votings_for_voterH\000B\016\n\014request_type\""
-  "\225\004\n\rproto_massage\022#\n\tm_request\030\001 \001(\0132\016.p"
-  "roto.requestH\000\022#\n\tm_headers\030\002 \001(\0132\016.prot"
-  "o.headersH\000\022\037\n\007m_block\030\003 \001(\0132\014.proto.blo"
-  "ckH\000\022+\n\rm_transaction\030\004 \001(\0132\022.proto.tran"
-  "sactionH\000\022\035\n\006m_addr\030\005 \001(\0132\013.proto.addrH\000"
-  "\022/\n\017m_merkle_branch\030\007 \001(\0132\024.proto.merkle"
-  "_branchH\000\022M\n\036m_all_active_votings_for_vo"
-  "ter\030\010 \001(\0132#.proto.all_active_votings_for"
-  "_voterH\000\022/\n\017m_amount_on_pkh\030\t \001(\0132\024.prot"
-  "o.amount_on_pkhH\000\0229\n\024m_authorization_txi"
-  "d\030\n \001(\0132\031.proto.authorization_txidH\000\022Q\n "
-  "m_all_finished_votings_for_voter\030\013 \001(\0132%"
-  ".proto.all_finished_votings_for_voterH\000B"
-  "\016\n\014message_typeb\006proto3"
+  " \001(\014H\000\210\001\001\022\014\n\004m_pk\030\003 \001(\014B\t\n\007_m_sign\032\025\n\004vo"
+  "ut\022\r\n\005m_pkh\030\001 \001(\014\"{\n\017transactiontype\022\017\n\013"
+  "placeholder\020\000\022\014\n\010generate\020\001\022\023\n\017authorize"
+  "_miner\020\002\022\027\n\023authorize_organizer\020\003\022\033\n\027ano"
+  "ther_voting_protocol\020\004\"\220\001\n\006header\022\021\n\tm_v"
+  "ersion\030\001 \001(\007\022\025\n\rm_parent_hash\030\002 \001(\014\022\025\n\rm"
+  "_actual_hash\030\003 \001(\014\022\024\n\014m_block_time\030\004 \001(\007"
+  "\022\025\n\rm_all_tx_hash\030\005 \001(\014\022\030\n\020m_all_signatu"
+  "res\030\006 \003(\014\"+\n\007headers\022 \n\tm_headers\030\001 \003(\0132"
+  "\r.proto.header\"S\n\005block\022\037\n\010m_header\030\001 \001("
+  "\0132\r.proto.header\022)\n\rm_transaction\030\002 \003(\0132"
+  "\022.proto.transaction\"}\n\004addr\022-\n\013m_peer_li"
+  "st\030\001 \003(\0132\030.proto.addr.peer_details\032F\n\014pe"
+  "er_details\022\021\n\tm_address\030\001 \001(\t\022\016\n\006m_port\030"
+  "\002 \001(\r\022\023\n\013m_timestamp\030\003 \001(\004\"X\n\ngetheaders"
+  "\022\021\n\tm_version\030\001 \001(\007\022\033\n\023m_hash_header_sta"
+  "rt\030\002 \001(\014\022\032\n\022m_hash_header_stop\030\003 \001(\014\"\037\n\006"
+  "gettxs\022\025\n\rm_hash_header\030\001 \001(\014\"!\n\010getbloc"
+  "k\022\025\n\rm_hash_header\030\001 \001(\014\"\030\n\026getmempooltr"
+  "ansactions\"\t\n\007getaddr\"!\n\017getmerklebranch"
+  "\022\016\n\006m_txid\030\001 \001(\014\"<\n\rmerkle_branch\022\027\n\017m_m"
+  "erkle_branch\030\001 \003(\014\022\022\n\nm_block_id\030\002 \001(\014\"!"
+  "\n\017get_transaction\022\016\n\006m_txid\030\001 \001(\014\";\n\026get"
+  "_authorization_txid\022\014\n\004m_pk\030\001 \001(\014\022\023\n\013m_v"
+  "oting_id\030\002 \001(\014\"$\n\022authorization_txid\022\016\n\006"
+  "m_txid\030\001 \001(\014\"\243\003\n\007request\022)\n\014m_getheaders"
+  "\030\001 \001(\0132\021.proto.getheadersH\000\022!\n\010m_gettxs\030"
+  "\002 \001(\0132\r.proto.gettxsH\000\022%\n\nm_getblock\030\003 \001"
+  "(\0132\017.proto.getblockH\000\022A\n\030m_getmempooltra"
+  "nsactions\030\004 \001(\0132\035.proto.getmempooltransa"
+  "ctionsH\000\022#\n\tm_getaddr\030\005 \001(\0132\016.proto.geta"
+  "ddrH\000\0223\n\021m_getmerklebranch\030\006 \001(\0132\026.proto"
+  ".getmerklebranchH\000\0223\n\021m_get_transaction\030"
+  "\n \001(\0132\026.proto.get_transactionH\000\022A\n\030m_get"
+  "_authorization_txid\030\013 \001(\0132\035.proto.get_au"
+  "thorization_txidH\000B\016\n\014request_type\"\302\002\n\rp"
+  "roto_massage\022#\n\tm_request\030\001 \001(\0132\016.proto."
+  "requestH\000\022#\n\tm_headers\030\002 \001(\0132\016.proto.hea"
+  "dersH\000\022\037\n\007m_block\030\003 \001(\0132\014.proto.blockH\000\022"
+  "+\n\rm_transaction\030\004 \001(\0132\022.proto.transacti"
+  "onH\000\022\035\n\006m_addr\030\005 \001(\0132\013.proto.addrH\000\022/\n\017m"
+  "_merkle_branch\030\007 \001(\0132\024.proto.merkle_bran"
+  "chH\000\0229\n\024m_authorization_txid\030\n \001(\0132\031.pro"
+  "to.authorization_txidH\000B\016\n\014message_typeb"
+  "\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_p2p_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_p2p_2eproto = {
-  false, false, 2943, descriptor_table_protodef_p2p_2eproto, "p2p.proto", 
-  &descriptor_table_p2p_2eproto_once, nullptr, 0, 26,
+  false, false, 2007, descriptor_table_protodef_p2p_2eproto, "p2p.proto", 
+  &descriptor_table_p2p_2eproto_once, nullptr, 0, 20,
   schemas, file_default_instances, TableStruct_p2p_2eproto::offsets,
   file_level_metadata_p2p_2eproto, file_level_enum_descriptors_p2p_2eproto, file_level_service_descriptors_p2p_2eproto,
 };
@@ -742,12 +579,6 @@ bool transaction_transactiontype_IsValid(int value) {
     case 2:
     case 3:
     case 4:
-    case 5:
-    case 6:
-    case 7:
-    case 8:
-    case 9:
-    case 10:
       return true;
     default:
       return false;
@@ -755,17 +586,11 @@ bool transaction_transactiontype_IsValid(int value) {
 }
 
 #if (__cplusplus < 201703) && (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
-constexpr transaction_transactiontype transaction::add_secret_vote;
-constexpr transaction_transactiontype transaction::add_open_vote;
+constexpr transaction_transactiontype transaction::placeholder;
 constexpr transaction_transactiontype transaction::generate;
 constexpr transaction_transactiontype transaction::authorize_miner;
 constexpr transaction_transactiontype transaction::authorize_organizer;
-constexpr transaction_transactiontype transaction::authorize_issuer;
-constexpr transaction_transactiontype transaction::authorize_voter;
-constexpr transaction_transactiontype transaction::create_voting;
-constexpr transaction_transactiontype transaction::coin_join;
 constexpr transaction_transactiontype transaction::another_voting_protocol;
-constexpr transaction_transactiontype transaction::hash_personal_data;
 constexpr transaction_transactiontype transaction::transactiontype_MIN;
 constexpr transaction_transactiontype transaction::transactiontype_MAX;
 constexpr int transaction::transactiontype_ARRAYSIZE;
@@ -1096,7 +921,6 @@ transaction_vout::transaction_vout(const transaction_vout& from)
     m_pkh_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_m_pkh(), 
       GetArenaForAllocation());
   }
-  m_amount_ = from.m_amount_;
   // @@protoc_insertion_point(copy_constructor:proto.transaction.vout)
 }
 
@@ -1105,7 +929,6 @@ m_pkh_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlread
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   m_pkh_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-m_amount_ = 0u;
 }
 
 transaction_vout::~transaction_vout() {
@@ -1137,7 +960,6 @@ void transaction_vout::Clear() {
   (void) cached_has_bits;
 
   m_pkh_.ClearToEmpty();
-  m_amount_ = 0u;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1153,14 +975,6 @@ const char* transaction_vout::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
           auto str = _internal_mutable_m_pkh();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // fixed32 m_amount = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 21)) {
-          m_amount_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<uint32_t>(ptr);
-          ptr += sizeof(uint32_t);
         } else
           goto handle_unusual;
         continue;
@@ -1199,12 +1013,6 @@ uint8_t* transaction_vout::_InternalSerialize(
         1, this->_internal_m_pkh(), target);
   }
 
-  // fixed32 m_amount = 2;
-  if (this->_internal_m_amount() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFixed32ToArray(2, this->_internal_m_amount(), target);
-  }
-
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1226,11 +1034,6 @@ size_t transaction_vout::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
         this->_internal_m_pkh());
-  }
-
-  // fixed32 m_amount = 2;
-  if (this->_internal_m_amount() != 0) {
-    total_size += 1 + 4;
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -1258,9 +1061,6 @@ void transaction_vout::MergeFrom(const transaction_vout& from) {
   if (!from._internal_m_pkh().empty()) {
     _internal_set_m_pkh(from._internal_m_pkh());
   }
-  if (from._internal_m_amount() != 0) {
-    _internal_set_m_amount(from._internal_m_amount());
-  }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -1285,7 +1085,6 @@ void transaction_vout::InternalSwap(transaction_vout* other) {
       &m_pkh_, lhs_arena,
       &other->m_pkh_, rhs_arena
   );
-  swap(m_amount_, other->m_amount_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata transaction_vout::GetMetadata() const {
@@ -2873,191 +2672,6 @@ void addr::InternalSwap(addr* other) {
 
 // ===================================================================
 
-class all_active_votings_for_voter::_Internal {
- public:
-};
-
-all_active_votings_for_voter::all_active_votings_for_voter(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  m_voting_ids_(arena) {
-  SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
-  // @@protoc_insertion_point(arena_constructor:proto.all_active_votings_for_voter)
-}
-all_active_votings_for_voter::all_active_votings_for_voter(const all_active_votings_for_voter& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      m_voting_ids_(from.m_voting_ids_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  // @@protoc_insertion_point(copy_constructor:proto.all_active_votings_for_voter)
-}
-
-inline void all_active_votings_for_voter::SharedCtor() {
-}
-
-all_active_votings_for_voter::~all_active_votings_for_voter() {
-  // @@protoc_insertion_point(destructor:proto.all_active_votings_for_voter)
-  if (GetArenaForAllocation() != nullptr) return;
-  SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-inline void all_active_votings_for_voter::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-}
-
-void all_active_votings_for_voter::ArenaDtor(void* object) {
-  all_active_votings_for_voter* _this = reinterpret_cast< all_active_votings_for_voter* >(object);
-  (void)_this;
-}
-void all_active_votings_for_voter::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
-void all_active_votings_for_voter::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-
-void all_active_votings_for_voter::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto.all_active_votings_for_voter)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  m_voting_ids_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* all_active_votings_for_voter::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // repeated bytes m_voting_ids = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            auto str = _internal_add_m_voting_ids();
-            ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* all_active_votings_for_voter::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:proto.all_active_votings_for_voter)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // repeated bytes m_voting_ids = 1;
-  for (int i = 0, n = this->_internal_m_voting_ids_size(); i < n; i++) {
-    const auto& s = this->_internal_m_voting_ids(i);
-    target = stream->WriteBytes(1, s, target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:proto.all_active_votings_for_voter)
-  return target;
-}
-
-size_t all_active_votings_for_voter::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:proto.all_active_votings_for_voter)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // repeated bytes m_voting_ids = 1;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(m_voting_ids_.size());
-  for (int i = 0, n = m_voting_ids_.size(); i < n; i++) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-      m_voting_ids_.Get(i));
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData all_active_votings_for_voter::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
-    all_active_votings_for_voter::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*all_active_votings_for_voter::GetClassData() const { return &_class_data_; }
-
-void all_active_votings_for_voter::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<all_active_votings_for_voter *>(to)->MergeFrom(
-      static_cast<const all_active_votings_for_voter &>(from));
-}
-
-
-void all_active_votings_for_voter::MergeFrom(const all_active_votings_for_voter& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto.all_active_votings_for_voter)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  m_voting_ids_.MergeFrom(from.m_voting_ids_);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void all_active_votings_for_voter::CopyFrom(const all_active_votings_for_voter& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto.all_active_votings_for_voter)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool all_active_votings_for_voter::IsInitialized() const {
-  return true;
-}
-
-void all_active_votings_for_voter::InternalSwap(all_active_votings_for_voter* other) {
-  using std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  m_voting_ids_.InternalSwap(&other->m_voting_ids_);
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata all_active_votings_for_voter::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
-      &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[8]);
-}
-
-// ===================================================================
-
 class getheaders::_Internal {
  public:
 };
@@ -3321,7 +2935,7 @@ void getheaders::InternalSwap(getheaders* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata getheaders::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[9]);
+      file_level_metadata_p2p_2eproto[8]);
 }
 
 // ===================================================================
@@ -3519,7 +3133,7 @@ void gettxs::InternalSwap(gettxs* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata gettxs::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[10]);
+      file_level_metadata_p2p_2eproto[9]);
 }
 
 // ===================================================================
@@ -3717,7 +3331,7 @@ void getblock::InternalSwap(getblock* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata getblock::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[11]);
+      file_level_metadata_p2p_2eproto[10]);
 }
 
 // ===================================================================
@@ -3756,7 +3370,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*getmempooltransactions::GetCla
 ::PROTOBUF_NAMESPACE_ID::Metadata getmempooltransactions::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[12]);
+      file_level_metadata_p2p_2eproto[11]);
 }
 
 // ===================================================================
@@ -3795,7 +3409,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*getaddr::GetClassData() const 
 ::PROTOBUF_NAMESPACE_ID::Metadata getaddr::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[13]);
+      file_level_metadata_p2p_2eproto[12]);
 }
 
 // ===================================================================
@@ -3993,17 +3607,13 @@ void getmerklebranch::InternalSwap(getmerklebranch* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata getmerklebranch::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[14]);
+      file_level_metadata_p2p_2eproto[13]);
 }
 
 // ===================================================================
 
 class merkle_branch::_Internal {
  public:
-  using HasBits = decltype(std::declval<merkle_branch>()._has_bits_);
-  static void set_has_m_block_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 1u;
-  }
 };
 
 merkle_branch::merkle_branch(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -4018,14 +3628,13 @@ merkle_branch::merkle_branch(::PROTOBUF_NAMESPACE_ID::Arena* arena,
 }
 merkle_branch::merkle_branch(const merkle_branch& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
-      _has_bits_(from._has_bits_),
       m_merkle_branch_(from.m_merkle_branch_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   m_block_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     m_block_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (from._internal_has_m_block_id()) {
+  if (!from._internal_m_block_id().empty()) {
     m_block_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_m_block_id(), 
       GetArenaForAllocation());
   }
@@ -4068,17 +3677,12 @@ void merkle_branch::Clear() {
   (void) cached_has_bits;
 
   m_merkle_branch_.Clear();
-  cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    m_block_id_.ClearNonDefaultToEmpty();
-  }
-  _has_bits_.Clear();
+  m_block_id_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* merkle_branch::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  _Internal::HasBits has_bits{};
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
@@ -4097,7 +3701,7 @@ const char* merkle_branch::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
         } else
           goto handle_unusual;
         continue;
-      // optional bytes m_block_id = 2;
+      // bytes m_block_id = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           auto str = _internal_mutable_m_block_id();
@@ -4122,7 +3726,6 @@ const char* merkle_branch::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
     CHK_(ptr != nullptr);
   }  // while
 message_done:
-  _has_bits_.Or(has_bits);
   return ptr;
 failure:
   ptr = nullptr;
@@ -4142,8 +3745,8 @@ uint8_t* merkle_branch::_InternalSerialize(
     target = stream->WriteBytes(1, s, target);
   }
 
-  // optional bytes m_block_id = 2;
-  if (_internal_has_m_block_id()) {
+  // bytes m_block_id = 2;
+  if (!this->_internal_m_block_id().empty()) {
     target = stream->WriteBytesMaybeAliased(
         2, this->_internal_m_block_id(), target);
   }
@@ -4172,9 +3775,8 @@ size_t merkle_branch::ByteSizeLong() const {
       m_merkle_branch_.Get(i));
   }
 
-  // optional bytes m_block_id = 2;
-  cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
+  // bytes m_block_id = 2;
+  if (!this->_internal_m_block_id().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
         this->_internal_m_block_id());
@@ -4203,7 +3805,7 @@ void merkle_branch::MergeFrom(const merkle_branch& from) {
   (void) cached_has_bits;
 
   m_merkle_branch_.MergeFrom(from.m_merkle_branch_);
-  if (from._internal_has_m_block_id()) {
+  if (!from._internal_m_block_id().empty()) {
     _internal_set_m_block_id(from._internal_m_block_id());
   }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -4225,7 +3827,6 @@ void merkle_branch::InternalSwap(merkle_branch* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_has_bits_[0], other->_has_bits_[0]);
   m_merkle_branch_.InternalSwap(&other->m_merkle_branch_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -4237,640 +3838,7 @@ void merkle_branch::InternalSwap(merkle_branch* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata merkle_branch::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[15]);
-}
-
-// ===================================================================
-
-class get_all_active_votings_for_voter::_Internal {
- public:
-};
-
-get_all_active_votings_for_voter::get_all_active_votings_for_voter(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
-  // @@protoc_insertion_point(arena_constructor:proto.get_all_active_votings_for_voter)
-}
-get_all_active_votings_for_voter::get_all_active_votings_for_voter(const get_all_active_votings_for_voter& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  m_voter_pk_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    m_voter_pk_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_m_voter_pk().empty()) {
-    m_voter_pk_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_m_voter_pk(), 
-      GetArenaForAllocation());
-  }
-  // @@protoc_insertion_point(copy_constructor:proto.get_all_active_votings_for_voter)
-}
-
-inline void get_all_active_votings_for_voter::SharedCtor() {
-m_voter_pk_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  m_voter_pk_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-
-get_all_active_votings_for_voter::~get_all_active_votings_for_voter() {
-  // @@protoc_insertion_point(destructor:proto.get_all_active_votings_for_voter)
-  if (GetArenaForAllocation() != nullptr) return;
-  SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-inline void get_all_active_votings_for_voter::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  m_voter_pk_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-
-void get_all_active_votings_for_voter::ArenaDtor(void* object) {
-  get_all_active_votings_for_voter* _this = reinterpret_cast< get_all_active_votings_for_voter* >(object);
-  (void)_this;
-}
-void get_all_active_votings_for_voter::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
-void get_all_active_votings_for_voter::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-
-void get_all_active_votings_for_voter::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto.get_all_active_votings_for_voter)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  m_voter_pk_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* get_all_active_votings_for_voter::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // bytes m_voter_pk = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_m_voter_pk();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* get_all_active_votings_for_voter::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:proto.get_all_active_votings_for_voter)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // bytes m_voter_pk = 1;
-  if (!this->_internal_m_voter_pk().empty()) {
-    target = stream->WriteBytesMaybeAliased(
-        1, this->_internal_m_voter_pk(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:proto.get_all_active_votings_for_voter)
-  return target;
-}
-
-size_t get_all_active_votings_for_voter::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:proto.get_all_active_votings_for_voter)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // bytes m_voter_pk = 1;
-  if (!this->_internal_m_voter_pk().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-        this->_internal_m_voter_pk());
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData get_all_active_votings_for_voter::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
-    get_all_active_votings_for_voter::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*get_all_active_votings_for_voter::GetClassData() const { return &_class_data_; }
-
-void get_all_active_votings_for_voter::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<get_all_active_votings_for_voter *>(to)->MergeFrom(
-      static_cast<const get_all_active_votings_for_voter &>(from));
-}
-
-
-void get_all_active_votings_for_voter::MergeFrom(const get_all_active_votings_for_voter& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto.get_all_active_votings_for_voter)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (!from._internal_m_voter_pk().empty()) {
-    _internal_set_m_voter_pk(from._internal_m_voter_pk());
-  }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void get_all_active_votings_for_voter::CopyFrom(const get_all_active_votings_for_voter& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto.get_all_active_votings_for_voter)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool get_all_active_votings_for_voter::IsInitialized() const {
-  return true;
-}
-
-void get_all_active_votings_for_voter::InternalSwap(get_all_active_votings_for_voter* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      &m_voter_pk_, lhs_arena,
-      &other->m_voter_pk_, rhs_arena
-  );
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata get_all_active_votings_for_voter::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
-      &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[16]);
-}
-
-// ===================================================================
-
-class get_amount_on_pkh::_Internal {
- public:
-};
-
-get_amount_on_pkh::get_amount_on_pkh(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
-  // @@protoc_insertion_point(arena_constructor:proto.get_amount_on_pkh)
-}
-get_amount_on_pkh::get_amount_on_pkh(const get_amount_on_pkh& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  m_pkh_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    m_pkh_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_m_pkh().empty()) {
-    m_pkh_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_m_pkh(), 
-      GetArenaForAllocation());
-  }
-  // @@protoc_insertion_point(copy_constructor:proto.get_amount_on_pkh)
-}
-
-inline void get_amount_on_pkh::SharedCtor() {
-m_pkh_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  m_pkh_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-
-get_amount_on_pkh::~get_amount_on_pkh() {
-  // @@protoc_insertion_point(destructor:proto.get_amount_on_pkh)
-  if (GetArenaForAllocation() != nullptr) return;
-  SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-inline void get_amount_on_pkh::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  m_pkh_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-
-void get_amount_on_pkh::ArenaDtor(void* object) {
-  get_amount_on_pkh* _this = reinterpret_cast< get_amount_on_pkh* >(object);
-  (void)_this;
-}
-void get_amount_on_pkh::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
-void get_amount_on_pkh::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-
-void get_amount_on_pkh::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto.get_amount_on_pkh)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  m_pkh_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* get_amount_on_pkh::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // bytes m_pkh = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_m_pkh();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* get_amount_on_pkh::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:proto.get_amount_on_pkh)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // bytes m_pkh = 1;
-  if (!this->_internal_m_pkh().empty()) {
-    target = stream->WriteBytesMaybeAliased(
-        1, this->_internal_m_pkh(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:proto.get_amount_on_pkh)
-  return target;
-}
-
-size_t get_amount_on_pkh::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:proto.get_amount_on_pkh)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // bytes m_pkh = 1;
-  if (!this->_internal_m_pkh().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-        this->_internal_m_pkh());
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData get_amount_on_pkh::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
-    get_amount_on_pkh::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*get_amount_on_pkh::GetClassData() const { return &_class_data_; }
-
-void get_amount_on_pkh::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<get_amount_on_pkh *>(to)->MergeFrom(
-      static_cast<const get_amount_on_pkh &>(from));
-}
-
-
-void get_amount_on_pkh::MergeFrom(const get_amount_on_pkh& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto.get_amount_on_pkh)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (!from._internal_m_pkh().empty()) {
-    _internal_set_m_pkh(from._internal_m_pkh());
-  }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void get_amount_on_pkh::CopyFrom(const get_amount_on_pkh& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto.get_amount_on_pkh)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool get_amount_on_pkh::IsInitialized() const {
-  return true;
-}
-
-void get_amount_on_pkh::InternalSwap(get_amount_on_pkh* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      &m_pkh_, lhs_arena,
-      &other->m_pkh_, rhs_arena
-  );
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata get_amount_on_pkh::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
-      &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[17]);
-}
-
-// ===================================================================
-
-class amount_on_pkh::_Internal {
- public:
-  using HasBits = decltype(std::declval<amount_on_pkh>()._has_bits_);
-  static void set_has_m_txid(HasBits* has_bits) {
-    (*has_bits)[0] |= 1u;
-  }
-};
-
-amount_on_pkh::amount_on_pkh(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
-  // @@protoc_insertion_point(arena_constructor:proto.amount_on_pkh)
-}
-amount_on_pkh::amount_on_pkh(const amount_on_pkh& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      _has_bits_(from._has_bits_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  m_txid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    m_txid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (from._internal_has_m_txid()) {
-    m_txid_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_m_txid(), 
-      GetArenaForAllocation());
-  }
-  m_amount_ = from.m_amount_;
-  // @@protoc_insertion_point(copy_constructor:proto.amount_on_pkh)
-}
-
-inline void amount_on_pkh::SharedCtor() {
-m_txid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  m_txid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-m_amount_ = 0u;
-}
-
-amount_on_pkh::~amount_on_pkh() {
-  // @@protoc_insertion_point(destructor:proto.amount_on_pkh)
-  if (GetArenaForAllocation() != nullptr) return;
-  SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-inline void amount_on_pkh::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  m_txid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-
-void amount_on_pkh::ArenaDtor(void* object) {
-  amount_on_pkh* _this = reinterpret_cast< amount_on_pkh* >(object);
-  (void)_this;
-}
-void amount_on_pkh::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
-void amount_on_pkh::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-
-void amount_on_pkh::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto.amount_on_pkh)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    m_txid_.ClearNonDefaultToEmpty();
-  }
-  m_amount_ = 0u;
-  _has_bits_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* amount_on_pkh::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  _Internal::HasBits has_bits{};
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // uint32 m_amount = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          m_amount_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // optional bytes m_txid = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_m_txid();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  _has_bits_.Or(has_bits);
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* amount_on_pkh::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:proto.amount_on_pkh)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // uint32 m_amount = 1;
-  if (this->_internal_m_amount() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_m_amount(), target);
-  }
-
-  // optional bytes m_txid = 2;
-  if (_internal_has_m_txid()) {
-    target = stream->WriteBytesMaybeAliased(
-        2, this->_internal_m_txid(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:proto.amount_on_pkh)
-  return target;
-}
-
-size_t amount_on_pkh::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:proto.amount_on_pkh)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // optional bytes m_txid = 2;
-  cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-        this->_internal_m_txid());
-  }
-
-  // uint32 m_amount = 1;
-  if (this->_internal_m_amount() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32SizePlusOne(this->_internal_m_amount());
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData amount_on_pkh::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
-    amount_on_pkh::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*amount_on_pkh::GetClassData() const { return &_class_data_; }
-
-void amount_on_pkh::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<amount_on_pkh *>(to)->MergeFrom(
-      static_cast<const amount_on_pkh &>(from));
-}
-
-
-void amount_on_pkh::MergeFrom(const amount_on_pkh& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto.amount_on_pkh)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (from._internal_has_m_txid()) {
-    _internal_set_m_txid(from._internal_m_txid());
-  }
-  if (from._internal_m_amount() != 0) {
-    _internal_set_m_amount(from._internal_m_amount());
-  }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void amount_on_pkh::CopyFrom(const amount_on_pkh& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto.amount_on_pkh)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool amount_on_pkh::IsInitialized() const {
-  return true;
-}
-
-void amount_on_pkh::InternalSwap(amount_on_pkh* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_has_bits_[0], other->_has_bits_[0]);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      &m_txid_, lhs_arena,
-      &other->m_txid_, rhs_arena
-  );
-  swap(m_amount_, other->m_amount_);
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata amount_on_pkh::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
-      &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[18]);
+      file_level_metadata_p2p_2eproto[14]);
 }
 
 // ===================================================================
@@ -5068,7 +4036,7 @@ void get_transaction::InternalSwap(get_transaction* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata get_transaction::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[19]);
+      file_level_metadata_p2p_2eproto[15]);
 }
 
 // ===================================================================
@@ -5310,7 +4278,7 @@ void get_authorization_txid::InternalSwap(get_authorization_txid* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata get_authorization_txid::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[20]);
+      file_level_metadata_p2p_2eproto[16]);
 }
 
 // ===================================================================
@@ -5508,390 +4476,7 @@ void authorization_txid::InternalSwap(authorization_txid* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata authorization_txid::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[21]);
-}
-
-// ===================================================================
-
-class get_all_finished_votings_for_voter::_Internal {
- public:
-};
-
-get_all_finished_votings_for_voter::get_all_finished_votings_for_voter(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
-  // @@protoc_insertion_point(arena_constructor:proto.get_all_finished_votings_for_voter)
-}
-get_all_finished_votings_for_voter::get_all_finished_votings_for_voter(const get_all_finished_votings_for_voter& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  m_voter_pk_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    m_voter_pk_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_m_voter_pk().empty()) {
-    m_voter_pk_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_m_voter_pk(), 
-      GetArenaForAllocation());
-  }
-  // @@protoc_insertion_point(copy_constructor:proto.get_all_finished_votings_for_voter)
-}
-
-inline void get_all_finished_votings_for_voter::SharedCtor() {
-m_voter_pk_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  m_voter_pk_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-
-get_all_finished_votings_for_voter::~get_all_finished_votings_for_voter() {
-  // @@protoc_insertion_point(destructor:proto.get_all_finished_votings_for_voter)
-  if (GetArenaForAllocation() != nullptr) return;
-  SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-inline void get_all_finished_votings_for_voter::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  m_voter_pk_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-
-void get_all_finished_votings_for_voter::ArenaDtor(void* object) {
-  get_all_finished_votings_for_voter* _this = reinterpret_cast< get_all_finished_votings_for_voter* >(object);
-  (void)_this;
-}
-void get_all_finished_votings_for_voter::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
-void get_all_finished_votings_for_voter::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-
-void get_all_finished_votings_for_voter::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto.get_all_finished_votings_for_voter)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  m_voter_pk_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* get_all_finished_votings_for_voter::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // bytes m_voter_pk = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_m_voter_pk();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* get_all_finished_votings_for_voter::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:proto.get_all_finished_votings_for_voter)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // bytes m_voter_pk = 1;
-  if (!this->_internal_m_voter_pk().empty()) {
-    target = stream->WriteBytesMaybeAliased(
-        1, this->_internal_m_voter_pk(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:proto.get_all_finished_votings_for_voter)
-  return target;
-}
-
-size_t get_all_finished_votings_for_voter::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:proto.get_all_finished_votings_for_voter)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // bytes m_voter_pk = 1;
-  if (!this->_internal_m_voter_pk().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-        this->_internal_m_voter_pk());
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData get_all_finished_votings_for_voter::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
-    get_all_finished_votings_for_voter::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*get_all_finished_votings_for_voter::GetClassData() const { return &_class_data_; }
-
-void get_all_finished_votings_for_voter::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<get_all_finished_votings_for_voter *>(to)->MergeFrom(
-      static_cast<const get_all_finished_votings_for_voter &>(from));
-}
-
-
-void get_all_finished_votings_for_voter::MergeFrom(const get_all_finished_votings_for_voter& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto.get_all_finished_votings_for_voter)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (!from._internal_m_voter_pk().empty()) {
-    _internal_set_m_voter_pk(from._internal_m_voter_pk());
-  }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void get_all_finished_votings_for_voter::CopyFrom(const get_all_finished_votings_for_voter& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto.get_all_finished_votings_for_voter)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool get_all_finished_votings_for_voter::IsInitialized() const {
-  return true;
-}
-
-void get_all_finished_votings_for_voter::InternalSwap(get_all_finished_votings_for_voter* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      &m_voter_pk_, lhs_arena,
-      &other->m_voter_pk_, rhs_arena
-  );
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata get_all_finished_votings_for_voter::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
-      &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[22]);
-}
-
-// ===================================================================
-
-class all_finished_votings_for_voter::_Internal {
- public:
-};
-
-all_finished_votings_for_voter::all_finished_votings_for_voter(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  m_voting_ids_(arena) {
-  SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
-  // @@protoc_insertion_point(arena_constructor:proto.all_finished_votings_for_voter)
-}
-all_finished_votings_for_voter::all_finished_votings_for_voter(const all_finished_votings_for_voter& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      m_voting_ids_(from.m_voting_ids_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  // @@protoc_insertion_point(copy_constructor:proto.all_finished_votings_for_voter)
-}
-
-inline void all_finished_votings_for_voter::SharedCtor() {
-}
-
-all_finished_votings_for_voter::~all_finished_votings_for_voter() {
-  // @@protoc_insertion_point(destructor:proto.all_finished_votings_for_voter)
-  if (GetArenaForAllocation() != nullptr) return;
-  SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-inline void all_finished_votings_for_voter::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-}
-
-void all_finished_votings_for_voter::ArenaDtor(void* object) {
-  all_finished_votings_for_voter* _this = reinterpret_cast< all_finished_votings_for_voter* >(object);
-  (void)_this;
-}
-void all_finished_votings_for_voter::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
-void all_finished_votings_for_voter::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-
-void all_finished_votings_for_voter::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto.all_finished_votings_for_voter)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  m_voting_ids_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* all_finished_votings_for_voter::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // repeated bytes m_voting_ids = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            auto str = _internal_add_m_voting_ids();
-            ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* all_finished_votings_for_voter::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:proto.all_finished_votings_for_voter)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // repeated bytes m_voting_ids = 1;
-  for (int i = 0, n = this->_internal_m_voting_ids_size(); i < n; i++) {
-    const auto& s = this->_internal_m_voting_ids(i);
-    target = stream->WriteBytes(1, s, target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:proto.all_finished_votings_for_voter)
-  return target;
-}
-
-size_t all_finished_votings_for_voter::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:proto.all_finished_votings_for_voter)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // repeated bytes m_voting_ids = 1;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(m_voting_ids_.size());
-  for (int i = 0, n = m_voting_ids_.size(); i < n; i++) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-      m_voting_ids_.Get(i));
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData all_finished_votings_for_voter::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
-    all_finished_votings_for_voter::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*all_finished_votings_for_voter::GetClassData() const { return &_class_data_; }
-
-void all_finished_votings_for_voter::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<all_finished_votings_for_voter *>(to)->MergeFrom(
-      static_cast<const all_finished_votings_for_voter &>(from));
-}
-
-
-void all_finished_votings_for_voter::MergeFrom(const all_finished_votings_for_voter& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto.all_finished_votings_for_voter)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  m_voting_ids_.MergeFrom(from.m_voting_ids_);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void all_finished_votings_for_voter::CopyFrom(const all_finished_votings_for_voter& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto.all_finished_votings_for_voter)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool all_finished_votings_for_voter::IsInitialized() const {
-  return true;
-}
-
-void all_finished_votings_for_voter::InternalSwap(all_finished_votings_for_voter* other) {
-  using std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  m_voting_ids_.InternalSwap(&other->m_voting_ids_);
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata all_finished_votings_for_voter::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
-      &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[23]);
+      file_level_metadata_p2p_2eproto[17]);
 }
 
 // ===================================================================
@@ -5904,11 +4489,8 @@ class request::_Internal {
   static const ::proto::getmempooltransactions& m_getmempooltransactions(const request* msg);
   static const ::proto::getaddr& m_getaddr(const request* msg);
   static const ::proto::getmerklebranch& m_getmerklebranch(const request* msg);
-  static const ::proto::get_all_active_votings_for_voter& m_get_all_active_votings_for_voter(const request* msg);
-  static const ::proto::get_amount_on_pkh& m_get_amount_on_pkh(const request* msg);
   static const ::proto::get_transaction& m_get_transaction(const request* msg);
   static const ::proto::get_authorization_txid& m_get_authorization_txid(const request* msg);
-  static const ::proto::get_all_finished_votings_for_voter& m_get_all_finished_votings_for_voter(const request* msg);
 };
 
 const ::proto::getheaders&
@@ -5935,14 +4517,6 @@ const ::proto::getmerklebranch&
 request::_Internal::m_getmerklebranch(const request* msg) {
   return *msg->request_type_.m_getmerklebranch_;
 }
-const ::proto::get_all_active_votings_for_voter&
-request::_Internal::m_get_all_active_votings_for_voter(const request* msg) {
-  return *msg->request_type_.m_get_all_active_votings_for_voter_;
-}
-const ::proto::get_amount_on_pkh&
-request::_Internal::m_get_amount_on_pkh(const request* msg) {
-  return *msg->request_type_.m_get_amount_on_pkh_;
-}
 const ::proto::get_transaction&
 request::_Internal::m_get_transaction(const request* msg) {
   return *msg->request_type_.m_get_transaction_;
@@ -5950,10 +4524,6 @@ request::_Internal::m_get_transaction(const request* msg) {
 const ::proto::get_authorization_txid&
 request::_Internal::m_get_authorization_txid(const request* msg) {
   return *msg->request_type_.m_get_authorization_txid_;
-}
-const ::proto::get_all_finished_votings_for_voter&
-request::_Internal::m_get_all_finished_votings_for_voter(const request* msg) {
-  return *msg->request_type_.m_get_all_finished_votings_for_voter_;
 }
 void request::set_allocated_m_getheaders(::proto::getheaders* m_getheaders) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
@@ -6045,36 +4615,6 @@ void request::set_allocated_m_getmerklebranch(::proto::getmerklebranch* m_getmer
   }
   // @@protoc_insertion_point(field_set_allocated:proto.request.m_getmerklebranch)
 }
-void request::set_allocated_m_get_all_active_votings_for_voter(::proto::get_all_active_votings_for_voter* m_get_all_active_votings_for_voter) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_request_type();
-  if (m_get_all_active_votings_for_voter) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::proto::get_all_active_votings_for_voter>::GetOwningArena(m_get_all_active_votings_for_voter);
-    if (message_arena != submessage_arena) {
-      m_get_all_active_votings_for_voter = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, m_get_all_active_votings_for_voter, submessage_arena);
-    }
-    set_has_m_get_all_active_votings_for_voter();
-    request_type_.m_get_all_active_votings_for_voter_ = m_get_all_active_votings_for_voter;
-  }
-  // @@protoc_insertion_point(field_set_allocated:proto.request.m_get_all_active_votings_for_voter)
-}
-void request::set_allocated_m_get_amount_on_pkh(::proto::get_amount_on_pkh* m_get_amount_on_pkh) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_request_type();
-  if (m_get_amount_on_pkh) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::proto::get_amount_on_pkh>::GetOwningArena(m_get_amount_on_pkh);
-    if (message_arena != submessage_arena) {
-      m_get_amount_on_pkh = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, m_get_amount_on_pkh, submessage_arena);
-    }
-    set_has_m_get_amount_on_pkh();
-    request_type_.m_get_amount_on_pkh_ = m_get_amount_on_pkh;
-  }
-  // @@protoc_insertion_point(field_set_allocated:proto.request.m_get_amount_on_pkh)
-}
 void request::set_allocated_m_get_transaction(::proto::get_transaction* m_get_transaction) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   clear_request_type();
@@ -6104,21 +4644,6 @@ void request::set_allocated_m_get_authorization_txid(::proto::get_authorization_
     request_type_.m_get_authorization_txid_ = m_get_authorization_txid;
   }
   // @@protoc_insertion_point(field_set_allocated:proto.request.m_get_authorization_txid)
-}
-void request::set_allocated_m_get_all_finished_votings_for_voter(::proto::get_all_finished_votings_for_voter* m_get_all_finished_votings_for_voter) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_request_type();
-  if (m_get_all_finished_votings_for_voter) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::proto::get_all_finished_votings_for_voter>::GetOwningArena(m_get_all_finished_votings_for_voter);
-    if (message_arena != submessage_arena) {
-      m_get_all_finished_votings_for_voter = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, m_get_all_finished_votings_for_voter, submessage_arena);
-    }
-    set_has_m_get_all_finished_votings_for_voter();
-    request_type_.m_get_all_finished_votings_for_voter_ = m_get_all_finished_votings_for_voter;
-  }
-  // @@protoc_insertion_point(field_set_allocated:proto.request.m_get_all_finished_votings_for_voter)
 }
 request::request(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
@@ -6158,24 +4683,12 @@ request::request(const request& from)
       _internal_mutable_m_getmerklebranch()->::proto::getmerklebranch::MergeFrom(from._internal_m_getmerklebranch());
       break;
     }
-    case kMGetAllActiveVotingsForVoter: {
-      _internal_mutable_m_get_all_active_votings_for_voter()->::proto::get_all_active_votings_for_voter::MergeFrom(from._internal_m_get_all_active_votings_for_voter());
-      break;
-    }
-    case kMGetAmountOnPkh: {
-      _internal_mutable_m_get_amount_on_pkh()->::proto::get_amount_on_pkh::MergeFrom(from._internal_m_get_amount_on_pkh());
-      break;
-    }
     case kMGetTransaction: {
       _internal_mutable_m_get_transaction()->::proto::get_transaction::MergeFrom(from._internal_m_get_transaction());
       break;
     }
     case kMGetAuthorizationTxid: {
       _internal_mutable_m_get_authorization_txid()->::proto::get_authorization_txid::MergeFrom(from._internal_m_get_authorization_txid());
-      break;
-    }
-    case kMGetAllFinishedVotingsForVoter: {
-      _internal_mutable_m_get_all_finished_votings_for_voter()->::proto::get_all_finished_votings_for_voter::MergeFrom(from._internal_m_get_all_finished_votings_for_voter());
       break;
     }
     case REQUEST_TYPE_NOT_SET: {
@@ -6252,18 +4765,6 @@ void request::clear_request_type() {
       }
       break;
     }
-    case kMGetAllActiveVotingsForVoter: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete request_type_.m_get_all_active_votings_for_voter_;
-      }
-      break;
-    }
-    case kMGetAmountOnPkh: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete request_type_.m_get_amount_on_pkh_;
-      }
-      break;
-    }
     case kMGetTransaction: {
       if (GetArenaForAllocation() == nullptr) {
         delete request_type_.m_get_transaction_;
@@ -6273,12 +4774,6 @@ void request::clear_request_type() {
     case kMGetAuthorizationTxid: {
       if (GetArenaForAllocation() == nullptr) {
         delete request_type_.m_get_authorization_txid_;
-      }
-      break;
-    }
-    case kMGetAllFinishedVotingsForVoter: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete request_type_.m_get_all_finished_votings_for_voter_;
       }
       break;
     }
@@ -6354,22 +4849,6 @@ const char* request::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
         } else
           goto handle_unusual;
         continue;
-      // .proto.get_all_active_votings_for_voter m_get_all_active_votings_for_voter = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 66)) {
-          ptr = ctx->ParseMessage(_internal_mutable_m_get_all_active_votings_for_voter(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .proto.get_amount_on_pkh m_get_amount_on_pkh = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 74)) {
-          ptr = ctx->ParseMessage(_internal_mutable_m_get_amount_on_pkh(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
       // .proto.get_transaction m_get_transaction = 10;
       case 10:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 82)) {
@@ -6382,14 +4861,6 @@ const char* request::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
       case 11:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 90)) {
           ptr = ctx->ParseMessage(_internal_mutable_m_get_authorization_txid(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .proto.get_all_finished_votings_for_voter m_get_all_finished_votings_for_voter = 12;
-      case 12:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 98)) {
-          ptr = ctx->ParseMessage(_internal_mutable_m_get_all_finished_votings_for_voter(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -6471,22 +4942,6 @@ uint8_t* request::_InternalSerialize(
         6, _Internal::m_getmerklebranch(this), target, stream);
   }
 
-  // .proto.get_all_active_votings_for_voter m_get_all_active_votings_for_voter = 8;
-  if (_internal_has_m_get_all_active_votings_for_voter()) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        8, _Internal::m_get_all_active_votings_for_voter(this), target, stream);
-  }
-
-  // .proto.get_amount_on_pkh m_get_amount_on_pkh = 9;
-  if (_internal_has_m_get_amount_on_pkh()) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        9, _Internal::m_get_amount_on_pkh(this), target, stream);
-  }
-
   // .proto.get_transaction m_get_transaction = 10;
   if (_internal_has_m_get_transaction()) {
     target = stream->EnsureSpace(target);
@@ -6501,14 +4956,6 @@ uint8_t* request::_InternalSerialize(
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
         11, _Internal::m_get_authorization_txid(this), target, stream);
-  }
-
-  // .proto.get_all_finished_votings_for_voter m_get_all_finished_votings_for_voter = 12;
-  if (_internal_has_m_get_all_finished_votings_for_voter()) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        12, _Internal::m_get_all_finished_votings_for_voter(this), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -6570,20 +5017,6 @@ size_t request::ByteSizeLong() const {
           *request_type_.m_getmerklebranch_);
       break;
     }
-    // .proto.get_all_active_votings_for_voter m_get_all_active_votings_for_voter = 8;
-    case kMGetAllActiveVotingsForVoter: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *request_type_.m_get_all_active_votings_for_voter_);
-      break;
-    }
-    // .proto.get_amount_on_pkh m_get_amount_on_pkh = 9;
-    case kMGetAmountOnPkh: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *request_type_.m_get_amount_on_pkh_);
-      break;
-    }
     // .proto.get_transaction m_get_transaction = 10;
     case kMGetTransaction: {
       total_size += 1 +
@@ -6596,13 +5029,6 @@ size_t request::ByteSizeLong() const {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
           *request_type_.m_get_authorization_txid_);
-      break;
-    }
-    // .proto.get_all_finished_votings_for_voter m_get_all_finished_votings_for_voter = 12;
-    case kMGetAllFinishedVotingsForVoter: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *request_type_.m_get_all_finished_votings_for_voter_);
       break;
     }
     case REQUEST_TYPE_NOT_SET: {
@@ -6656,24 +5082,12 @@ void request::MergeFrom(const request& from) {
       _internal_mutable_m_getmerklebranch()->::proto::getmerklebranch::MergeFrom(from._internal_m_getmerklebranch());
       break;
     }
-    case kMGetAllActiveVotingsForVoter: {
-      _internal_mutable_m_get_all_active_votings_for_voter()->::proto::get_all_active_votings_for_voter::MergeFrom(from._internal_m_get_all_active_votings_for_voter());
-      break;
-    }
-    case kMGetAmountOnPkh: {
-      _internal_mutable_m_get_amount_on_pkh()->::proto::get_amount_on_pkh::MergeFrom(from._internal_m_get_amount_on_pkh());
-      break;
-    }
     case kMGetTransaction: {
       _internal_mutable_m_get_transaction()->::proto::get_transaction::MergeFrom(from._internal_m_get_transaction());
       break;
     }
     case kMGetAuthorizationTxid: {
       _internal_mutable_m_get_authorization_txid()->::proto::get_authorization_txid::MergeFrom(from._internal_m_get_authorization_txid());
-      break;
-    }
-    case kMGetAllFinishedVotingsForVoter: {
-      _internal_mutable_m_get_all_finished_votings_for_voter()->::proto::get_all_finished_votings_for_voter::MergeFrom(from._internal_m_get_all_finished_votings_for_voter());
       break;
     }
     case REQUEST_TYPE_NOT_SET: {
@@ -6704,7 +5118,7 @@ void request::InternalSwap(request* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata request::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[24]);
+      file_level_metadata_p2p_2eproto[18]);
 }
 
 // ===================================================================
@@ -6717,10 +5131,7 @@ class proto_massage::_Internal {
   static const ::proto::transaction& m_transaction(const proto_massage* msg);
   static const ::proto::addr& m_addr(const proto_massage* msg);
   static const ::proto::merkle_branch& m_merkle_branch(const proto_massage* msg);
-  static const ::proto::all_active_votings_for_voter& m_all_active_votings_for_voter(const proto_massage* msg);
-  static const ::proto::amount_on_pkh& m_amount_on_pkh(const proto_massage* msg);
   static const ::proto::authorization_txid& m_authorization_txid(const proto_massage* msg);
-  static const ::proto::all_finished_votings_for_voter& m_all_finished_votings_for_voter(const proto_massage* msg);
 };
 
 const ::proto::request&
@@ -6747,21 +5158,9 @@ const ::proto::merkle_branch&
 proto_massage::_Internal::m_merkle_branch(const proto_massage* msg) {
   return *msg->message_type_.m_merkle_branch_;
 }
-const ::proto::all_active_votings_for_voter&
-proto_massage::_Internal::m_all_active_votings_for_voter(const proto_massage* msg) {
-  return *msg->message_type_.m_all_active_votings_for_voter_;
-}
-const ::proto::amount_on_pkh&
-proto_massage::_Internal::m_amount_on_pkh(const proto_massage* msg) {
-  return *msg->message_type_.m_amount_on_pkh_;
-}
 const ::proto::authorization_txid&
 proto_massage::_Internal::m_authorization_txid(const proto_massage* msg) {
   return *msg->message_type_.m_authorization_txid_;
-}
-const ::proto::all_finished_votings_for_voter&
-proto_massage::_Internal::m_all_finished_votings_for_voter(const proto_massage* msg) {
-  return *msg->message_type_.m_all_finished_votings_for_voter_;
 }
 void proto_massage::set_allocated_m_request(::proto::request* m_request) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
@@ -6853,36 +5252,6 @@ void proto_massage::set_allocated_m_merkle_branch(::proto::merkle_branch* m_merk
   }
   // @@protoc_insertion_point(field_set_allocated:proto.proto_massage.m_merkle_branch)
 }
-void proto_massage::set_allocated_m_all_active_votings_for_voter(::proto::all_active_votings_for_voter* m_all_active_votings_for_voter) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_message_type();
-  if (m_all_active_votings_for_voter) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::proto::all_active_votings_for_voter>::GetOwningArena(m_all_active_votings_for_voter);
-    if (message_arena != submessage_arena) {
-      m_all_active_votings_for_voter = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, m_all_active_votings_for_voter, submessage_arena);
-    }
-    set_has_m_all_active_votings_for_voter();
-    message_type_.m_all_active_votings_for_voter_ = m_all_active_votings_for_voter;
-  }
-  // @@protoc_insertion_point(field_set_allocated:proto.proto_massage.m_all_active_votings_for_voter)
-}
-void proto_massage::set_allocated_m_amount_on_pkh(::proto::amount_on_pkh* m_amount_on_pkh) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_message_type();
-  if (m_amount_on_pkh) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::proto::amount_on_pkh>::GetOwningArena(m_amount_on_pkh);
-    if (message_arena != submessage_arena) {
-      m_amount_on_pkh = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, m_amount_on_pkh, submessage_arena);
-    }
-    set_has_m_amount_on_pkh();
-    message_type_.m_amount_on_pkh_ = m_amount_on_pkh;
-  }
-  // @@protoc_insertion_point(field_set_allocated:proto.proto_massage.m_amount_on_pkh)
-}
 void proto_massage::set_allocated_m_authorization_txid(::proto::authorization_txid* m_authorization_txid) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   clear_message_type();
@@ -6897,21 +5266,6 @@ void proto_massage::set_allocated_m_authorization_txid(::proto::authorization_tx
     message_type_.m_authorization_txid_ = m_authorization_txid;
   }
   // @@protoc_insertion_point(field_set_allocated:proto.proto_massage.m_authorization_txid)
-}
-void proto_massage::set_allocated_m_all_finished_votings_for_voter(::proto::all_finished_votings_for_voter* m_all_finished_votings_for_voter) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_message_type();
-  if (m_all_finished_votings_for_voter) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::proto::all_finished_votings_for_voter>::GetOwningArena(m_all_finished_votings_for_voter);
-    if (message_arena != submessage_arena) {
-      m_all_finished_votings_for_voter = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, m_all_finished_votings_for_voter, submessage_arena);
-    }
-    set_has_m_all_finished_votings_for_voter();
-    message_type_.m_all_finished_votings_for_voter_ = m_all_finished_votings_for_voter;
-  }
-  // @@protoc_insertion_point(field_set_allocated:proto.proto_massage.m_all_finished_votings_for_voter)
 }
 proto_massage::proto_massage(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
@@ -6951,20 +5305,8 @@ proto_massage::proto_massage(const proto_massage& from)
       _internal_mutable_m_merkle_branch()->::proto::merkle_branch::MergeFrom(from._internal_m_merkle_branch());
       break;
     }
-    case kMAllActiveVotingsForVoter: {
-      _internal_mutable_m_all_active_votings_for_voter()->::proto::all_active_votings_for_voter::MergeFrom(from._internal_m_all_active_votings_for_voter());
-      break;
-    }
-    case kMAmountOnPkh: {
-      _internal_mutable_m_amount_on_pkh()->::proto::amount_on_pkh::MergeFrom(from._internal_m_amount_on_pkh());
-      break;
-    }
     case kMAuthorizationTxid: {
       _internal_mutable_m_authorization_txid()->::proto::authorization_txid::MergeFrom(from._internal_m_authorization_txid());
-      break;
-    }
-    case kMAllFinishedVotingsForVoter: {
-      _internal_mutable_m_all_finished_votings_for_voter()->::proto::all_finished_votings_for_voter::MergeFrom(from._internal_m_all_finished_votings_for_voter());
       break;
     }
     case MESSAGE_TYPE_NOT_SET: {
@@ -7041,27 +5383,9 @@ void proto_massage::clear_message_type() {
       }
       break;
     }
-    case kMAllActiveVotingsForVoter: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete message_type_.m_all_active_votings_for_voter_;
-      }
-      break;
-    }
-    case kMAmountOnPkh: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete message_type_.m_amount_on_pkh_;
-      }
-      break;
-    }
     case kMAuthorizationTxid: {
       if (GetArenaForAllocation() == nullptr) {
         delete message_type_.m_authorization_txid_;
-      }
-      break;
-    }
-    case kMAllFinishedVotingsForVoter: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete message_type_.m_all_finished_votings_for_voter_;
       }
       break;
     }
@@ -7137,34 +5461,10 @@ const char* proto_massage::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
         } else
           goto handle_unusual;
         continue;
-      // .proto.all_active_votings_for_voter m_all_active_votings_for_voter = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 66)) {
-          ptr = ctx->ParseMessage(_internal_mutable_m_all_active_votings_for_voter(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .proto.amount_on_pkh m_amount_on_pkh = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 74)) {
-          ptr = ctx->ParseMessage(_internal_mutable_m_amount_on_pkh(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
       // .proto.authorization_txid m_authorization_txid = 10;
       case 10:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 82)) {
           ptr = ctx->ParseMessage(_internal_mutable_m_authorization_txid(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .proto.all_finished_votings_for_voter m_all_finished_votings_for_voter = 11;
-      case 11:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 90)) {
-          ptr = ctx->ParseMessage(_internal_mutable_m_all_finished_votings_for_voter(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -7246,36 +5546,12 @@ uint8_t* proto_massage::_InternalSerialize(
         7, _Internal::m_merkle_branch(this), target, stream);
   }
 
-  // .proto.all_active_votings_for_voter m_all_active_votings_for_voter = 8;
-  if (_internal_has_m_all_active_votings_for_voter()) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        8, _Internal::m_all_active_votings_for_voter(this), target, stream);
-  }
-
-  // .proto.amount_on_pkh m_amount_on_pkh = 9;
-  if (_internal_has_m_amount_on_pkh()) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        9, _Internal::m_amount_on_pkh(this), target, stream);
-  }
-
   // .proto.authorization_txid m_authorization_txid = 10;
   if (_internal_has_m_authorization_txid()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
         10, _Internal::m_authorization_txid(this), target, stream);
-  }
-
-  // .proto.all_finished_votings_for_voter m_all_finished_votings_for_voter = 11;
-  if (_internal_has_m_all_finished_votings_for_voter()) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        11, _Internal::m_all_finished_votings_for_voter(this), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -7337,32 +5613,11 @@ size_t proto_massage::ByteSizeLong() const {
           *message_type_.m_merkle_branch_);
       break;
     }
-    // .proto.all_active_votings_for_voter m_all_active_votings_for_voter = 8;
-    case kMAllActiveVotingsForVoter: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *message_type_.m_all_active_votings_for_voter_);
-      break;
-    }
-    // .proto.amount_on_pkh m_amount_on_pkh = 9;
-    case kMAmountOnPkh: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *message_type_.m_amount_on_pkh_);
-      break;
-    }
     // .proto.authorization_txid m_authorization_txid = 10;
     case kMAuthorizationTxid: {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
           *message_type_.m_authorization_txid_);
-      break;
-    }
-    // .proto.all_finished_votings_for_voter m_all_finished_votings_for_voter = 11;
-    case kMAllFinishedVotingsForVoter: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *message_type_.m_all_finished_votings_for_voter_);
       break;
     }
     case MESSAGE_TYPE_NOT_SET: {
@@ -7416,20 +5671,8 @@ void proto_massage::MergeFrom(const proto_massage& from) {
       _internal_mutable_m_merkle_branch()->::proto::merkle_branch::MergeFrom(from._internal_m_merkle_branch());
       break;
     }
-    case kMAllActiveVotingsForVoter: {
-      _internal_mutable_m_all_active_votings_for_voter()->::proto::all_active_votings_for_voter::MergeFrom(from._internal_m_all_active_votings_for_voter());
-      break;
-    }
-    case kMAmountOnPkh: {
-      _internal_mutable_m_amount_on_pkh()->::proto::amount_on_pkh::MergeFrom(from._internal_m_amount_on_pkh());
-      break;
-    }
     case kMAuthorizationTxid: {
       _internal_mutable_m_authorization_txid()->::proto::authorization_txid::MergeFrom(from._internal_m_authorization_txid());
-      break;
-    }
-    case kMAllFinishedVotingsForVoter: {
-      _internal_mutable_m_all_finished_votings_for_voter()->::proto::all_finished_votings_for_voter::MergeFrom(from._internal_m_all_finished_votings_for_voter());
       break;
     }
     case MESSAGE_TYPE_NOT_SET: {
@@ -7460,7 +5703,7 @@ void proto_massage::InternalSwap(proto_massage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata proto_massage::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_p2p_2eproto_getter, &descriptor_table_p2p_2eproto_once,
-      file_level_metadata_p2p_2eproto[25]);
+      file_level_metadata_p2p_2eproto[19]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -7490,9 +5733,6 @@ template<> PROTOBUF_NOINLINE ::proto::addr_peer_details* Arena::CreateMaybeMessa
 template<> PROTOBUF_NOINLINE ::proto::addr* Arena::CreateMaybeMessage< ::proto::addr >(Arena* arena) {
   return Arena::CreateMessageInternal< ::proto::addr >(arena);
 }
-template<> PROTOBUF_NOINLINE ::proto::all_active_votings_for_voter* Arena::CreateMaybeMessage< ::proto::all_active_votings_for_voter >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::proto::all_active_votings_for_voter >(arena);
-}
 template<> PROTOBUF_NOINLINE ::proto::getheaders* Arena::CreateMaybeMessage< ::proto::getheaders >(Arena* arena) {
   return Arena::CreateMessageInternal< ::proto::getheaders >(arena);
 }
@@ -7514,15 +5754,6 @@ template<> PROTOBUF_NOINLINE ::proto::getmerklebranch* Arena::CreateMaybeMessage
 template<> PROTOBUF_NOINLINE ::proto::merkle_branch* Arena::CreateMaybeMessage< ::proto::merkle_branch >(Arena* arena) {
   return Arena::CreateMessageInternal< ::proto::merkle_branch >(arena);
 }
-template<> PROTOBUF_NOINLINE ::proto::get_all_active_votings_for_voter* Arena::CreateMaybeMessage< ::proto::get_all_active_votings_for_voter >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::proto::get_all_active_votings_for_voter >(arena);
-}
-template<> PROTOBUF_NOINLINE ::proto::get_amount_on_pkh* Arena::CreateMaybeMessage< ::proto::get_amount_on_pkh >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::proto::get_amount_on_pkh >(arena);
-}
-template<> PROTOBUF_NOINLINE ::proto::amount_on_pkh* Arena::CreateMaybeMessage< ::proto::amount_on_pkh >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::proto::amount_on_pkh >(arena);
-}
 template<> PROTOBUF_NOINLINE ::proto::get_transaction* Arena::CreateMaybeMessage< ::proto::get_transaction >(Arena* arena) {
   return Arena::CreateMessageInternal< ::proto::get_transaction >(arena);
 }
@@ -7531,12 +5762,6 @@ template<> PROTOBUF_NOINLINE ::proto::get_authorization_txid* Arena::CreateMaybe
 }
 template<> PROTOBUF_NOINLINE ::proto::authorization_txid* Arena::CreateMaybeMessage< ::proto::authorization_txid >(Arena* arena) {
   return Arena::CreateMessageInternal< ::proto::authorization_txid >(arena);
-}
-template<> PROTOBUF_NOINLINE ::proto::get_all_finished_votings_for_voter* Arena::CreateMaybeMessage< ::proto::get_all_finished_votings_for_voter >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::proto::get_all_finished_votings_for_voter >(arena);
-}
-template<> PROTOBUF_NOINLINE ::proto::all_finished_votings_for_voter* Arena::CreateMaybeMessage< ::proto::all_finished_votings_for_voter >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::proto::all_finished_votings_for_voter >(arena);
 }
 template<> PROTOBUF_NOINLINE ::proto::request* Arena::CreateMaybeMessage< ::proto::request >(Arena* arena) {
   return Arena::CreateMessageInternal< ::proto::request >(arena);

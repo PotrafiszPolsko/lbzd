@@ -20,7 +20,7 @@ std::vector<t_peer_finder_address> c_peer_finder::load_peers() {
 	leveldb::Iterator* it = m_database->NewIterator(leveldb::ReadOptions());
 	for (it->SeekToFirst(); it->Valid(); it->Next()) {
 		t_peer_finder_address peer_finder_address;
-		const auto public_address_port = it->key().ToString(); // <public ip/onion>:<port>
+		const auto public_address_port = it->key().ToString(); // <public ip>:<port>
 		const auto colon_pos = public_address_port.find_last_of(':');
 		peer_finder_address.m_external_address = public_address_port.substr(0, colon_pos);
 		const auto port_str = public_address_port.substr(colon_pos + 1);

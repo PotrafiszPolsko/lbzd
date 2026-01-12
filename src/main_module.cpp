@@ -16,6 +16,56 @@ std::unique_ptr<t_mediator_command_response> c_main_module::notify(const t_media
 			response_add_new_block.m_is_block_exists = m_blockchain_module->block_exists(block.m_header.m_actual_hash);
 			break;
 		}
+		case t_mediator_cmd_type::e_add_new_transaction:
+		{
+			const auto & add_new_tx_request = dynamic_cast<const t_mediator_command_request_add_new_transaction &>(request);
+			const auto & tx = add_new_tx_request.m_transaction;
+			
+			const auto tx_added_to_mempool = m_blockchain_module->add_new_transaction(tx);
+			response = std::make_unique<t_mediator_command_response_add_new_transaction>();
+			auto & response_new_tx = dynamic_cast<t_mediator_command_response_add_new_transaction &>(*response);
+			response_new_tx.m_tx_added_to_mempool = tx_added_to_mempool;
+			
+			if (tx_added_to_mempool) break; // full transaction added to mempool
+			else throw std::runtime_error("transaction is not added to mempool");
+			break;
+		}
+		case t_mediator_cmd_type::e_authorize_organizer_by_admin:
+		{
+			const auto & request_organizer_pk = dynamic_cast<const t_mediator_command_request_authorize_organizer_by_admin&>(request);
+			const auto pk_admin = m_wallet_module->get_main_pk();
+			if(!n_blockchainparams::is_pk_adminsys(pk_admin)) throw std::invalid_argument("Bad adminsys public key");
+			auto auth_tx = m_blockchain_module->authorize_organizer_by_adminsys(request_organizer_pk.m_organizer_pk, pk_admin);
+			const auto tx_added = m_blockchain_module->add_new_transaction(auth_tx);
+			if (tx_added) m_p2p_module->broadcast_transaction(auth_tx);
+			response = std::make_unique<t_mediator_command_response_authorize_organizer_by_admin>();
+			auto & response_authorize_organizer = dynamic_cast<t_mediator_command_response_authorize_organizer_by_admin&>(*response);
+			response_authorize_organizer.m_txid_auth_organizer = auth_tx.m_txid;
+			break;
+		}
+		case t_mediator_cmd_type::e_authorize_miner_by_admin:
+		{
+			const auto & request_miner_pk = dynamic_cast<const t_mediator_command_request_authorize_miner_by_admin&>(request);
+			const auto pk_admin = m_wallet_module->get_main_pk();
+			if(!n_blockchainparams::is_pk_adminsys(pk_admin)) throw std::invalid_argument("Bad adminsys public key");
+			auto auth_tx = m_blockchain_module->authorize_miner_by_adminsys(request_miner_pk.m_miner_pk, pk_admin);
+			const auto tx_added = m_blockchain_module->add_new_transaction(auth_tx);
+			if (tx_added) m_p2p_module->broadcast_transaction(auth_tx);
+			response = std::make_unique<t_mediator_command_response_authorize_miner_by_admin>();
+			auto & response_authorize_miner = dynamic_cast<t_mediator_command_response_authorize_miner_by_admin&>(*response);
+			response_authorize_miner.m_txid_auth_miner = auth_tx.m_txid;
+			break;
+		}	
+		case t_mediator_cmd_type::e_add_transaction_to_mempool:
+		{
+			const auto &request_get_tx = dynamic_cast<const t_mediator_command_request_add_transaction_to_mempool&>(request);
+			const auto &tx = request_get_tx.m_tx;
+			if(m_blockchain_module->is_transaction_in_blockchain(tx.m_txid)) throw std::invalid_argument("this transaction is in blockchain");
+			if(!m_blockchain_module->add_new_transaction(tx)) throw std::invalid_argument("this transaction is in mempool");
+			m_p2p_module->broadcast_transaction(tx);
+			response = std::make_unique<t_mediator_command_response_add_transaction_to_mempool>();
+			break;
+		}
 		case t_mediator_cmd_type::e_broadcast_block:
 		{
 			const auto & broadcast_block_request = dynamic_cast<const t_mediator_command_request_broadcast_block&>(request);
@@ -30,6 +80,29 @@ std::unique_ptr<t_mediator_command_response> c_main_module::notify(const t_media
 			const auto & transaction = broadcast_transaction_request.m_transaction;
 			m_p2p_module->broadcast_transaction(transaction);
 			response = std::make_unique<t_mediator_command_response_broadcast_transaction>();
+			break;
+		}
+		case t_mediator_cmd_type::e_set_key_from_mnemonic:
+		{
+			const auto & request_set_key_from_mnemonic = dynamic_cast<const t_mediator_command_request_set_key_from_mnemonic&>(request);
+			m_wallet_module->generate_seed_from_words(request_set_key_from_mnemonic.m_seed_words);
+			response = std::make_unique<t_mediator_command_response_set_key_from_mnemonic>();
+			break;
+		}
+		case t_mediator_cmd_type::e_add_voting_protocol:
+		{
+			const auto my_pk = m_wallet_module->get_main_pk();
+			const auto is_pk_organizer = m_blockchain_module->is_pk_organizer(my_pk);
+			if (!is_pk_organizer) throw std::runtime_error("Organizer permissions needed");
+			const auto & request_add_another_voting_protocol = dynamic_cast<const t_mediator_command_request_add_voting_protocol&>(request);
+			const auto & voting_protocol = request_add_another_voting_protocol.m_voting_protocol;
+			const auto tx = m_blockchain_module->add_voting_protocol(voting_protocol, my_pk);
+			if(m_blockchain_module->is_transaction_in_blockchain(tx.m_txid)) throw std::invalid_argument("this transaction is in blockchain");
+			if(!m_blockchain_module->add_new_transaction(tx)) throw std::invalid_argument("this transaction is in mempool");
+			m_p2p_module->broadcast_transaction(tx);
+			response = std::make_unique<t_mediator_command_response_add_voting_protocol>();
+			auto & response_add_voting_protocol = dynamic_cast<t_mediator_command_response_add_voting_protocol&>(*response);
+			response_add_voting_protocol.m_txid = tx.m_txid;
 			break;
 		}
 		default:
@@ -84,6 +157,14 @@ std::unique_ptr<t_mediator_command_response> c_main_module::notify(const t_media
 			response_as_get_mempool_size.m_number_of_transactions = m_blockchain_module->get_number_of_mempool_transactions();
 			break;
 		}
+		case t_mediator_cmd_type::e_get_pk:
+		{
+			const auto pk = m_wallet_module->get_main_pk();
+			response = std::make_unique<t_mediator_command_response_get_pk>();
+			auto & response_get_pk = dynamic_cast<t_mediator_command_response_get_pk&>(*response);
+			response_get_pk.m_pk = pk;
+			break;
+		}
 		case t_mediator_cmd_type::e_get_mempool_transactions:
 		{
 			response = std::make_unique<t_mediator_command_response_get_mempool_transactions>();
@@ -118,35 +199,11 @@ std::unique_ptr<t_mediator_command_response> c_main_module::notify(const t_media
 			response_is_pk_organizer.m_is_organizer_pk = is_organizer_pk;
 			break;
 		}
-		case t_mediator_cmd_type::e_get_voter_auth_data:
+		case t_mediator_cmd_type::e_get_mnemonic_sentence:
 		{
-			const auto & request_auth_data = dynamic_cast<const t_mediator_command_request_get_voter_auth_data&>(request);
-			const auto & pk_voter = request_auth_data.m_pk_voter;
-			const auto & txs_of_voter_auth = m_blockchain_module->get_voter_auth_tx(pk_voter);
-			if(txs_of_voter_auth.empty()) throw std::invalid_argument("this pk is not authorized");
-			std::map<t_public_key_type, uint32_t> auth_data;
-			for(const auto &tx_of_voter_auth:txs_of_voter_auth) {
-				const auto & all_metadata = tx_of_voter_auth.m_allmetadata;
-				const auto & metadata_map = get_metadata_map(all_metadata);
-				const auto auth_level_vec = metadata_map.find("AL")->second;
-				const auto auth_level = get_integer<uint32_t>(auth_level_vec);
-				const auto co_color = metadata_map.find("CO")->second;
-				auth_data.emplace(container_to_array_of_uchars<public_key_size>(co_color), auth_level);
-			}
-			response = std::make_unique<t_mediator_command_response_get_voter_auth_data>();
-			auto & response_auth_level = dynamic_cast<t_mediator_command_response_get_voter_auth_data&>(*response);
-			response_auth_level.m_auth_level = auth_data;
-			break;
-		}
-		case t_mediator_cmd_type::e_get_personal_data:
-		{
-			const auto & request_personal_data = dynamic_cast<const t_mediator_command_request_get_personal_data&>(request);
-			const auto & pk_voter = request_personal_data.m_pk_voter;
-			if(!m_blockchain_module->is_pk_voter(pk_voter)) throw std::invalid_argument("Bad public key");
-			const auto hash_personal_data = m_blockchain_module->get_hash_personal_data(pk_voter);
-			response = std::make_unique<t_mediator_command_response_get_personal_data>();
-			auto & response_get_personal_data = dynamic_cast<t_mediator_command_response_get_personal_data&>(*response);
-			response_get_personal_data.m_hash_personal_data = hash_personal_data;
+			response = std::make_unique<t_mediator_command_response_get_mnemonic_sentence>();
+			auto & response_get_mnemonic = dynamic_cast<t_mediator_command_response_get_mnemonic_sentence&>(*response);
+			response_get_mnemonic.m_seed_words = m_wallet_module->get_words_of_seed();
 			break;
 		}
 		case t_mediator_cmd_type::e_get_height:
@@ -157,106 +214,69 @@ std::unique_ptr<t_mediator_command_response> c_main_module::notify(const t_media
 			response_get_height.m_height = m_blockchain_module->get_height();
 			break;
 		}
-		case t_mediator_cmd_type::e_get_voting_results:
-		{
-			const auto &request_get_txid = dynamic_cast<const t_mediator_command_request_get_voting_results&>(request);
-			const auto &txid = request_get_txid.m_txid_create_voting;
-			const auto tx = m_blockchain_module->get_transaction(txid);
-			const auto metadata_map = get_metadata_map(tx.m_allmetadata);
-			auto iterators_OP = metadata_map.equal_range("OP");
-			std::unordered_map<std::string, uint32_t> voting_results;
-			for (auto iterator = iterators_OP.first; iterator != iterators_OP.second; ++iterator) {
-				const auto &option = iterator->second;
-				const auto hash_of_option_address = c_blockchain_module::get_vote_option_hash(tx, option);
-				const auto amount = m_blockchain_module->get_amount_pkh(hash_of_option_address);
-				const auto option_str = container_to_string(option);
-				voting_results.emplace(std::make_pair(option_str, amount));
-			}
-			response = std::make_unique<t_mediator_command_response_get_voting_results>();
-			auto & response_get_voting_results = dynamic_cast<t_mediator_command_response_get_voting_results&>(*response);
-			const auto number_voters = m_blockchain_module->get_number_of_all_voters_in_group(tx.m_vin.at(0).m_pk);
-			response_get_voting_results.m_number_of_authorized_voters = number_voters;
-			response_get_voting_results.m_voting_results = std::move(voting_results);
-			auto iterator_VN = metadata_map.find("VN");
-			const auto &name_bin = iterator_VN->second;
-			const auto name_str = container_to_string(name_bin);
-			response_get_voting_results.m_voting_name = name_str;
-			auto iterator_QS = metadata_map.find("QS");
-			const auto question_bin = iterator_QS->second;
-			const auto question_str = container_to_string(question_bin);
-			response_get_voting_results.m_question = question_str;
-			break;
-		}
 		case t_mediator_cmd_type::e_is_authorized:
 		{
 			const auto &request_is_authorized = dynamic_cast<const t_mediator_command_request_is_authorized&>(request);
 			const auto &pk = request_is_authorized.m_pk;
 			response = std::make_unique<t_mediator_command_response_is_authorized>();
 			auto &response_is_authorized = dynamic_cast<t_mediator_command_response_is_authorized&>(*response);
-			if(n_blockchainparams::is_pk_adminsys(pk)) {
-				response_is_authorized.m_is_adminsys = true;
+			const auto is_pk_adminsys = n_blockchainparams::is_pk_adminsys(pk);
+			bool is_pk_organizer = false;
+			bool is_pk_miner = false;
+			if(is_pk_adminsys) {
+				response_is_authorized.m_is_adminsys = is_pk_adminsys;
+				response_is_authorized.m_is_miner = is_pk_miner;
+				response_is_authorized.m_is_organizer = is_pk_organizer;
+				response_is_authorized.m_txid_auth = m_blockchain_module->get_auth_txid(pk);
 				break;
+			} else {
+				is_pk_organizer = m_blockchain_module->is_pk_organizer(pk);
+				if(is_pk_organizer) {
+					response_is_authorized.m_is_adminsys = is_pk_adminsys;
+					response_is_authorized.m_is_miner = is_pk_miner;
+					response_is_authorized.m_is_organizer = is_pk_organizer;
+					response_is_authorized.m_txid_auth = m_blockchain_module->get_auth_txid(pk);
+					break;
+				} else {
+					is_pk_miner = m_blockchain_module->is_pk_miner(pk);
+					if(is_pk_miner) {
+						response_is_authorized.m_is_adminsys = is_pk_adminsys;
+						response_is_authorized.m_is_miner = is_pk_miner;
+						response_is_authorized.m_is_organizer = is_pk_organizer;
+						response_is_authorized.m_txid_auth = m_blockchain_module->get_auth_txid(pk);
+						break;
+					} else throw std::runtime_error("This pk is not authorized");
+				}
 			}
-			response_is_authorized.m_is_adminsys = false;
-			response_is_authorized.m_auth_data = m_blockchain_module->get_authorization_data(pk);
+		}
+		case t_mediator_cmd_type::e_get_pk_and_sign:
+		{
+			const auto pk = m_wallet_module->get_main_pk();
+			const auto & sign_request = dynamic_cast<const t_mediator_command_request_get_pk_and_sign&>(request);
+			const auto sign = m_wallet_module->sign_message_using_main_pk(sign_request.m_msg_to_sign);
+			response = std::make_unique<t_mediator_command_response_get_pk_and_sign>();
+			auto & response_get_pk_and_sign = dynamic_cast<t_mediator_command_response_get_pk_and_sign&>(*response);
+			response_get_pk_and_sign.m_pk = pk;
+			response_get_pk_and_sign.m_sign = sign;
 			break;
 		}
-		case t_mediator_cmd_type::e_get_all_active_votings_for_voter:
+		case t_mediator_cmd_type::e_sign_message_by_main_identity:
 		{
-			const auto & request_get_votings = dynamic_cast<const t_mediator_command_request_get_all_active_votings_for_voter&>(request);
-			const auto & voter_pk = request_get_votings.m_voter_pk;
-			response = std::make_unique<t_mediator_command_response_get_all_active_votings_for_voter>();
-			auto & response_get_votings = dynamic_cast<t_mediator_command_response_get_all_active_votings_for_voter&>(*response);
-			response_get_votings.m_active_votings = m_blockchain_module->get_all_active_votings_for_voter(voter_pk);
+			const auto & request_sign = dynamic_cast<const t_mediator_command_request_sign_message_by_main_identity&>(request);
+			const auto & msg_to_sign = request_sign.m_msg;
+			const auto signature = m_wallet_module->sign_message_using_main_pk(msg_to_sign);
+			response = std::make_unique<t_mediator_command_response_sign_message_by_main_identity>();
+			auto & response_sign_message = dynamic_cast<t_mediator_command_response_sign_message_by_main_identity&>(*response);
+			response_sign_message.m_sign = signature;
 			break;
 		}
-		case t_mediator_cmd_type::e_get_amount_on_pkh:
+		case t_mediator_cmd_type::e_sign_tx_by_main_identity:
 		{
-			const auto & request_get_amount = dynamic_cast<const t_mediator_command_request_get_amount_on_pkh&>(request);
-			const auto & pkh = request_get_amount.m_pkh;
-			response = std::make_unique<t_mediator_command_response_get_amount_on_pkh>();
-			auto & response_get_pkh = dynamic_cast<t_mediator_command_response_get_amount_on_pkh&>(*response);
-			response_get_pkh.m_amount = m_blockchain_module->get_amount_pkh(pkh);
-			break;
-		}
-		case t_mediator_cmd_type::e_check_voter_voted:
-		{
-			const auto & request_check_vote_voted = dynamic_cast<const t_mediator_command_request_check_voter_voted&>(request);
-			const auto voter_pk = request_check_vote_voted.m_voter_pk;
-			const auto voting_id = request_check_vote_voted.m_voting_id;
-			response = std::make_unique<t_mediator_command_response_check_voter_voted>();
-			auto & response_check_voter_voted = dynamic_cast<t_mediator_command_response_check_voter_voted&>(*response);
-			response_check_voter_voted.m_voter_voted = m_blockchain_module->check_the_voter_voted(voter_pk, voting_id);
-			break;
-		}
-		case t_mediator_cmd_type::e_get_voter_auth_txid_for_voting:
-		{
-			const auto & request_get_voter_auth_txid = dynamic_cast<const t_mediator_command_request_get_voter_auth_txid_for_voting&>(request);
-			const auto & voter_pk = request_get_voter_auth_txid.m_voter_pk;
-			const auto & voting_id = request_get_voter_auth_txid.m_voting_id;
-			response = std::make_unique<t_mediator_command_response_get_voter_auth_txid_for_voting>();
-			auto & response_get_voter_auth_txid = dynamic_cast<t_mediator_command_response_get_voter_auth_txid_for_voting&>(*response);
-			response_get_voter_auth_txid.m_txid = m_blockchain_module->get_voter_auth_txid_for_voting(voter_pk, voting_id);
-			break;
-		}
-		case t_mediator_cmd_type::e_get_voting_details:
-		{
-			const auto & request_voting_id = dynamic_cast<const t_mediator_command_request_get_voting_details&>(request);
-			const auto & voting_id = request_voting_id.m_voting_id;
-			response = std::make_unique<t_mediator_command_response_get_voting_details>();
-			auto & response_voting_details = dynamic_cast<t_mediator_command_response_get_voting_details&>(*response);
-			const auto voting_details = m_blockchain_module->get_voting_details(voting_id);
-			response_voting_details.m_voting_details = voting_details;
-			break;
-		}
-		case t_mediator_cmd_type::e_get_source_txid_for_pkh:
-		{
-			const auto & request_get_txid = dynamic_cast<const t_mediator_command_request_get_source_txid_for_pkh&>(request);
-			const auto & pkh = request_get_txid.m_pkh;
-			const auto txid = m_blockchain_module->get_source_txid(pkh);
-			response = std::make_unique<t_mediator_command_response_get_source_txid_for_pkh>();
-			auto & response_get_txid = dynamic_cast<t_mediator_command_response_get_source_txid_for_pkh&>(*response);
-			response_get_txid.m_txid = txid;
+			const auto & request_sign_tx = dynamic_cast<const t_mediator_command_request_sign_tx_by_main_identity&>(request);
+			const auto & tx_to_sign = request_sign_tx.m_transaction_to_sign;
+			response = std::make_unique<t_mediator_command_response_sign_tx_by_main_identity>();
+			auto & response_sign_tx = dynamic_cast<t_mediator_command_response_sign_tx_by_main_identity&>(*response);
+			response_sign_tx.m_transaction_signature = m_wallet_module->sign_tx_by_main_identity(tx_to_sign);
 			break;
 		}
 		case t_mediator_cmd_type::e_get_peers:
@@ -264,7 +284,6 @@ std::unique_ptr<t_mediator_command_response> c_main_module::notify(const t_media
 			response = std::make_unique<t_mediator_command_response_get_peers>();
 			auto & response_get_peers = dynamic_cast<t_mediator_command_response_get_peers&>(*response);
 			response_get_peers.m_peers_tcp = m_p2p_module->get_peers_tcp();
-			response_get_peers.m_peers_tor = m_p2p_module->get_peers_tor();
 			break;
 		}
 		case t_mediator_cmd_type::e_get_metadata_from_tx:
@@ -293,16 +312,6 @@ std::unique_ptr<t_mediator_command_response> c_main_module::notify(const t_media
 			response_get_block.m_block = std::move(block);
 			break;
 		}
-		case t_mediator_cmd_type::e_get_all_vote_transactions:
-		{
-			const auto request_get_all_vote_transactions = dynamic_cast<const t_mediator_command_request_get_all_vote_transactions&>(request);
-			const auto voting_id = request_get_all_vote_transactions.m_voting_id;
-			auto transactions = m_blockchain_module->get_all_vote_transactions(voting_id);
-			response = std::make_unique<t_mediator_command_response_get_all_vote_transactions>();
-			auto & response_get_txs = dynamic_cast<t_mediator_command_response_get_all_vote_transactions&>(*response);
-			response_get_txs.m_vote_transactions = std::move(transactions);
-			break;
-		}
 		case t_mediator_cmd_type::e_get_merkle_branch:
 		{
 			const auto request_get_merkle_branch = dynamic_cast<const t_mediator_command_request_get_merkle_branch&>(request);
@@ -315,23 +324,6 @@ std::unique_ptr<t_mediator_command_response> c_main_module::notify(const t_media
 			response_get_merkle_branch.m_block_id = block_id;
 			break;
 		}
-		case t_mediator_cmd_type::e_get_voter_groups:
-		{
-			const auto request_get_voter_groups = dynamic_cast<const t_mediator_command_request_get_voter_groups&>(request);
-			const auto voter_pk = request_get_voter_groups.m_voter_pk;
-			const auto voter_groups = m_blockchain_module->get_voter_groups(voter_pk);
-			response = std::make_unique<t_mediator_command_response_get_voter_groups>();
-			auto & response_get_voter_groups = dynamic_cast<t_mediator_command_response_get_voter_groups&>(*response);
-			response_get_voter_groups.m_voter_groups = voter_groups;
-			break;
-		}
-		case t_mediator_cmd_type::e_get_number_of_all_voters:
-		{
-			response = std::make_unique<t_mediator_command_response_get_number_of_all_voters>();
-			auto & get_number_voters_data_response = dynamic_cast<t_mediator_command_response_get_number_of_all_voters&>(*response);
-			get_number_voters_data_response.m_number_of_all_voters = m_blockchain_module->get_number_of_all_voters();
-			break;
-		}
 		case t_mediator_cmd_type::e_get_number_of_miners:
 		{
 			response = std::make_unique<t_mediator_command_response_get_number_of_miners>();
@@ -339,69 +331,11 @@ std::unique_ptr<t_mediator_command_response> c_main_module::notify(const t_media
 			get_number_of_miners_response.m_number_of_miners = m_blockchain_module->get_number_of_miners();
 			break;
 		}
-		case t_mediator_cmd_type::e_get_all_active_voting_ids:
-		{
-			response = std::make_unique<t_mediator_command_response_get_all_active_voting_ids>();
-			auto & get_all_active_voting_ids = dynamic_cast<t_mediator_command_response_get_all_active_voting_ids&>(*response);
-			const auto votings = m_blockchain_module->get_all_active_votings();
-			// transform pair <voting_id, voting_metarata> to vector<voting_id>
-			std::transform(
-						votings.cbegin(),
-						votings.cend(),
-						std::back_inserter(get_all_active_voting_ids.m_voting_ids),
-						[](const std::pair<t_hash_type, t_voting_metadata> & pair){return pair.first;});
-			break;
-		}
-		case t_mediator_cmd_type::e_get_number_of_all_votings:
-		{
-			response = std::make_unique<t_mediator_command_response_get_number_of_all_votings>();
-			auto & get_number_of_all_votings = dynamic_cast<t_mediator_command_response_get_number_of_all_votings&>(*response);
-			get_number_of_all_votings.m_number_of_all_votings = m_blockchain_module->get_all_votings().size();
-			break;
-		}
-		case t_mediator_cmd_type::e_get_number_of_all_inactive_votings:
-		{
-			response = std::make_unique<t_mediator_command_response_get_number_of_all_inactive_votings>();
-			auto & get_number_of_inactive_votings = dynamic_cast<t_mediator_command_response_get_number_of_all_inactive_votings&>(*response);
-			get_number_of_inactive_votings.m_number_of_all_inactive_votings = m_blockchain_module->get_all_inactive_votings().size();
-			break;
-		}
-		case t_mediator_cmd_type::e_get_number_of_all_added_votes:
-		{
-			response = std::make_unique<t_mediator_command_response_get_number_of_all_added_votes>();
-			auto & get_number_of_all_added_votes = dynamic_cast<t_mediator_command_response_get_number_of_all_added_votes&>(*response);
-			get_number_of_all_added_votes.m_number_of_all_added_votes = m_blockchain_module->get_all_added_votes();
-			break;
-		}
 		case t_mediator_cmd_type::e_get_number_of_all_transactions:
 		{
 			response = std::make_unique<t_mediator_command_response_get_number_of_all_transactions>();
 			auto & get_number_of_all_transactions = dynamic_cast<t_mediator_command_response_get_number_of_all_transactions&>(*response);
 			get_number_of_all_transactions.m_number_of_all_transactions = m_blockchain_module->get_number_of_transactions();
-			break;
-		}
-		case t_mediator_cmd_type::e_get_last_5_blocks:
-		{
-			response = std::make_unique<t_mediator_command_response_get_last_5_blocks>();
-			auto & get_last_5_blocks = dynamic_cast<t_mediator_command_response_get_last_5_blocks&>(*response);
-			get_last_5_blocks.m_last_5_blocks = m_blockchain_module->get_last_5_blocks();
-			break;
-		}
-		case t_mediator_cmd_type::e_get_last_5_transactions:
-		{
-			response = std::make_unique<t_mediator_command_response_get_last_5_transactions>();
-			auto & get_last_5_transactions = dynamic_cast<t_mediator_command_response_get_last_5_transactions&>(*response);
-			get_last_5_transactions.m_last_5_transactions = m_blockchain_module->get_last_5_transactions();
-			break;
-		}
-		case t_mediator_cmd_type::e_get_last_5_votings:
-		{
-			response = std::make_unique<t_mediator_command_response_get_last_5_votings>();
-			auto & get_last_5_votings = dynamic_cast<t_mediator_command_response_get_last_5_votings&>(*response);
-			get_last_5_votings.m_last_5_votings = m_blockchain_module->get_last_5_votings();
-			get_last_5_votings.m_is_finished = m_blockchain_module->finished_or_active_votings(get_last_5_votings.m_last_5_votings);
-			get_last_5_votings.m_voter_turnout = m_blockchain_module->get_voter_turnout_from_specific_votes(get_last_5_votings.m_last_5_votings);
-			get_last_5_votings.m_is_waiting = m_blockchain_module->get_waiting_votings_ids(get_last_5_votings.m_last_5_votings);
 			break;
 		}
 		case t_mediator_cmd_type::e_get_block_by_id_without_txs_and_signs:
@@ -469,48 +403,9 @@ std::unique_ptr<t_mediator_command_response> c_main_module::notify(const t_media
 			get_txs_per_page.m_total_number_txs = txs_and_total_number_txs.second;
 			break;
 		}
-		case t_mediator_cmd_type::e_get_votings_by_name_or_id:
+		case t_mediator_cmd_type::e_get_txs_from_block_per_page:
 		{
-			const auto & request_get_votings_by_name = dynamic_cast<const t_mediator_command_request_get_votings_by_name_or_id&>(request);
-			response = std::make_unique<t_mediator_command_response_get_votings_by_name_or_id>();
-			auto & get_votings_by_name_with_number_votings = dynamic_cast<t_mediator_command_response_get_votings_by_name_or_id&>(*response);
-			const auto &votings_by_name_with_number_votings = 
-			        m_blockchain_module->get_all_votings_by_name_or_voting_id_with_number_votings(request_get_votings_by_name.m_offset, request_get_votings_by_name.m_name_or_voting_id);
-			get_votings_by_name_with_number_votings.m_votings = votings_by_name_with_number_votings.first;
-			get_votings_by_name_with_number_votings.m_is_finished = m_blockchain_module->finished_or_active_votings(get_votings_by_name_with_number_votings.m_votings);
-			get_votings_by_name_with_number_votings.m_is_waiting = m_blockchain_module->get_waiting_votings_ids(get_votings_by_name_with_number_votings.m_votings);
-			get_votings_by_name_with_number_votings.m_voter_turnout = m_blockchain_module->get_voter_turnout_from_specific_votes(get_votings_by_name_with_number_votings.m_votings);
-			get_votings_by_name_with_number_votings.m_votings_results = m_blockchain_module->get_votings_results_from_specific_votes(get_votings_by_name_with_number_votings.m_votings);
-			get_votings_by_name_with_number_votings.m_total_number_votings = votings_by_name_with_number_votings.second;
-			break;
-		}
-		case t_mediator_cmd_type::e_get_latest_votings:
-		{
-			const auto & request_get_latest_voting = dynamic_cast<const t_mediator_command_request_get_latest_votings&>(request);
-			response = std::make_unique<t_mediator_command_response_get_latest_votings>();
-			auto & get_latest_votings = dynamic_cast<t_mediator_command_response_get_latest_votings&>(*response);
-			get_latest_votings.m_latest_votings = m_blockchain_module->get_latest_votings(request_get_latest_voting.m_amount_votings);
-			get_latest_votings.m_is_finished = m_blockchain_module->finished_or_active_votings(get_latest_votings.m_latest_votings);
-			get_latest_votings.m_is_waiting = m_blockchain_module->get_waiting_votings_ids(get_latest_votings.m_latest_votings);
-			get_latest_votings.m_voter_turnout = m_blockchain_module->get_voter_turnout_from_specific_votes(get_latest_votings.m_latest_votings);
-			break;
-		}
-		case t_mediator_cmd_type::e_get_votings_per_page:
-		{
-			const auto & request_get_votings_per_page = dynamic_cast<const t_mediator_command_request_get_votings_per_page&>(request);
-			const auto votings_with_total_number = m_blockchain_module->get_votings_per_page(request_get_votings_per_page.m_offset);
-			response = std::make_unique<t_mediator_command_response_get_votings_per_page>();
-			auto & get_votings_per_page = dynamic_cast<t_mediator_command_response_get_votings_per_page&>(*response);
-			get_votings_per_page.m_votings = votings_with_total_number.first;
-			get_votings_per_page.m_is_finished = m_blockchain_module->finished_or_active_votings(get_votings_per_page.m_votings);
-			get_votings_per_page.m_is_waiting = m_blockchain_module->get_waiting_votings_ids(get_votings_per_page.m_votings);
-			get_votings_per_page.m_voter_turnout = m_blockchain_module->get_voter_turnout_from_specific_votes(get_votings_per_page.m_votings);
-			get_votings_per_page.m_total_number_votings = votings_with_total_number.second;
-			break;
-	    }
-	    case t_mediator_cmd_type::e_get_txs_from_block_per_page:
-	    {
-		    const auto & request_get_txs_per_page_from_block = dynamic_cast<const t_mediator_command_request_get_txs_from_block_per_page&>(request);
+			const auto & request_get_txs_per_page_from_block = dynamic_cast<const t_mediator_command_request_get_txs_from_block_per_page&>(request);
 			auto txs_with_number_txs = m_blockchain_module->get_txs_from_block_per_page(request_get_txs_per_page_from_block.m_offset, request_get_txs_per_page_from_block.m_block_id);
 			response = std::make_unique<t_mediator_command_response_get_txs_from_block_per_page>();
 			auto & get_txs_per_page_from_block = dynamic_cast<t_mediator_command_response_get_txs_from_block_per_page&>(*response);
@@ -528,40 +423,6 @@ std::unique_ptr<t_mediator_command_response> c_main_module::notify(const t_media
 			get_block_signs_pks_miners_all_number_signs_from_block.m_signatures_and_pks = std::move(signs_pks_all_number_signs_from_block.first);
 			break;
 		}
-		case t_mediator_cmd_type::e_get_number_of_all_active_votings:
-		{
-			response = std::make_unique<t_mediator_command_response_get_number_of_all_active_votings>();
-			auto & get_number_of_active_votings = dynamic_cast<t_mediator_command_response_get_number_of_all_active_votings&>(*response);
-			get_number_of_active_votings.m_number_of_all_active_votings = m_blockchain_module->get_all_active_votings().size();
-			break;
-		}
-		case t_mediator_cmd_type::e_get_number_of_all_finished_votings:
-		{
-			response = std::make_unique<t_mediator_command_response_get_number_of_all_finished_votings>();
-			auto & get_number_of_finished_votings = dynamic_cast<t_mediator_command_response_get_number_of_all_finished_votings&>(*response);
-			get_number_of_finished_votings.m_number_of_all_finished_votings = m_blockchain_module->get_all_finished_votings().size();
-			break;
-		}
-		case t_mediator_cmd_type::e_get_voting_by_id:
-		{
-			const auto & request_get_voting_by_id = dynamic_cast<const t_mediator_command_request_get_voting_by_id&>(request);
-			response = std::make_unique<t_mediator_command_response_get_voting_by_id>();
-			auto & get_voting_by_id = dynamic_cast<t_mediator_command_response_get_voting_by_id&>(*response);
-			get_voting_by_id.m_voting_metadata = m_blockchain_module->get_voting_details(request_get_voting_by_id.m_voting_id);
-			get_voting_by_id.m_voter_turnout = m_blockchain_module->get_voter_turnout_from_vote(request_get_voting_by_id.m_voting_id);
-			get_voting_by_id.m_voting_results = m_blockchain_module->get_voting_result(request_get_voting_by_id.m_voting_id);
-			get_voting_by_id.m_voting_status = m_blockchain_module->get_voting_status(request_get_voting_by_id.m_voting_id);
-			break;
-		}
-		case t_mediator_cmd_type::e_get_all_finished_votings_for_voter:
-		{
-			const auto & request_get_votings = dynamic_cast<const t_mediator_command_request_get_all_finished_votings_for_voter&>(request);
-			const auto & voter_pk = request_get_votings.m_voter_pk;
-			response = std::make_unique<t_mediator_command_response_get_all_finished_votings_for_voter>();
-			auto & response_get_votings = dynamic_cast<t_mediator_command_response_get_all_finished_votings_for_voter&>(*response);
-			response_get_votings.m_finished_votings = m_blockchain_module->get_all_finished_votings_for_voter(voter_pk);
-			break;
-		}
 		case t_mediator_cmd_type::e_is_blockchain_synchronized:
 		{
 			response = std::make_unique<t_mediator_command_response_is_blockchain_synchronized>();
@@ -572,12 +433,13 @@ std::unique_ptr<t_mediator_command_response> c_main_module::notify(const t_media
 		case t_mediator_cmd_type::e_block_exists:
 		{
 			const auto request_block_exists = dynamic_cast<const t_mediator_command_request_block_exists&>(request);
-			const auto & block_id = request_block_exists.block_id;
+			const auto & block_id = request_block_exists.m_block_id;
 			response = std::make_unique<t_mediator_command_response_block_exists>();
 			auto & block_exists = dynamic_cast<t_mediator_command_response_block_exists&>(*response);
 			block_exists.m_block_exists = m_blockchain_module->block_exists(block_id);
 			break;
 		}
+
 		default:
 		break;
 	}
@@ -587,6 +449,7 @@ std::unique_ptr<t_mediator_command_response> c_main_module::notify(const t_media
 
 void c_main_module::run() {
 	m_blockchain_module->run();
+	m_wallet_module->run();
 	m_rpc_module->run();
 	m_p2p_module->run();
 	std::unique_lock<std::mutex> lock(m_stop_cv_mutex);
@@ -594,6 +457,7 @@ void c_main_module::run() {
 }
 
 void c_main_module::stop() {
+	m_blockchain_module->stop();
 	std::unique_lock<std::mutex> lock(m_stop_cv_mutex);
 	m_stopped = true;
 	lock.unlock();

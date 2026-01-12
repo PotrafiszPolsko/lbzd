@@ -4,23 +4,23 @@
 #include <string>
 
 const std::string conffile_text =
-R"(# Add a node to connect. Format: <ip>:<port>
-# addnode = 192.168.1.4:22083
+R"(# Add a node to connect. Format: <ip>:<port> e.g ip:192.168.1.4
+# addnode = 192.168.1.4:33333
 
 # Bind to given address and always listen on it
-# bindport = 22083
+# bindport = 33333
 
 # Bind to given address and always listen on it
 # bindaddress = 0.0.0.0
 
-# Hidden service port
-# onionport = 22086
-
 # Enable connection to seed node
 # enable-seed-node-connection = true
 
-# Specify data directory
-# datadir = ./ivoting
+# Specify data directory e.g. for linux: /home/<username>/ivoting ,  windows: <root>\Users\<username>\ivoting ,  macOS: /Users/<username>/ivoting ,  android: /data/media/<userid>/ivoting 
+# default linux, macOS and android datadir:
+# datadir = ./ivoting 
+# default windows datadir:
+# datadir = .\ivoting
 
 # Number of threads
 # par = 0
@@ -28,9 +28,11 @@ R"(# Add a node to connect. Format: <ip>:<port>
 # RPC address for TCP socket
 # rpc-tcp-address = 127.0.0.1
 
-# RPC Port for TCP socket (default: 22084)
-# rpc-tcp-port = 22084
+# RPC Port for TCP socket (default: 33334)
+# rpc-tcp-port = 33334
 
+# mining of block
+# gen = 1
 # rpcuser
 # rpcpassword)";
 

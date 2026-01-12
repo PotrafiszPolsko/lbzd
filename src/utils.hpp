@@ -101,7 +101,7 @@ std::array<unsigned char, crypto_generichash_BYTES> generate_hash(const std::vec
 	return hash;
 }
 
-uint64_t get_unix_time();
+uint32_t get_unix_time();
 void crypto_secure_random(void * const buff, size_t size);
 
 

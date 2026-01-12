@@ -17,10 +17,10 @@ void c_blockchain::create_dir_tree() {
 void c_blockchain::open_blocks_db() const{
 	leveldb::Options options;
 	options.create_if_missing = true;
-    leveldb::DB * db {nullptr};
-    const auto blocks_path = m_blocks_dir_path/"index";
+	leveldb::DB * db {nullptr};
+	const auto blocks_path = m_blocks_dir_path/"index";
 	LOG(info) << "Block path: " << blocks_path.string();
-    const auto status = leveldb::DB::Open(options, blocks_path.string(), &db);
+	const auto status = leveldb::DB::Open(options, blocks_path.string(), &db);
 	m_blocks_database.reset(db);
 	if (!status.ok()) throw std::runtime_error("Open blocks db error " + status.ToString());
 }
@@ -58,7 +58,7 @@ proto::block c_blockchain::read_block_from_ifstream_proto(std::ifstream & block_
 	block_file.read(reinterpret_cast<char *>(size_of_header_as_array.data()), size_of_header_as_array.size());
 	const uint32_t size_of_header = get_integer<uint32_t>(size_of_header_as_array);
 	std::string header_as_string(size_of_header, '\0');
-	block_file.read(header_as_string.data(), header_as_string.size());
+	block_file.read(header_as_string.data(), static_cast<long int>(header_as_string.size()));
 	auto header_proto = deserialize_to_proto<proto::header>(header_as_string);
 	proto::block block_proto;
 	block_proto.mutable_m_header()->Swap(&header_proto);
@@ -71,7 +71,7 @@ proto::block c_blockchain::read_block_from_ifstream_proto(std::ifstream & block_
 		block_file.read(reinterpret_cast<char *>(tx_size_as_array.data()), tx_size_as_array.size());
 		const uint32_t tx_size = get_integer<uint32_t>(tx_size_as_array);
 		std::string tx_as_string(tx_size, '\0');
-		block_file.read(tx_as_string.data(), tx_as_string.size());
+		block_file.read(tx_as_string.data(), static_cast<long int>(tx_as_string.size()));
 		auto tx_proto = deserialize_to_proto<proto::transaction>(tx_as_string);
 		auto * const new_tx = block_proto.add_m_transaction();
 		new_tx->Swap(&tx_proto);
@@ -158,33 +158,6 @@ size_t c_blockchain::get_number_of_transactions() const {
 	return number_of_transactions;
 }
 
-std::vector<c_block_record> c_blockchain::get_last_5_blocks() const {
-	const auto current_height = get_current_height();
-	const auto all_blocks_record = get_all_sorted_record_blocks(current_height);
-	std::vector<c_block_record> specific_number_blocks_record;
-	std::copy_n(all_blocks_record.cbegin(), 5, std::back_inserter(specific_number_blocks_record));
-	return specific_number_blocks_record;
-}
-
-std::vector<c_transaction> c_blockchain::get_last_5_transactions() const {
-	std::vector<c_transaction> txs;
-	const auto blocks_record = get_sorted_record_blocks_with_txs_only();
-	for(const auto &block_record:blocks_record) {
-		const auto block_height = block_record.m_height;
-		const auto block = get_block_at_height(block_height);
-		const auto number_of_transactions = block.m_transaction.size();
-		auto block_transactions = block.m_transaction;
-		std::sort(block_transactions.begin(), block_transactions.end(),
-		[](const c_transaction & tx_1, const c_transaction & tx_2){return tx_1.m_txid < tx_2.m_txid;});
-		size_t actual_number_txs;
-		if(number_of_transactions<5 - txs.size()) actual_number_txs = number_of_transactions;
-		else actual_number_txs = 5 - txs.size();
-		std::copy_n(block_transactions.cbegin(), actual_number_txs, std::back_inserter(txs));
-		if(txs.size()==5) break;
-	}
-	return txs;
-}
-
 std::vector<c_block_record> c_blockchain::get_sorted_blocks(const size_t amount_of_blocks) const {
 	const auto current_height = get_current_height();
 	const auto all_blocks_record = get_all_sorted_record_blocks(current_height);
@@ -252,7 +225,7 @@ std::pair<std::vector<c_transaction>, size_t> c_blockchain::get_txs_per_page(con
 			std::sort(block_transactions.begin(), block_transactions.end(),
 			[](const c_transaction & tx_1, const c_transaction & tx_2){return tx_1.m_txid < tx_2.m_txid;});
 			if(end_tx_number <= number_of_transactions && counter<blocks_record.size()-1) {
-				std::copy_n(block_transactions.cbegin()+ begin_to_copy_txs_form_block,
+				std::copy_n(block_transactions.cbegin() + begin_to_copy_txs_form_block,
 				            n_rpcparams::number_of_txs_per_page - txs.size(),
 				            std::back_inserter(txs));
 			} else {
@@ -279,12 +252,12 @@ std::pair<std::vector<c_transaction>, size_t> c_blockchain::get_txs_from_block_p
 		std::copy(block_transactions.cbegin(), block_transactions.cend(), std::back_inserter(txs));
 	} else {
 		const unsigned int txs_begin =static_cast<unsigned int>( (offset-1)*n_rpcparams::number_of_txs_from_block_per_page );
-		const size_t txs_end = txs_begin + n_rpcparams::number_of_txs_from_block_per_page;
+		const auto txs_end = txs_begin + n_rpcparams::number_of_txs_from_block_per_page;
 		if(block_transactions.size()<=txs_begin) throw std::runtime_error("txs offset from block is too big");
 		if(txs_end<=block_transactions.size()) {
-			std::copy_n(block_transactions.cbegin()+txs_begin, n_rpcparams::number_of_txs_from_block_per_page, std::back_inserter(txs));
+			std::copy_n(block_transactions.cbegin() + txs_begin, n_rpcparams::number_of_txs_from_block_per_page, std::back_inserter(txs));
 		} else {
-			std::copy_n(block_transactions.cbegin()+txs_begin, block.m_transaction.size()-txs_begin, std::back_inserter(txs));
+			std::copy_n(block_transactions.cbegin() + txs_begin, block.m_transaction.size()-txs_begin, std::back_inserter(txs));
 		}
 	}
 	return std::make_pair(txs, block_transactions.size());
@@ -347,6 +320,7 @@ void c_blockchain::add_block(const c_block & block) {
 		LOG(info) << "block current height is " << current_height;
 	}
 	// serialize block
+	// const std::string block_as_binary_string = to_string(block);
 	c_header header = block.m_header;
 	const std::string header_as_string = serialize_to_string(header);
 	size_t size_of_transaction_segment = 0;
@@ -375,7 +349,7 @@ void c_blockchain::add_block(const c_block & block) {
 	auto transactions_vector = block.m_transaction;
 	assert(transactions_vector.size() == serialized_transactions.size());
 	for (size_t i = 0; i < transactions_vector.size(); i++) {
-		const unsigned int transaction_position_in_file = static_cast<unsigned int>(block_file.tellp());
+		const auto transaction_position_in_file = block_file.tellp();
 		const auto serialized_transaction = serialized_transactions.at(i);
 		const auto size_of_tx = get_array_byte<uint32_t>(static_cast<uint32_t>(serialized_transaction.size()));
 		block_file.write(reinterpret_cast<const char *>(size_of_tx.data()), size_of_tx.size());
@@ -400,7 +374,7 @@ void c_blockchain::add_block(const c_block & block) {
 	block_record.m_number_of_transactions = static_cast<unsigned int>(block.m_transaction.size());
 	block_record.m_file_contains_block = block_base_filename.string();
 	block_record.m_position_in_file = static_cast<int>(file_position_block_begin);
-	block_record.m_size_of_binary_data = static_cast<unsigned int>(block_file.tellp()) - file_position_block_begin;
+	block_record.m_size_of_binary_data = static_cast<unsigned int>(block_file.tellp())- file_position_block_begin;
 	
 	save_current_height(block_record.m_height);
 	save_block_record(block_record);
@@ -459,12 +433,11 @@ c_block c_blockchain::get_block_at_height(const size_t height) const {
 	c_file_info_record file_info_record;
 	while (!found_file) {
 		if (lowest_file_number == upper_file_number) found_file = true;
-		const auto middle_file_number = static_cast<size_t>(lowest_file_number + (upper_file_number - lowest_file_number) / 2.);
+		const size_t middle_file_number = static_cast<size_t>(lowest_file_number + (upper_file_number - lowest_file_number) / 2.);
 		const std::string db_key = "f" + std::to_string(middle_file_number);
 		std::string file_info_record_as_str;
 		const auto status = m_blocks_database->Get(leveldb::ReadOptions(), db_key, &file_info_record_as_str);
-		if (!status.ok()) 
-			throw std::runtime_error("Load file info record from db error: " + status.ToString());
+		if (!status.ok()) throw std::runtime_error("Load file info record from db error: " + status.ToString());
 		file_info_record = deserialize_from_string<c_file_info_record>(file_info_record_as_str);
 		if (file_info_record.m_height_lowest > height) upper_file_number = middle_file_number;
 		else if (file_info_record.m_height_highest < height) lowest_file_number = middle_file_number;

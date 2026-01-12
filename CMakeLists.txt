@@ -63,8 +63,10 @@ endif (NATPMP)
 
 set(SOURCE_FILES_COMMON
     "${PROJECT_SOURCE_DIR}/miniupnp/miniupnpc/include/"
+    "${PROJECT_SOURCE_DIR}/src/miner.cpp"
     "${PROJECT_SOURCE_DIR}/src/mempool.cpp"
     "${PROJECT_SOURCE_DIR}/src/blockchain.cpp"
+    "${PROJECT_SOURCE_DIR}/src/wallet.cpp"
     "${PROJECT_SOURCE_DIR}/src/utxo.cpp"
     "${PROJECT_SOURCE_DIR}/src/transaction.cpp"
     "${PROJECT_SOURCE_DIR}/src/txid_generate.cpp"
@@ -72,8 +74,9 @@ set(SOURCE_FILES_COMMON
     "${PROJECT_SOURCE_DIR}/src/block_verifier.cpp"
     "${PROJECT_SOURCE_DIR}/src/blockchain_utils.cpp"
     "${PROJECT_SOURCE_DIR}/src/serialization_utils.cpp"
+    "${PROJECT_SOURCE_DIR}/src/adminsys.cpp"
+    "${PROJECT_SOURCE_DIR}/src/organizer.cpp"
     "${PROJECT_SOURCE_DIR}/src/block.cpp"
-    "${PROJECT_SOURCE_DIR}/src/types.cpp"
     "${PROJECT_SOURCE_DIR}/src/log.cpp"
     "${PROJECT_SOURCE_DIR}/src/blockchain.pb.cc"
     "${PROJECT_SOURCE_DIR}/src/p2p.pb.cc"
@@ -88,6 +91,7 @@ set(SOURCE_FILES_COMMON
     "${PROJECT_SOURCE_DIR}/src/ed25519/sha512.c"
     "${PROJECT_SOURCE_DIR}/src/ed25519/sign.c"
     "${PROJECT_SOURCE_DIR}/src/ed25519/verify.c"
+    "${PROJECT_SOURCE_DIR}/src/seed.cpp"
     "${PROJECT_SOURCE_DIR}/src/interrupted_sleep.cpp"
     "${PROJECT_SOURCE_DIR}/src/blockchain_module_builder.cpp"
     "${PROJECT_SOURCE_DIR}/src/blockchain_module.cpp"
@@ -104,29 +108,33 @@ set(SOURCE_FILES_COMMON
     "${PROJECT_SOURCE_DIR}/src/port_forwarder.cpp"
     "${PROJECT_SOURCE_DIR}/src/p2p_module.cpp"
     "${PROJECT_SOURCE_DIR}/src/p2p_session_manager.cpp"
-    "${PROJECT_SOURCE_DIR}/src/p2p_session_manager_tor.cpp"
     "${PROJECT_SOURCE_DIR}/src/main_module.cpp"
     "${PROJECT_SOURCE_DIR}/src/peer_finder.cpp"
     "${PROJECT_SOURCE_DIR}/src/session.cpp"
-    "${PROJECT_SOURCE_DIR}/src/tor_control.cpp"
-    "${PROJECT_SOURCE_DIR}/src/tor_socks5_provider.cpp"
     "${PROJECT_SOURCE_DIR}/src/utils-node.cpp"
     "${PROJECT_SOURCE_DIR}/src/main_module_builder.cpp"
+    "${PROJECT_SOURCE_DIR}/src/wallet_module_builder.cpp"
     "${PROJECT_SOURCE_DIR}/src/rpc_module_builder.cpp"
     "${PROJECT_SOURCE_DIR}/src/p2p_module_builder.cpp"
+    "${PROJECT_SOURCE_DIR}/src/wallet_module.cpp"
     "${PROJECT_SOURCE_DIR}/src/p2p_session_manager_tcp.cpp"
     "${PROJECT_SOURCE_DIR}/src/block_record.cpp"
-    "${PROJECT_SOURCE_DIR}/src/authorization_level_data.cpp"
     )
 
-set (SOURCE_FILES_NODE
-    "${PROJECT_SOURCE_DIR}/src/tor_socks5_credentials.cpp"
+set (SOURCE_FILES_SIMULATION
+    "${PROJECT_SOURCE_DIR}/src/simulation/simulation.cpp"
+    "${PROJECT_SOURCE_DIR}/src/simulation/main.cpp"
     )
 
 set(TESTS
     "${PROJECT_SOURCE_DIR}/tests/main.cpp"
     "${PROJECT_SOURCE_DIR}/tests/transaction.cpp"
+    "${PROJECT_SOURCE_DIR}/tests/wallet.cpp"
+    "${PROJECT_SOURCE_DIR}/tests/simulation.cpp"
+    "${PROJECT_SOURCE_DIR}/tests/seed.cpp"
     "${PROJECT_SOURCE_DIR}/tests/blockchain_module.cpp"
+    "${PROJECT_SOURCE_DIR}/tests/blockchain_module_authorization.cpp"
+    "${PROJECT_SOURCE_DIR}/tests/blockchain_module_add_voting_protocols.cpp"
     "${PROJECT_SOURCE_DIR}/tests/serialization.cpp"
     "${PROJECT_SOURCE_DIR}/tests/crypto.cpp"
     "${PROJECT_SOURCE_DIR}/tests/rpc.cpp"
@@ -135,16 +143,16 @@ set(TESTS
     "${PROJECT_SOURCE_DIR}/tests/main_module_mock_builder.cpp"
     "${PROJECT_SOURCE_DIR}/tests/blockchain_module_mock.cpp"
     "${PROJECT_SOURCE_DIR}/tests/p2p_module_mock.cpp"
-    "${PROJECT_SOURCE_DIR}/tests/utxo_mock.cpp"
-    "${PROJECT_SOURCE_DIR}/tests/blockchain_mock.cpp"
-    "${PROJECT_SOURCE_DIR}/tests/mempool_mock.cpp"
+    "${PROJECT_SOURCE_DIR}/tests/wallet_module_interface_mock.cpp"
     "${PROJECT_SOURCE_DIR}/tests/interrupted_sleep.cpp"
     "${PROJECT_SOURCE_DIR}/tests/p2p_module.cpp"
     "${PROJECT_SOURCE_DIR}/tests/p2p_session_manager_tcp_mock.cpp"
-    "${PROJECT_SOURCE_DIR}/tests/p2p_session_manager_tor_mock.cpp"
     "${PROJECT_SOURCE_DIR}/tests/port_forwarder_mock.cpp"
     "${PROJECT_SOURCE_DIR}/tests/peer_finder_mock.cpp"
     "${PROJECT_SOURCE_DIR}/tests/p2p_module_builder_tests.cpp"
+    "${PROJECT_SOURCE_DIR}/tests/utils-node.cpp"
+    "${PROJECT_SOURCE_DIR}/tests/key_manager_bip32.cpp"
+    "${PROJECT_SOURCE_DIR}/tests/wallet_module.cpp"
     )
 
 set_property(SOURCE ${SOURCE_FILES_COMMON} PROPERTY COMPILE_FLAGS "-Wall -Wextra -pedantic -Wno-error")
@@ -168,6 +176,13 @@ if((NOT ANDROID) AND (NOT APPLE))
     set(FILESYSTEM_STD_LIB "stdc++fs")
 endif()
 
+add_executable(simulation ${SOURCE_FILES_SIMULATION} $<TARGET_OBJECTS:common_files>)
+target_include_directories(simulation PUBLIC ${sodium_INCLUDE_DIR} ${BOOST_INCLUDE_DIRS}
+			PRIVATE "${PROJECT_SOURCE_DIR}/googletest/googletest/include"
+			PRIVATE "${PROJECT_SOURCE_DIR}/googletest/googlemock/include")
+target_link_libraries(simulation PUBLIC gtest gmock ${sodium_LIBRARY_RELEASE} ${Boost_LIBRARIES} leveldb libminiupnpc-static natpmp protobuf::libprotoc leveldb ${FILESYSTEM_STD_LIB} ${WINDOWS_LIBS} Threads::Threads)
+target_compile_definitions(simulation PRIVATE -DIVOTING_TESTS)
+
 add_executable(node "${PROJECT_SOURCE_DIR}/src/main-node.cpp" ${SOURCE_FILES_NODE} $<TARGET_OBJECTS:common_files>)
 target_include_directories(node PUBLIC ${sodium_INCLUDE_DIR} ${BOOST_INCLUDE_DIRS}
 			PRIVATE "${PROJECT_SOURCE_DIR}/googletest/googletest/include"
@@ -181,7 +196,7 @@ if (NOT TARGET gtest)
 	add_subdirectory(${PROJECT_SOURCE_DIR}/googletest EXCLUDE_FROM_ALL)
 endif()
 
-add_executable(bc-tests EXCLUDE_FROM_ALL ${TESTS} ${SOURCE_FILES_COMMON})
+add_executable(bc-tests EXCLUDE_FROM_ALL ${TESTS} ${SOURCE_FILES_COMMON} "${PROJECT_SOURCE_DIR}/src/simulation/simulation.cpp")
 target_compile_options(bc-tests PRIVATE ${WARN_FLAGS})
 target_include_directories(bc-tests
 			SYSTEM
@@ -194,7 +209,7 @@ if(NATPMP)
 endif(NATPMP)
 target_compile_definitions(bc-tests PRIVATE -DIVOTING_TESTS)
 
-add_executable(bc-tests-coverage EXCLUDE_FROM_ALL ${TESTS} ${SOURCE_FILES_COMMON})
+add_executable(bc-tests-coverage EXCLUDE_FROM_ALL ${TESTS} ${SOURCE_FILES_COMMON} "${PROJECT_SOURCE_DIR}/src/simulation/simulation.cpp")
 target_compile_options(bc-tests-coverage PRIVATE ${WARN_FLAGS})
 target_include_directories(bc-tests-coverage
 			SYSTEM
@@ -215,6 +230,7 @@ if(LCOV)
 		set(COVERAGE_LCOV_EXCLUDES '/usr/*'
 		    'boost/*'
 		    "${PROJECT_SOURCE_DIR}/tests/*"
+		    "${PROJECT_SOURCE_DIR}/src/simulation/*"
 		    "${PROJECT_SOURCE_DIR}/leveldb/include/leveldb/*"
 		    "${PROJECT_SOURCE_DIR}/src/ed25519/*"
 		    "${PROJECT_SOURCE_DIR}/protobuf/src/google/protobuf/*"
@@ -231,6 +247,8 @@ if(LCOV)
 		    "${PROJECT_SOURCE_DIR}/src/blockchain.pb.h"
 		    "${PROJECT_SOURCE_DIR}/src/p2p.pb.cc"
 		    "${PROJECT_SOURCE_DIR}/src/p2p.pb.h"
+		    "${PROJECT_SOURCE_DIR}/src/wallet-integration.pb.cc"
+		    "${PROJECT_SOURCE_DIR}/src/wallet-integration.pb.h"
 		)
 		APPEND_COVERAGE_COMPILER_FLAGS()
 		SETUP_TARGET_FOR_COVERAGE_LCOV(

@@ -5,17 +5,11 @@ package proto;
 message transaction {
 	
 	enum transactiontype {
-		add_secret_vote = 0;
-		add_open_vote = 1;
-		generate = 2;
-		authorize_miner = 3;
-		authorize_organizer = 4;
-		authorize_issuer = 5;
-		authorize_voter = 6;
-		create_voting = 7;
-		coin_join = 8;
-		another_voting_protocol = 9;
-		hash_personal_data = 10;
+		placeholder = 0;
+		generate = 1;
+		authorize_miner = 2;
+		authorize_organizer = 3;
+		another_voting_protocol = 4;
 	}
 	transactiontype m_type = 1;
 
@@ -28,7 +22,6 @@ message transaction {
  
 	message vout {
 		bytes m_pkh = 1;
-		fixed32 m_amount = 2;
 	}
 	repeated vout m_vout = 3;
 
@@ -63,10 +56,6 @@ message addr {
     repeated peer_details m_peer_list = 1;
 }
 
-message all_active_votings_for_voter {
-	repeated bytes m_voting_ids = 1;
-}
-
 message getheaders {
 	fixed32 m_version = 1;
 	bytes m_hash_header_start = 2;
@@ -93,20 +82,7 @@ message getmerklebranch {
 
 message merkle_branch {
 	repeated bytes m_merkle_branch = 1;
-	optional bytes m_block_id = 2;
-}
-
-message get_all_active_votings_for_voter {
-	bytes m_voter_pk = 1;
-}
-
-message get_amount_on_pkh {
-	bytes m_pkh = 1;
-}
-
-message amount_on_pkh {
-	uint32 m_amount = 1;
-	optional bytes m_txid = 2;
+	bytes m_block_id = 2;
 }
 
 message get_transaction {
@@ -122,14 +98,6 @@ message authorization_txid {
 	bytes m_txid = 1;
 }
 
-message get_all_finished_votings_for_voter {
-	bytes m_voter_pk = 1;
-}
-
-message all_finished_votings_for_voter {
-	repeated bytes m_voting_ids = 1;
-}
-
 message request {
     oneof request_type {
         getheaders m_getheaders = 1;
@@ -138,11 +106,8 @@ message request {
         getmempooltransactions m_getmempooltransactions = 4;
         getaddr m_getaddr = 5;
         getmerklebranch m_getmerklebranch = 6;
-        get_all_active_votings_for_voter m_get_all_active_votings_for_voter = 8;
-        get_amount_on_pkh m_get_amount_on_pkh = 9;
         get_transaction m_get_transaction = 10;
         get_authorization_txid m_get_authorization_txid = 11;
-	get_all_finished_votings_for_voter m_get_all_finished_votings_for_voter = 12;
     }
 }
 
@@ -154,9 +119,6 @@ message proto_massage {
         transaction m_transaction = 4;
         addr m_addr = 5;
         merkle_branch m_merkle_branch = 7;
-        all_active_votings_for_voter m_all_active_votings_for_voter = 8;
-        amount_on_pkh m_amount_on_pkh = 9;
         authorization_txid m_authorization_txid = 10;
-	all_finished_votings_for_voter m_all_finished_votings_for_voter = 11;
     }
 }

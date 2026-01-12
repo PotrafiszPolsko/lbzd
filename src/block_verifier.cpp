@@ -21,7 +21,9 @@ bool c_block_verifier::verify_block(const c_block & block) const {
 		return false;
 	}
 	if (!is_genesis(block)) {
-		if (!check_time_diff(block)) return false;
+		if (!check_time_diff(block)) {
+			return false;
+		}
 		if (!check_transaction_merkle_root(block)){
 			return false;
 		}
@@ -56,8 +58,7 @@ bool c_block_verifier::check_parent_hash(const c_block & block) const {
 	} else {
 		const auto parent_block = m_blockchain.get_last_block();
 		const auto parent_hash = parent_block.m_header.m_actual_hash;
-		if (parent_hash != block.m_header.m_parent_hash) 
-			return false;
+		if (parent_hash != block.m_header.m_parent_hash) return false;
 	}
 	return true;
 }
@@ -135,7 +136,7 @@ bool c_block_verifier::check_transactions(const c_block & block) const {
 			size_t tx_index = index.fetch_add(1);
 			while (tx_index < block.m_transaction.size()) {
 				const auto & tx = block.m_transaction.at(tx_index);
-				if (!check_transaction(m_blockchain, tx, m_utxo)) return false;
+				if (!check_transaction(tx, m_utxo)) return false;
 				tx_index = index.fetch_add(1);
 			}
 			return true;
@@ -145,6 +146,10 @@ bool c_block_verifier::check_transactions(const c_block & block) const {
 	for (auto & future : result_futures) future.wait();
 	for (auto & future : result_futures) {
 		if (future.get() == false) return false;
+	}
+	
+	for (const auto & tx : block.m_transaction) {
+		if (!check_transaction(tx, m_utxo)) return false;
 	}
 	return true;
 }

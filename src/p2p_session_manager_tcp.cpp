@@ -4,7 +4,7 @@
 #include "logger.hpp"
 #include "p2p_session_manager_tcp.hpp"
 
-c_p2p_session_manager_tcp::c_p2p_session_manager_tcp(read_handler read_handler, new_peer_handler new_peer_handler, boost::asio::ip::tcp::endpoint listen_endpoint)
+c_p2p_session_manager_tcp::c_p2p_session_manager_tcp(read_handler read_handler,  new_peer_handler new_peer_handler, boost::asio::ip::tcp::endpoint listen_endpoint)
 	:
 	  c_p2p_session_manager (read_handler, new_peer_handler, listen_endpoint)
 {

@@ -14,6 +14,7 @@ class c_main_module_builder {
 		boost::program_options::variables_map m_variable_map;
 		template <class T_BUILDER>
 		auto build_component(const boost::program_options::variables_map & vm, c_main_module & main_module) const;
+		t_root_keypair m_miner_keypair;
 };
 
 template<class T_BUILDER>

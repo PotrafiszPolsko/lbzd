@@ -3,7 +3,6 @@
 
 #include <boost/asio.hpp>
 #include <memory>
-#include <array>
 #include <vector>
 #include <queue>
 #include "peer_reference.hpp"

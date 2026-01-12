@@ -6,6 +6,7 @@
 #include "utils_json.hpp"
 
 class c_rpc_module;
+class c_wallet_module;
 
 class c_rpc_exec {
 	public:

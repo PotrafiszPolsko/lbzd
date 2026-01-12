@@ -11,8 +11,11 @@ namespace n_utils_node {
 	void writing_string_to_a_file(const std::filesystem::path & filename_path, const std::string & text);
 	std::string reading_string_to_a_file(const std::filesystem::path & filename_path);
 	std::filesystem::path make_file(const std::filesystem::path & filename_path, const std::string & text);
+#ifdef WIN32
+	const std::string name_of_the_datadir = "ivoting";
+#else
 	const std::string name_of_the_datadir = ".ivoting";
-	const std::string name_of_the_file_tor_key = "private_key.pem";
+#endif
 	const std::string name_of_the_configuration_file = "ivoting.conf";
 
 }

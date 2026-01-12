@@ -10,9 +10,11 @@ class c_mempool {
 		c_mempool() = default; //for only tests
 		virtual ~c_mempool() = default;
 		/**
-		 * @brief
+		 * @brief add_transaction
 		 * check transaction and add to internal buffer if valid. Else ignore.
 		 */
+		template <class T>
+		bool add_transaction(T && transaction, const c_utxo & utxo);
 		void remove_transaction_if_exists(const t_hash_type & txid);
 		const c_transaction & get_first_transaction() const;
 		c_transaction get_and_remove_transaction();
@@ -27,5 +29,18 @@ class c_mempool {
 		 */
 		std::unordered_map<t_hash_type, c_transaction> m_transactions; // txid => transaction
 };
+
+template <class T>
+bool c_mempool::add_transaction(T && transaction, const c_utxo & utxo) {
+	// check specify for mempool
+	const auto txid = transaction.m_txid;
+	if (check_transaction(transaction, utxo)) {
+		m_transactions.emplace(txid, std::forward<T>(transaction));
+		return true;
+	} else {
+		return false;
+	}
+}
+
 
 #endif // MEMPOOL_HPP

@@ -1,11 +1,9 @@
 #include "../src/p2p_module.hpp"
 #include "../src/serialization_utils.hpp"
-#include "../src/utils.hpp"
 #include "p2p_module_mock.hpp"
 #include "mediator_mock.hpp"
 #include "p2p_module_builder_tests.hpp"
 #include "p2p_session_manager_tcp_mock.hpp"
-#include "p2p_session_manager_tor_mock.hpp"
 #include "peer_finder_mock.hpp"
 #include "port_forwarder_mock.hpp"
 
@@ -13,6 +11,77 @@ class p2p_module : public ::testing::Test {
 	protected:
 		c_mediator_mock m_mediator_mock;
 };
+
+TEST_F(p2p_module, send_proto_message_to_peer_parse_tx) {
+	c_transaction tx;
+	tx.m_vin.resize(1);
+	tx.m_vout.resize(1);
+	const std::string tx_allmetadata_str = "434f8524a28dd9d80e70eb536372f08aa0a7a0eaf982fc7ca8910affc42ca10c56ea";
+	tx.m_allmetadata.resize(tx_allmetadata_str.size()/2);
+	if(tx_allmetadata_str.size()!=tx.m_allmetadata.size()*2) throw std::invalid_argument("Bad allmetadata size");
+	int ret = 1;
+	ret = sodium_hex2bin(tx.m_allmetadata.data(), tx.m_allmetadata.size(),
+						tx_allmetadata_str.data(), tx_allmetadata_str.size(),
+						nullptr, nullptr, nullptr);
+	if (ret!=0) throw std::runtime_error("hex2bin error");
+	const std::string tx_txid_str = "8ceab7910abf80c8d9c95a5937f9bdaadd17cef4a4077c6be33115071b03566d";
+	if(tx_txid_str.size()!=tx.m_txid.size()*2) throw std::invalid_argument("Bad txid size");
+	ret = sodium_hex2bin(tx.m_txid.data(), tx.m_txid.size(),
+						tx_txid_str.data(), tx_txid_str.size(),
+						nullptr, nullptr, nullptr);
+	if (ret!=0) throw std::runtime_error("hex2bin error");
+	tx.m_type = t_transactiontype::authorize_organizer;
+	const std::string tx_vin_pk_str = "6e07388956fded045fa877ea0e2d1ad5bc465ae9052219f8114a5ee31e025eef";
+	if(tx_vin_pk_str.size()!=tx.m_vin.at(0).m_pk.size()*2) throw std::invalid_argument("Bad pk size");
+	ret = sodium_hex2bin(tx.m_vin.at(0).m_pk.data(), tx.m_vin.at(0).m_pk.size(),
+						tx_vin_pk_str.data(), tx_vin_pk_str.size(),
+						nullptr, nullptr, nullptr);
+	if (ret!=0) throw std::runtime_error("hex2bin error");
+	const std::string tx_vin_sign_str = "44aa7c22e4d8a9395c2e8698890d915ca2045085a62ebe128159ae55bde9b69f659fc4f86e63c7a4c395a3c7c0da6575f627b3b8dbe213d29c8f6ee23d59b305";
+	if(tx_vin_sign_str.size()!=tx.m_vin.at(0).m_sign.size()*2) throw std::invalid_argument("Bad sign size");
+	ret = sodium_hex2bin(tx.m_vin.at(0).m_sign.data(), tx.m_vin.at(0).m_sign.size(),
+						tx_vin_sign_str.data(), tx_vin_sign_str.size(),
+						nullptr, nullptr, nullptr);
+	if (ret!=0) throw std::runtime_error("hex2bin error");
+	const std::string tx_vin_txid_str = "43677e6f5b952d27f4ef0828a38db971218e4b04a685bf64576a9ed2bad46abe";
+	if(tx_vin_txid_str.size()!=tx.m_vin.at(0).m_txid.size()*2) throw std::invalid_argument("Bad vin_txid size");
+	ret = sodium_hex2bin(tx.m_vin.at(0).m_txid.data(), tx.m_vin.at(0).m_txid.size(),
+						tx_vin_txid_str.data(), tx_vin_txid_str.size(),
+						nullptr, nullptr, nullptr);
+	if (ret!=0) throw std::runtime_error("hex2bin error");
+	const std::string tx_vout_pkh_str = "2ba3904dde8c813670a64d96d5614a6c90d6a94d692e1d839621e7d0aefaceb3";
+	if(tx_vout_pkh_str.size()!=tx.m_vout.at(0).m_pkh.size()*2) throw std::invalid_argument("Bad vout pkh size");
+	ret = sodium_hex2bin(tx.m_vout.at(0).m_pkh.data(), tx.m_vout.at(0).m_pkh.size(),
+						tx_vout_pkh_str.data(), tx_vout_pkh_str.size(),
+						nullptr, nullptr, nullptr);
+	if (ret!=0) throw std::runtime_error("hex2bin error");
+	using testing::_;
+	EXPECT_CALL(m_mediator_mock, notify(_))
+	        .WillOnce(
+	            [&tx](const t_mediator_command_request & request){
+		            std::unique_ptr<t_mediator_command_response> response;
+					const auto request_add_new_transaction = dynamic_cast<const t_mediator_command_request_add_new_transaction&>(request);
+					EXPECT_EQ(request_add_new_transaction.m_transaction, tx);
+					response = std::make_unique<t_mediator_command_response_add_new_transaction>();
+					auto & response_add_new_transaction = dynamic_cast<t_mediator_command_response_add_new_transaction&>(*response);
+					response_add_new_transaction.m_tx_added_to_mempool = false;
+					assert(response != nullptr);
+					return response;
+	});
+
+	c_p2p_module_builder_tests p2p_module_builder_test;
+	const auto p2p_module = p2p_module_builder_test.build_p2p_module(m_mediator_mock);
+
+	std::string address_tcp_str = "91.236.233.26";
+	unsigned short port = 33333;
+	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
+	proto::proto_massage proto_message;
+	auto * const transaction_proto = proto_message.mutable_m_transaction();
+	*transaction_proto = transaction_to_protobuf(tx);
+	const auto proto_message_str = proto_message.SerializeAsString();
+	const auto proto_message_vec = container_to_vector_of_uchars(proto_message_str);
+	EXPECT_NO_THROW(p2p_module->read_handler_tcp(*peer_ref_from_tcp, span(proto_message_vec.data(), proto_message_vec.size())));
+}
 
 TEST_F(p2p_module, send_proto_message_to_peer_parse_block) {
 	c_block block;
@@ -83,7 +152,6 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_block) {
 						nullptr, nullptr, nullptr);
 	if (ret!=0) throw std::runtime_error("hex2bin error");
 	txs.at(0).m_vin.at(0).m_txid.fill(0x00);
-	txs.at(0).m_vout.at(0).m_amount = 0;
 	const std::string tx_vout_pkh_str = "2ba3904dde8c813670a64d96d5614a6c90d6a94d692e1d839621e7d0aefaceb3";
 	if(tx_vout_pkh_str.size()!=txs.at(0).m_vout.at(0).m_pkh.size()*2) throw std::invalid_argument("Bad vout pkh size");
 	ret = sodium_hex2bin(txs.at(0).m_vout.at(0).m_pkh.data(), txs.at(0).m_vout.at(0).m_pkh.size(),
@@ -124,7 +192,7 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_block) {
 	const auto p2p_module = p2p_module_builder_test.build_p2p_module(m_mediator_mock);
 
 	std::string address_tcp_str = "91.236.233.26";
-	unsigned short port = 22083;
+	unsigned short port = 33333;
 	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
 	proto::proto_massage proto_message;
 	auto * const block_proto = proto_message.mutable_m_block();
@@ -173,45 +241,44 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_headers) {
 	header.m_parent_hash = parent_hash;
 	header.m_version = 0;
 
+	c_p2p_module_builder_tests p2p_module_builder_test;
 	using testing::_;
 	EXPECT_CALL(m_mediator_mock, notify(_))
-			.WillRepeatedly(
-				[&actual_hash](const t_mediator_command_request & request) {
-					std::unique_ptr<t_mediator_command_response> response;
-					switch (request.m_type) {
-						case t_mediator_cmd_type::e_is_blockchain_synchronized:
-						{
-							response = std::make_unique<t_mediator_command_response_is_blockchain_synchronized>();
-							auto & response_is_bc_synchronized = dynamic_cast<t_mediator_command_response_is_blockchain_synchronized&>(*response);
+	.WillRepeatedly(
+	[&actual_hash](const t_mediator_command_request & request) {
+		std::unique_ptr<t_mediator_command_response> response;
+		switch (request.m_type) {
+			case t_mediator_cmd_type::e_is_blockchain_synchronized:
+				{
+					response = std::make_unique<t_mediator_command_response_is_blockchain_synchronized>();
+					auto & response_is_bc_synchronized = dynamic_cast<t_mediator_command_response_is_blockchain_synchronized&>(*response);
 							response_is_bc_synchronized.m_is_blockchain_synchronized = false;
 							break;
-						}
-						case t_mediator_cmd_type::e_block_exists:
-						{
-							response = std::make_unique<t_mediator_command_response_block_exists>();
-							auto & response_block_exists = dynamic_cast<t_mediator_command_response_block_exists&>(*response);
+				}
+			case t_mediator_cmd_type::e_block_exists:
+				{
+					response = std::make_unique<t_mediator_command_response_block_exists>();
+					auto & response_block_exists = dynamic_cast<t_mediator_command_response_block_exists&>(*response);
 							response_block_exists.m_block_exists = true;
 							break;
-						}
-						case t_mediator_cmd_type::e_get_last_block_hash:
-						{
-							response = std::make_unique<t_mediator_command_response_get_last_block_hash>();
-							auto & response_get_last_block_hash = dynamic_cast<t_mediator_command_response_get_last_block_hash&>(*response);
+				}
+			case t_mediator_cmd_type::e_get_last_block_hash:
+				{
+					response = std::make_unique<t_mediator_command_response_get_last_block_hash>();
+					auto & response_get_last_block_hash = dynamic_cast<t_mediator_command_response_get_last_block_hash&>(*response);
 							response_get_last_block_hash.m_last_block_hash = actual_hash;
 							break;
-						}
-						default:
-							break;
-					}
-					return response;
 				}
-			);
-
-	c_p2p_module_builder_tests p2p_module_builder_test;
+			default:
+				break;
+		}
+		return response;
+	}
+	);
 	const auto p2p_module = p2p_module_builder_test.build_p2p_module(m_mediator_mock);
 
 	std::string address_tcp_str = "91.236.233.26";
-	unsigned short port = 22083;
+	unsigned short port = 33333;
 	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
 	proto::proto_massage proto_message;
 	auto * const headers_proto = proto_message.mutable_m_headers();
@@ -251,7 +318,7 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_merkle_branch) {
 	const auto p2p_module = p2p_module_builder_test.build_p2p_module(m_mediator_mock);
 
 	std::string address_tcp_str = "91.236.233.26";
-	unsigned short port = 22083;
+	unsigned short port = 33333;
 	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
 
 	const auto hash_1_str_to_proto = container_to_string(hash_1);
@@ -272,14 +339,14 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_addr) {
 	c_p2p_module_builder_tests p2p_module_builder_test;
 	const auto p2p_module = p2p_module_builder_test.build_p2p_module(m_mediator_mock);
 
-	std::string my_address = "91.236.233.26:22083";
+	std::string my_address = "91.236.233.26:33333";
 	const auto &peer_finder = dynamic_cast<const c_peer_finder_mock&>(*p2p_module->m_peer_finder);
 	EXPECT_CALL(peer_finder, is_my_address(my_address))
 	        .WillOnce(
 	            [&my_address](const std::string &address_tmp){return my_address==address_tmp;});
 
 	std::string address_tcp_str = "91.236.233.26";
-	unsigned short port = 22083;
+	unsigned short port = 33333;
 	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
 	proto::addr addr;
 	auto * const proto_peer_details = addr.add_m_peer_list();
@@ -313,7 +380,7 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_gettx) {
 						nullptr, nullptr, nullptr);
 	if (ret!=0) throw std::runtime_error("hex2bin error");
 	tx.m_txid = txid;
-	tx.m_type = t_transactiontype::authorize_voter;
+	tx.m_type = t_transactiontype::authorize_organizer;
 	const std::string tx_vin_pk_str = "6e07388956fded045fa877ea0e2d1ad5bc465ae9052219f8114a5ee31e025eef";
 	if(tx_vin_pk_str.size()!=tx.m_vin.at(0).m_pk.size()*2) throw std::invalid_argument("Bad pk size");
 	ret = sodium_hex2bin(tx.m_vin.at(0).m_pk.data(), tx.m_vin.at(0).m_pk.size(),
@@ -332,8 +399,6 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_gettx) {
 						tx_vin_txid_str.data(), tx_vin_txid_str.size(),
 						nullptr, nullptr, nullptr);
 	if (ret!=0) throw std::runtime_error("hex2bin error");
-	
-	tx.m_vout.at(0).m_amount = 0;
 	const std::string tx_vout_pkh_str = "2ba3904dde8c813670a64d96d5614a6c90d6a94d692e1d839621e7d0aefaceb3";
 	if(tx_vout_pkh_str.size()!=tx.m_vout.at(0).m_pkh.size()*2) throw std::invalid_argument("Bad vout pkh size");
 	ret = sodium_hex2bin(tx.m_vout.at(0).m_pkh.data(), tx.m_vout.at(0).m_pkh.size(),
@@ -359,7 +424,7 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_gettx) {
 	const auto p2p_module = p2p_module_builder_test.build_p2p_module(m_mediator_mock);
 
 	std::string address_tcp_str = "91.236.233.26";
-	unsigned short port = 22083;
+	unsigned short port = 33333;
 	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
 	proto::proto_massage proto_message;
 	proto::request request;
@@ -440,7 +505,6 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_getblock) {
 						nullptr, nullptr, nullptr);
 	if (ret!=0) throw std::runtime_error("hex2bin error");
 	txs.at(0).m_vin.at(0).m_txid.fill(0x00);
-	txs.at(0).m_vout.at(0).m_amount = 0;
 	const std::string tx_vout_pkh_str = "2ba3904dde8c813670a64d96d5614a6c90d6a94d692e1d839621e7d0aefaceb3";
 	if(tx_vout_pkh_str.size()!=txs.at(0).m_vout.at(0).m_pkh.size()*2) throw std::invalid_argument("Bad vout pkh size");
 	ret = sodium_hex2bin(txs.at(0).m_vout.at(0).m_pkh.data(), txs.at(0).m_vout.at(0).m_pkh.size(),
@@ -467,7 +531,7 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_getblock) {
 	const auto p2p_module = p2p_module_builder_test.build_p2p_module(m_mediator_mock);
 
 	std::string address_tcp_str = "91.236.233.26";
-	unsigned short port = 22083;
+	unsigned short port = 33333;
 	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
 	proto::proto_massage proto_message;
 	proto::request request;
@@ -575,7 +639,7 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_getheaders) {
 	const auto p2p_module = p2p_module_builder_test.build_p2p_module(m_mediator_mock);
 
 	std::string address_tcp_str = "91.236.233.26";
-	unsigned short port = 22083;
+	unsigned short port = 33333;
 	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
 	proto::proto_massage proto_message;
 	proto::request request;
@@ -607,7 +671,7 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_getmempooltransactio
 						tx_txid_str.data(), tx_txid_str.size(),
 						nullptr, nullptr, nullptr);
 	if (ret!=0) throw std::runtime_error("hex2bin error");
-	tx.m_type = t_transactiontype::authorize_voter;
+	tx.m_type = t_transactiontype::authorize_organizer;
 	const std::string tx_vin_pk_str = "6e07388956fded045fa877ea0e2d1ad5bc465ae9052219f8114a5ee31e025eef";
 	if(tx_vin_pk_str.size()!=tx.m_vin.at(0).m_pk.size()*2) throw std::invalid_argument("Bad pk size");
 	ret = sodium_hex2bin(tx.m_vin.at(0).m_pk.data(), tx.m_vin.at(0).m_pk.size(),
@@ -626,8 +690,6 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_getmempooltransactio
 						tx_vin_txid_str.data(), tx_vin_txid_str.size(),
 						nullptr, nullptr, nullptr);
 	if (ret!=0) throw std::runtime_error("hex2bin error");
-	
-	tx.m_vout.at(0).m_amount = 0;
 	const std::string tx_vout_pkh_str = "2ba3904dde8c813670a64d96d5614a6c90d6a94d692e1d839621e7d0aefaceb3";
 	if(tx_vout_pkh_str.size()!=tx.m_vout.at(0).m_pkh.size()*2) throw std::invalid_argument("Bad vout pkh size");
 	ret = sodium_hex2bin(tx.m_vout.at(0).m_pkh.data(), tx.m_vout.at(0).m_pkh.size(),
@@ -653,7 +715,7 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_getmempooltransactio
 	const auto p2p_module = p2p_module_builder_test.build_p2p_module(m_mediator_mock);
 
 	std::string address_tcp_str = "91.236.233.26";
-	unsigned short port = 22083;
+	unsigned short port = 33333;
 	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
 	proto::proto_massage proto_message;
 	proto::request request;
@@ -716,135 +778,12 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_getmerklebranch) {
 	const auto p2p_module = p2p_module_builder_test.build_p2p_module(m_mediator_mock);
 
 	std::string address_tcp_str = "91.236.233.26";
-	unsigned short port = 22083;
+	unsigned short port = 33333;
 	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
 	proto::proto_massage proto_message;
 	proto::request request;
 	const auto txid_str_to_proto = container_to_string(txid);
 	request.mutable_m_getmerklebranch()->set_m_txid(txid_str_to_proto);
-	proto_message.mutable_m_request()->CopyFrom(request);
-	const auto proto_message_str = proto_message.SerializeAsString();
-	const auto proto_message_vec = container_to_vector_of_uchars(proto_message_str);
-	EXPECT_NO_THROW(p2p_module->read_handler_tcp(*peer_ref_from_tcp, span(proto_message_vec.data(), proto_message_vec.size())));
-}
-
-TEST_F(p2p_module, send_proto_message_to_peer_parse_request_getallactivevotingsforvoter) {
-	t_public_key_type voter_pk;
-	const std::string voter_pk_str = "c2ac71261b939b4c785d0c64a33743cc6475e7eb45cfdbca2e0ac8a9d0b3760c";
-	if(voter_pk_str.size()!=voter_pk.size()*2) throw std::invalid_argument("Bad pk size");
-	int ret = 1;
-	ret = sodium_hex2bin(voter_pk.data(), voter_pk.size(),
-						voter_pk_str.data(), voter_pk_str.size(),
-						nullptr, nullptr, nullptr);
-	if (ret!=0) throw std::runtime_error("hex2bin error");
-	t_voting_metadata voting_metadata;
-	voting_metadata.m_start_timepoint = 1679183050;
-	const uint32_t voting_end_time = 1679189050;
-	const uint32_t voting_time = voting_end_time - voting_metadata.m_start_timepoint;
-	const uint32_t number_of_blocks = voting_time / n_blockchainparams::blocks_diff_time_in_sec;
-	voting_metadata.m_number_of_blocks_to_the_end = number_of_blocks;
-	voting_metadata.m_name = "Voting D";
-	voting_metadata.m_voting_type = 0;
-	voting_metadata.m_authorization_level = 1;
-	voting_metadata.m_number_of_choice = 1;
-	voting_metadata.m_options = {"option A", "option B"};
-	voting_metadata.m_question = "Do you prefer option a or b?";
-	t_hash_type voting_id;
-	const std::string voting_id_str = "fcefd000c7a8e644835c9bdf252d81135a375f72101f164b6a75b18019e3d53e";
-	if(voting_id_str.size()!=voting_id.size()*2) throw std::invalid_argument("Bad voting_id size");
-	ret = sodium_hex2bin(voting_id.data(), voting_id.size(),
-						voting_id_str.data(), voting_id_str.size(),
-						nullptr, nullptr, nullptr);
-	if (ret!=0) throw std::runtime_error("hex2bin error");
-	std::vector<std::pair<t_hash_type, t_voting_metadata>> active_votings;
-	active_votings.push_back(std::make_pair(voting_id, voting_metadata));
-	using testing::_;
-	EXPECT_CALL(m_mediator_mock, notify(_))
-	        .WillOnce(
-	            [&voter_pk, &active_votings](const t_mediator_command_request & request){
-						const auto request_getallactivevotingsforvoter = dynamic_cast<const t_mediator_command_request_get_all_active_votings_for_voter&>(request);
-						EXPECT_EQ(request_getallactivevotingsforvoter.m_voter_pk, voter_pk);
-						std::unique_ptr<t_mediator_command_response> response;
-						response = std::make_unique<t_mediator_command_response_get_all_active_votings_for_voter>();
-						auto & response_getallactivevotingsforvoter = dynamic_cast<t_mediator_command_response_get_all_active_votings_for_voter&>(*response);
-						response_getallactivevotingsforvoter.m_active_votings = active_votings;
-						assert(response != nullptr);
-						return response;
-	});
-
-	c_p2p_module_builder_tests p2p_module_builder_test;
-	const auto p2p_module = p2p_module_builder_test.build_p2p_module(m_mediator_mock);
-
-	std::string address_tcp_str = "91.236.233.26";
-	unsigned short port = 22083;
-	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
-	proto::proto_massage proto_message;
-	proto::request request;
-	const auto voter_pk_str_to_proto = container_to_string(voter_pk);
-	request.mutable_m_get_all_active_votings_for_voter()->set_m_voter_pk(voter_pk_str_to_proto);
-	proto_message.mutable_m_request()->CopyFrom(request);
-	const auto proto_message_str = proto_message.SerializeAsString();
-	const auto proto_message_vec = container_to_vector_of_uchars(proto_message_str);
-	EXPECT_NO_THROW(p2p_module->read_handler_tcp(*peer_ref_from_tcp, span(proto_message_vec.data(), proto_message_vec.size())));
-}
-
-TEST_F(p2p_module, send_proto_message_to_peer_parse_request_getamountonpkh) {
-	t_hash_type pkh;
-	const std::string pkh_str = "d4debcb364a14025b13640899929abc31484797e4b6eaf788fba6833ec6fcc92";
-	if(pkh_str.size()!=pkh.size()*2) throw std::invalid_argument("Bad pkh size");
-	int ret = 1;
-	ret = sodium_hex2bin(pkh.data(), pkh.size(),
-						pkh_str.data(), pkh_str.size(),
-						nullptr, nullptr, nullptr);
-	if (ret!=0) throw std::runtime_error("hex2bin error");
-	t_hash_type txid;
-	const std::string txid_str = "8ceab7910abf80c8d9c95a5937f9bdaadd17cef4a4077c6be33115071b03566d";
-	if(txid_str.size()!=txid.size()*2) throw std::invalid_argument("Bad txid size");
-	ret = sodium_hex2bin(txid.data(), txid.size(),
-						txid_str.data(), txid_str.size(),
-						nullptr, nullptr, nullptr);
-	if (ret!=0) throw std::runtime_error("hex2bin error");
-	using testing::_;
-	EXPECT_CALL(m_mediator_mock, notify(_))
-	        .WillRepeatedly(
-	            [&pkh, &txid](const t_mediator_command_request & request){
-					std::unique_ptr<t_mediator_command_response> response;
-					switch (request.m_type) {
-						case t_mediator_cmd_type::e_get_amount_on_pkh:
-						{
-							const auto request_getamountonpkh = dynamic_cast<const t_mediator_command_request_get_amount_on_pkh&>(request);
-							EXPECT_EQ(request_getamountonpkh.m_pkh, pkh);
-							response = std::make_unique<t_mediator_command_response_get_amount_on_pkh>();
-							auto & response_getamountonpkh = dynamic_cast<t_mediator_command_response_get_amount_on_pkh&>(*response);
-							response_getamountonpkh.m_amount = 1;
-							break;
-						}
-						case t_mediator_cmd_type::e_get_source_txid_for_pkh:
-						{
-							const auto request_getsourcetxidforpkh = dynamic_cast<const t_mediator_command_request_get_source_txid_for_pkh&>(request);
-							EXPECT_EQ(request_getsourcetxidforpkh.m_pkh, pkh);
-							response = std::make_unique<t_mediator_command_response_get_source_txid_for_pkh>();
-							auto & response_getsourcetxidforpkh = dynamic_cast<t_mediator_command_response_get_source_txid_for_pkh&>(*response);
-							response_getsourcetxidforpkh.m_txid = txid;
-							break;
-						}
-						default:
-						break;
-					}
-					assert(response != nullptr);
-					return response;
-	});
-
-	c_p2p_module_builder_tests p2p_module_builder_test;
-	const auto p2p_module = p2p_module_builder_test.build_p2p_module(m_mediator_mock);
-
-	std::string address_tcp_str = "91.236.233.26";
-	unsigned short port = 22083;
-	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
-	proto::proto_massage proto_message;
-	proto::request request;
-	const auto pkh_str_to_proto = container_to_string(pkh);
-	request.mutable_m_get_amount_on_pkh()->set_m_pkh(pkh_str_to_proto);
 	proto_message.mutable_m_request()->CopyFrom(request);
 	const auto proto_message_str = proto_message.SerializeAsString();
 	const auto proto_message_vec = container_to_vector_of_uchars(proto_message_str);
@@ -871,7 +810,7 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_gettransaction) {
 						nullptr, nullptr, nullptr);
 	if (ret!=0) throw std::runtime_error("hex2bin error");
 	tx.m_txid = txid;
-	tx.m_type = t_transactiontype::authorize_voter;
+	tx.m_type = t_transactiontype::authorize_organizer;
 	const std::string tx_vin_pk_str = "6e07388956fded045fa877ea0e2d1ad5bc465ae9052219f8114a5ee31e025eef";
 	if(tx_vin_pk_str.size()!=tx.m_vin.at(0).m_pk.size()*2) throw std::invalid_argument("Bad pk size");
 	ret = sodium_hex2bin(tx.m_vin.at(0).m_pk.data(), tx.m_vin.at(0).m_pk.size(),
@@ -890,8 +829,6 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_gettransaction) {
 						tx_vin_txid_str.data(), tx_vin_txid_str.size(),
 						nullptr, nullptr, nullptr);
 	if (ret!=0) throw std::runtime_error("hex2bin error");
-	
-	tx.m_vout.at(0).m_amount = 0;
 	const std::string tx_vout_pkh_str = "2ba3904dde8c813670a64d96d5614a6c90d6a94d692e1d839621e7d0aefaceb3";
 	if(tx_vout_pkh_str.size()!=tx.m_vout.at(0).m_pkh.size()*2) throw std::invalid_argument("Bad vout pkh size");
 	ret = sodium_hex2bin(tx.m_vout.at(0).m_pkh.data(), tx.m_vout.at(0).m_pkh.size(),
@@ -917,68 +854,12 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_gettransaction) {
 	const auto p2p_module = p2p_module_builder_test.build_p2p_module(m_mediator_mock);
 
 	std::string address_tcp_str = "91.236.233.26";
-	unsigned short port = 22083;
+	unsigned short port = 33333;
 	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
 	proto::proto_massage proto_message;
 	proto::request request;
 	const auto txid_str_to_proto = container_to_string(txid);
 	request.mutable_m_get_transaction()->set_m_txid(txid_str_to_proto);
-	proto_message.mutable_m_request()->CopyFrom(request);
-	const auto proto_message_str = proto_message.SerializeAsString();
-	const auto proto_message_vec = container_to_vector_of_uchars(proto_message_str);
-	EXPECT_NO_THROW(p2p_module->read_handler_tcp(*peer_ref_from_tcp, span(proto_message_vec.data(), proto_message_vec.size())));
-}
-
-TEST_F(p2p_module, send_proto_message_to_peer_parse_request_getauthtxid) {
-	t_hash_type voting_id;
-	const std::string voting_id_str = "fcefd000c7a8e644835c9bdf252d81135a375f72101f164b6a75b18019e3d53e";
-	if(voting_id_str.size()!=voting_id.size()*2) throw std::invalid_argument("Bad voting_id size");
-	int ret = 1;
-	ret = sodium_hex2bin(voting_id.data(), voting_id.size(),
-						voting_id_str.data(), voting_id_str.size(),
-						nullptr, nullptr, nullptr);
-	if (ret!=0) throw std::runtime_error("hex2bin error");
-	t_public_key_type voter_pk;
-	const std::string voter_pk_str = "c2ac71261b939b4c785d0c64a33743cc6475e7eb45cfdbca2e0ac8a9d0b3760c";
-	if(voter_pk_str.size()!=voter_pk.size()*2) throw std::invalid_argument("Bad pk size");
-	ret = sodium_hex2bin(voter_pk.data(), voter_pk.size(),
-						voter_pk_str.data(), voter_pk_str.size(),
-						nullptr, nullptr, nullptr);
-	if (ret!=0) throw std::runtime_error("hex2bin error");
-	const std::string txid_str = "8ceab7910abf80c8d9c95a5937f9bdaadd17cef4a4077c6be33115071b03566d";
-	t_hash_type txid;
-	if(txid_str.size()!=txid.size()*2) throw std::invalid_argument("Bad txid size");
-	ret = sodium_hex2bin(txid.data(), txid.size(),
-						txid_str.data(), txid_str.size(),
-						nullptr, nullptr, nullptr);
-	if (ret!=0) throw std::runtime_error("hex2bin error");
-	using testing::_;
-	EXPECT_CALL(m_mediator_mock, notify(_))
-	        .WillOnce(
-	            [&voting_id, &voter_pk, &txid](const t_mediator_command_request & request){
-						const auto request_getauthtxid = dynamic_cast<const t_mediator_command_request_get_voter_auth_txid_for_voting&>(request);
-						EXPECT_EQ(request_getauthtxid.m_voter_pk, voter_pk);
-						EXPECT_EQ(request_getauthtxid.m_voting_id, voting_id);
-						std::unique_ptr<t_mediator_command_response> response;
-						response = std::make_unique<t_mediator_command_response_get_voter_auth_txid_for_voting>();
-						auto & response_getauthtxid = dynamic_cast<t_mediator_command_response_get_voter_auth_txid_for_voting&>(*response);
-						response_getauthtxid.m_txid = txid;
-						assert(response != nullptr);
-						return response;
-	});
-
-	c_p2p_module_builder_tests p2p_module_builder_test;
-	const auto p2p_module = p2p_module_builder_test.build_p2p_module(m_mediator_mock);
-
-	std::string address_tcp_str = "91.236.233.26";
-	unsigned short port = 22083;
-	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
-	proto::proto_massage proto_message;
-	proto::request request;
-	const auto voter_pk_str_to_proto = container_to_string(voter_pk);
-	const auto voting_id_str_to_proto = container_to_string(voting_id);
-	request.mutable_m_get_authorization_txid()->set_m_pk(voter_pk_str_to_proto);
-	request.mutable_m_get_authorization_txid()->set_m_voting_id(voting_id_str_to_proto);
 	proto_message.mutable_m_request()->CopyFrom(request);
 	const auto proto_message_str = proto_message.SerializeAsString();
 	const auto proto_message_vec = container_to_vector_of_uchars(proto_message_str);
@@ -992,7 +873,7 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_getaddr) {
 
 	t_peer_finder_address peer_address;
 	peer_address.m_external_address = "91.236.233.26";
-	peer_address.m_port = 22083;
+	peer_address.m_port = 33333;
 	peer_address.m_timestamp = 1679189050;
 	std::vector<t_peer_finder_address> peers_addresses;
 	peers_addresses.push_back(peer_address);
@@ -1007,15 +888,8 @@ TEST_F(p2p_module, send_proto_message_to_peer_parse_request_getaddr) {
 	EXPECT_CALL(port_forwarder, get_my_public_ip())
 	        .WillOnce(Return(opt_addr));
 
-	const auto &session_manager_tor = dynamic_cast<const c_p2p_session_manager_tor_mock&>(*p2p_module->m_session_manager_tor);
-	const std::string address_tor_str = "jzn4p5ujyz74gqjpexxs7fidlsqmqqm4uefrj24ei35mwf4jlaajzja.onion";
-	EXPECT_CALL(session_manager_tor, get_tor_address())
-	        .WillOnce(Return(address_tor_str));
-	unsigned short port = 22083;
-	EXPECT_CALL(session_manager_tor, get_hidden_service_port())
-	        .WillOnce(Return(port));
-
 	std::string address_tcp_str = "91.236.233.26";
+	unsigned short port = 33333;
 	auto peer_ref_from_tcp = create_peer_reference(address_tcp_str, port);
 	proto::proto_massage proto_message;
 	proto::request request;

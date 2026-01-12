@@ -54,7 +54,6 @@ std::string serialize_to_string(const c_vin & vin) {
 proto::transaction::vout vout_to_protobuf(const c_vout & vout) {
 	proto::transaction::vout vout_proto;
 	vout_proto.set_m_pkh(container_to_string(vout.m_pkh));
-	vout_proto.set_m_amount(vout.m_amount);
 	return vout_proto;
 }
 
@@ -222,7 +221,6 @@ c_transaction transaction_from_protobuf(const proto::transaction & transaction_p
 c_vout vout_from_protobuf(const proto::transaction::vout & vout_proto) {
 	c_vout vout;
 	vout.m_pkh = transform_string_to_array<hash_size>(vout_proto.m_pkh());
-	vout.m_amount = vout_proto.m_amount();
 	return vout;
 }
 

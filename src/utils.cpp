@@ -1,7 +1,7 @@
 #include "utils.hpp"
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-uint64_t get_unix_time() {
+uint32_t get_unix_time() {
 	const auto now = boost::posix_time::second_clock::universal_time();
 	const boost::posix_time::ptime epoch(boost::gregorian::date(1970, 1, 1));
 	const auto duration = now - epoch;

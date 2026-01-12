@@ -14,9 +14,8 @@ std::unique_ptr<c_blockchain_module> c_blockchain_module_builder::get_result(c_m
 	blockchain_module->m_block_verifyer = build_block_verifyer(*(blockchain_module->m_blockchain), *(blockchain_module->m_utxo), number_of_threads);
 	blockchain_module->m_mempool = build_mempool();
 	assert(blockchain_module->m_utxo != nullptr);
-	if (m_variable_map.at("reindex-chainstate").as<bool>()) {
-		blockchain_module->reindex_chainstate();
-	}
+	blockchain_module->m_miner = build_miner();
+	blockchain_module->m_force_mine = m_variable_map.at("force-mine").as<bool>();
 	return blockchain_module;
 }
 
@@ -27,10 +26,6 @@ std::unique_ptr<c_blockchain> c_blockchain_module_builder::build_blockchain() co
 }
 
 std::unique_ptr<c_utxo> c_blockchain_module_builder::build_utxo() const {
-	if (m_variable_map.at("reindex-chainstate").as<bool>()) {
-		const std::filesystem::path datadir_path = m_variable_map.at("datadir").as<std::filesystem::path>();
-		std::filesystem::remove_all(datadir_path/"chainstate");
-	}
 	const std::filesystem::path datadir_path = m_variable_map.at("datadir").as<std::filesystem::path>();
 	auto utxo = std::make_unique<c_utxo>(datadir_path);
 	return utxo;
@@ -46,4 +41,13 @@ std::unique_ptr<c_block_verifier> c_blockchain_module_builder::build_block_verif
 std::unique_ptr<c_mempool> c_blockchain_module_builder::build_mempool() const {
 	auto mempool = std::make_unique<c_mempool>();
 	return mempool;
+}
+
+std::unique_ptr<c_miner> c_blockchain_module_builder::build_miner() const {
+	std::unique_ptr<c_miner> miner = nullptr;
+	if (m_variable_map.count("gen")) {
+		LOG(info) << "Enable miner";
+		miner = std::make_unique<c_miner>();
+	}
+	return miner;
 }

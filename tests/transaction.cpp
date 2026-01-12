@@ -23,7 +23,6 @@ c_vout transaction::make_random_vout() const {
 	std::generate(vout.m_pkh.begin(), vout.m_pkh.end(), [this] {
 		return get_random_byte();
 	});
-	vout.m_amount = get_random_int();
 	return vout;
 }
 
@@ -52,7 +51,7 @@ uint16_t transaction::get_random_int() const {
 
 c_transaction transaction::get_random_normal_tx() const {
 	c_transaction transaction;
-	transaction.m_type = t_transactiontype::add_secret_vote;
+	transaction.m_type = t_transactiontype::another_voting_protocol;
 	auto vout = make_random_vout();
 	transaction.m_vout.emplace_back(std::move(vout));
 	auto vin = make_random_vin();
@@ -89,7 +88,7 @@ TEST_F(transaction, eq_txs) {
 
 TEST_F(transaction, swap_places_vin_vout) {
 	c_transaction transaction_1;
-	transaction_1.m_type = t_transactiontype::add_secret_vote;
+	transaction_1.m_type = t_transactiontype::another_voting_protocol;
 	transaction_1.m_txid.fill(0x00);
 	transaction_1.m_allmetadata.clear();
 	auto transaction_2 = transaction_1;

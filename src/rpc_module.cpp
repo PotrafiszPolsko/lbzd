@@ -8,10 +8,6 @@ c_rpc_module::c_rpc_module(std::unique_ptr<c_rpc_server_base> && rpc_server, c_m
 {
 }
 
-c_rpc_server_base &c_rpc_module::get_rpc_server() {
-	return * m_rpc_server;
-}
-
 void c_rpc_module::start_execution_impl() {
 	m_thread_rpc = std::make_unique< std::thread >( [this]() {
 		m_rpc_server->run_and_block();

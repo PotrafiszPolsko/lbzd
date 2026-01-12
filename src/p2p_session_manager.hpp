@@ -17,7 +17,6 @@ class c_p2p_session_manager {
 		void send_to_all_peers(const std::string & msg);
 		virtual std::vector<std::unique_ptr<c_peer_reference>> get_peer_list();
 		size_t number_of_connected_peers() const;
-		void disconnect_peer(const c_peer_reference & peer);
 		void delete_session(const c_peer_reference & peer_info); ///< must be called after lock m_sessions_mtx
 	protected:
 		virtual boost::asio::ip::tcp::socket connect_to_peer(const c_peer_reference & peer_info) = 0;
@@ -34,7 +33,6 @@ class c_p2p_session_manager {
 		boost::asio::ip::tcp::socket m_accept_socket;
 		boost::asio::ip::tcp::acceptor m_acceptor;
 		std::vector<std::thread> m_io_context_thread;
-		
 		void add_peer(std::unique_ptr<c_peer_reference> && peer_info, boost::asio::ip::tcp::socket && connected_socket, bool is_server); ///< must be called after lock m_sessions_mtx
 		auto get_iterator_to_session(const c_peer_reference & peer_info); ///< must be called after lock m_sessions_mtx
 		void do_accept();

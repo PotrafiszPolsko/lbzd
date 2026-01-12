@@ -9,7 +9,7 @@ c_log::c_log(const c_blockchain &blockchain)
 }
 
 void c_log::write_in_log_file() const {
-    std::ofstream log;
+	std::ofstream log;
 	log.open("BC.log", std::ios::out);
 	if( log.good() == false ) {
 		LOG(error) << "file BC.log not found";
@@ -33,7 +33,6 @@ void c_log::write_in_log_file() const {
 			}
 			for(const auto &vout:tx.m_vout) {
 				log<<"vout-public key hash: "<<convert_array_or_vector_byte_to_hex_string(vout.m_pkh)<<std::endl;
-				log<<"vout-amount: "<<static_cast<unsigned int>(vout.m_amount)<<std::endl;
 			}
 			log<<"tx-txid: "<<convert_array_or_vector_byte_to_hex_string(tx.m_txid)<<std::endl;
 			log<<"tx-all meta data: "<<convert_array_or_vector_byte_to_hex_string(tx.m_allmetadata)<<std::endl;

@@ -24,7 +24,7 @@ class c_crypto {
 		c_keys m_key_pair;
 		t_nonce_type m_nonce;
 		size_t m_nonce_size;
-	};
+};
 
 
 #endif // C_CRYPTO_HPP

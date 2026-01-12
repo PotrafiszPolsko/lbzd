@@ -21,3 +21,7 @@ void c_main_module_mock_builder::set_p2p_module(std::unique_ptr<c_p2p_module> &&
 void c_main_module_mock_builder::set_rpc_module(std::unique_ptr<c_rpc_module> &&rpc_module) {
 	m_main_module->m_rpc_module = std::move(rpc_module);
 }
+
+void c_main_module_mock_builder::set_wallet_module_interface(std::unique_ptr<c_wallet_module_interface> &&wallet_module_interface) {
+	m_main_module->m_wallet_module = std::move(wallet_module_interface);
+}

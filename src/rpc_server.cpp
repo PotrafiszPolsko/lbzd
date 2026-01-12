@@ -63,12 +63,8 @@ void session_rpc::do_read_handler(const boost::system::error_code & ec, size_t) 
 	if (!check_auth_string(authorization_string)) {
 		response.result(401);
 	} else {
-		try {
-			response.body() = generate_response(m_reqest.body());
-		} catch (const std::exception & exception) {
-			LOG(error) << "Wrong RPC format" << exception.what();
-			response.body() = exception.what();
-		}
+		const auto json_response = generate_response(m_reqest.body());
+		response.body() = json_response;
 	}
 	response.prepare_payload();
 	boost::beast::http::write(m_stream, response);
@@ -92,17 +88,17 @@ c_rpc_server_base::c_rpc_server_base(std::shared_ptr<c_rpc_exec> exec)
 std::shared_ptr<c_rpc_exec> c_rpc_server_base::get_exec() { return m_exec; }
 
 c_rpc_server::c_rpc_server(std::shared_ptr<c_rpc_exec> exec, t_endpoint endpoint, const std::string auth_string)
-	:
-	  c_rpc_server_base(exec),
-	  m_service(),
-	  m_acceptor(m_service),
-	  m_socket(m_service),
+    :
+    c_rpc_server_base(exec),
+    m_service(),
+    m_acceptor(m_service),
+    m_socket(m_service),
 	m_auth_string(auth_string)
 {
 	m_acceptor.open(endpoint.protocol());
 	m_acceptor.bind(endpoint);
 	boost::asio::socket_base::reuse_address option(true);
-	m_acceptor.set_option(option);
+	m_acceptor.set_option(option);	
 	m_acceptor.listen(boost::asio::socket_base::max_connections);
 }
 
@@ -112,7 +108,7 @@ void c_rpc_server::run_and_block() {
 }
 
 void c_rpc_server::do_accept() {
-	m_acceptor.async_accept(m_socket, [this](const boost::system::error_code & ec) {
+    m_acceptor.async_accept(m_socket, [this](const boost::system::error_code & ec) {
 	if (ec) {
 		LOG(error) << "RPC error "<< ec.message();
 		return;

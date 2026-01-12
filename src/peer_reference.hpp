@@ -4,12 +4,11 @@
 #include <string>
 #include <vector>
 #include <boost/asio/ip/tcp.hpp>
-#include "tor_socks5_credentials.hpp"
 #include <atomic>
 
 class c_peer_reference {
 	public:
-		enum class type : uint8_t {e_tcp = 0, e_onion = 1, e_url = 2};
+		enum class type : uint8_t {e_tcp = 0, e_url = 2};
 		c_peer_reference(type type);
 		type get_type() const;
 		virtual ~c_peer_reference() = default;
@@ -54,27 +53,6 @@ class c_peer_reference_url : public c_peer_reference {
 		boost::asio::ip::tcp::endpoint m_endpoint;
 };
 
-class c_peer_reference_onion : public c_peer_reference {
-	public:
-		c_peer_reference_onion();
-		c_peer_reference_onion(const std::string & address, unsigned short port);
-		std::string to_string() const override;
-		bool is_hidden_remote() const noexcept;
-		std::string get_onion_address() const;
-		unsigned short get_port() const;
-		bool operator<(const c_peer_reference &other) const noexcept override;
-		std::unique_ptr<c_peer_reference> clone() const override;
-		tor_socks5_credentials get_socks5_credentials() const;
-	private:
-		std::string m_peer_name;
-		unsigned short m_port;
-		bool m_hidden_remote; ///< false for .onion addresses
-		static std::atomic<size_t> s_hidden_peer_number;
-		tor_socks5_credentials m_soks5_credentials;
-		void create_password_and_username();
-		bool is_equal(const c_peer_reference & other) const override;
-};
-
 class c_peer_reference_creator {
 	public:
 		virtual ~c_peer_reference_creator() = default;
@@ -87,11 +65,6 @@ class c_peer_reference_tcp_creator : public c_peer_reference_creator {
 };
 
 class c_peer_reference_url_creator : public c_peer_reference_creator {
-	public:
-		std::unique_ptr<c_peer_reference> create_peer_reference(const std::string & address, unsigned short port) const override;
-};
-
-class c_peer_reference_onion_creator : public c_peer_reference_creator {
 	public:
 		std::unique_ptr<c_peer_reference> create_peer_reference(const std::string & address, unsigned short port) const override;
 };

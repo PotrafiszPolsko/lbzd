@@ -1,4 +1,5 @@
 #include "main_module_builder.hpp"
+#include "wallet_module_builder.hpp"
 #include "p2p_module_builder.hpp"
 #include "rpc_module_builder.hpp"
 
@@ -15,6 +16,7 @@ auto c_main_module_builder::build_component<c_blockchain_module_builder>(const b
 
 std::unique_ptr<c_main_module> c_main_module_builder::get_result() {
 	auto main_module = std::make_unique<c_main_module>();
+	main_module->m_wallet_module = build_component<c_wallet_module_builder>(m_variable_map, *main_module);
 	main_module->m_blockchain_module = build_component<c_blockchain_module_builder>(m_variable_map, *main_module);
 	main_module->m_rpc_module = build_component<c_rpc_module_builder>(m_variable_map, *main_module);
 	main_module->m_p2p_module = build_component<c_p2p_module_builder>(m_variable_map, *main_module);

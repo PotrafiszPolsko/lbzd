@@ -11,7 +11,6 @@ class c_rpc_module final : public c_component {
 	public:
 		void run() override;
 		c_rpc_module(std::unique_ptr<c_rpc_server_base> && rpc_server, c_mediator & mediator);
-		c_rpc_server_base & get_rpc_server();
 		void start_execution_impl();
 	private:
 		std::unique_ptr<c_rpc_server_base> m_rpc_server;

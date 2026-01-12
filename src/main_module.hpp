@@ -5,6 +5,7 @@
 #include "blockchain_module.hpp"
 #include "p2p_module.hpp"
 #include "rpc_module.hpp"
+#include "wallet_module.hpp"
 #include <condition_variable>
 
 class c_main_module : public c_mediator {
@@ -21,6 +22,7 @@ class c_main_module : public c_mediator {
 		std::unique_ptr<c_blockchain_module> m_blockchain_module;
 		std::unique_ptr<c_p2p_module> m_p2p_module;
 		std::unique_ptr<c_rpc_module> m_rpc_module;
+		std::unique_ptr<c_wallet_module_interface> m_wallet_module;
 		std::mutex m_stop_cv_mutex;
 		std::condition_variable m_stop_cv;
 		bool m_stopped = false;

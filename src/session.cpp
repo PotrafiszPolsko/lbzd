@@ -61,6 +61,7 @@ void c_tcp_session::async_read(read_handler handler) {
 			std::unique_lock<std::mutex> lock(m_socket_mtx);
 			if (!m_socket.is_open()) {
 				LOG(info) << "timeout, close session";
+				lock.unlock();
 				close_session();
 				return;
 			}
@@ -89,7 +90,7 @@ void c_tcp_session::async_read_to_buffer(read_handler handler, t_read_data & rea
 		boost::asio::bind_executor(m_strand,
 		[this, handler, self, read_data = std::move(read_data)](const boost::system::error_code & error, [[maybe_unused]] size_t bytes_transferred) {
 			if (error) {
-				LOG(error)<<error.message();
+				LOG(debug)<<error.message();
 				close_session();
 				return;
 			}
@@ -121,7 +122,7 @@ void c_tcp_session::async_read_to_buffer_nonce(read_handler handler, t_read_data
 		boost::asio::bind_executor(m_strand,
 		[this, handler, self, read_data = std::move(read_data)](const boost::system::error_code & error, [[maybe_unused]] size_t bytes_transferred) mutable {
 			if (error) {
-				LOG(error)<<error.message();
+				LOG(debug)<<error.message();
 				close_session();
 				return;
 			}
@@ -182,6 +183,7 @@ void c_tcp_session::start(read_handler handler) {
 void c_tcp_session::close_session() {
 	LOG(debug) << "Close TCP session";
 	boost::system::error_code ec;
+	std::lock_guard<std::mutex> lock(m_socket_mtx);
 	m_socket.cancel(ec); // cancel all asynchronous operations associated with the socket
 	m_socket.close(ec);
 	if (ec) {

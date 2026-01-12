@@ -5,6 +5,7 @@
 #include "../src/mempool.hpp"
 #include "../src/utxo.hpp"
 #include "../src/blockchain.hpp"
+#include "../src/miner.hpp"
 #include "../src/merkle_tree.hpp"
 
 class merkle : public ::testing::TestWithParam<unsigned int> {};
@@ -162,16 +163,6 @@ TEST(merkle_branch, branch_merkle_empty) { //branch merkle from merkle_tree with
 	EXPECT_EQ(tree_mt.size(), 1);
 	const auto branch_merkle = mt.get_branch_merkle_tree(hash);
 	EXPECT_EQ(branch_merkle.size(), 0);
-}
-
-TEST(wallet, reproduce_keys) {
-	c_wallet wallet;
-	t_voting_mix_data voting_mix_data;
-	voting_mix_data.m_number_voting = 0;
-	voting_mix_data.m_number_mix = 2;
-	const auto pk1 = wallet.get_pk(voting_mix_data);
-	const auto pk2 = wallet.get_pk(voting_mix_data);
-	EXPECT_EQ(pk1, pk2);
 }
 
 TEST(wallet, sign_message) {

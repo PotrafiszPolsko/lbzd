@@ -37,12 +37,10 @@ class c_blockchain {
 		virtual size_t get_height_for_block_id(const t_hash_type & block_id) const;
 		virtual size_t get_current_height() const;
 		virtual proto::header get_header_proto(const t_hash_type & block_id) const;
-		bool block_exists(const t_hash_type & block_id) const;
+		virtual bool block_exists(const t_hash_type & block_id) const;
 		virtual std::vector<t_hash_type> get_merkle_branch(const t_hash_type & txid) const;
 		virtual t_hash_type get_block_id_by_txid(const t_hash_type & txid) const;
 		virtual size_t get_number_of_transactions() const;
-		virtual std::vector<c_block_record> get_last_5_blocks() const;
-		virtual std::vector<c_transaction> get_last_5_transactions() const;
 		virtual std::vector<c_block_record> get_sorted_blocks(const size_t amount_of_blocks) const;
 		virtual std::pair<std::vector<c_block_record>, size_t> get_sorted_blocks_per_page(const size_t offset) const;
 		virtual std::vector<c_transaction> get_latest_transactions(const size_t amount_txs) const;

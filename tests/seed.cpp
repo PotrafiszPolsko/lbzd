@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
+#include "../src/seed.hpp"
 #include "../src/params.hpp"
+#include "../src/words.hpp"
 
 class seed : public ::testing::TestWithParam<unsigned int> {
 };

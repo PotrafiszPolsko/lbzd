@@ -5,7 +5,6 @@ void to_json(nlohmann::json &result , const c_vout &vout) {
 	m_pkh_str.resize(vout.m_pkh.size()*2+1);
 	sodium_bin2hex(m_pkh_str.data(), m_pkh_str.size(), vout.m_pkh.data(), vout.m_pkh.size());
 	result["pkh"] = m_pkh_str.c_str();
-	result["amount"] = vout.m_amount;
 }
 
 void to_json(nlohmann::json &result , const c_vin &vin) {
@@ -41,7 +40,7 @@ void to_json(nlohmann::json &result, const t_signature_type &signature ) {
 	std::string signature_str;
 	signature_str.resize(signature.size()*2+1);
 	sodium_bin2hex(signature_str.data(), signature_str.size(), signature.data(), signature.size());
-	result = signature_str.c_str();
+	result["sign"] = signature_str.c_str();
 }
 
 void to_json(nlohmann::json &result , const c_header &header) {
@@ -96,7 +95,6 @@ void from_json(const nlohmann::json &input, c_vout &vout) {
 	input.at("pkh").get_to(pkh_as_str);
 	const auto ret = sodium_hex2bin(vout.m_pkh.data(), vout.m_pkh.size(), pkh_as_str.data(), pkh_as_str.size(), nullptr, nullptr, nullptr);
 	if (ret!=0) throw std::runtime_error("hex2bin error");
-	input.at("amount").get_to(vout.m_amount);
 }
 
 void from_json(const nlohmann::json &input, c_transaction &tx) {
